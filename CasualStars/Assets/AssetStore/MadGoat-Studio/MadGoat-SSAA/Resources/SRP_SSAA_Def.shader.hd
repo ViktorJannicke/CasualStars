@@ -1,0 +1,59 @@
+﻿Shader "Hidden/SSAA_Def_HDRP" 
+{
+    Properties
+    {
+        [HideInInspector] _MainTex("Base (RGB)", 2D) = "white" {}
+    }
+ 
+    HLSLINCLUDE
+
+	#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
+	#include "UnityShaderVariables.cginc"
+	float2 FixVFlip(float2 texcoord)
+    {
+#if UNITY_UV_STARTS_AT_TOP
+        bool flip = _ProjectionParams.x > 0;
+#else
+        bool flip = _ProjectionParams.x < 0;
+#endif
+        if (flip) texcoord.y = 1 - texcoord.y;
+        return texcoord;
+    }
+ 
+    TEXTURE2D(_MainTex);
+    SAMPLER(sampler_MainTex);
+ 
+    // Vertex shader (procedural fullscreen triangle)
+    void Vertex(
+        uint vertexID : SV_VertexID,
+        out float4 positionCS : SV_POSITION,
+        out float2 texcoord : TEXCOORD0
+    )
+    {
+        positionCS = GetFullScreenTriangleVertexPosition(vertexID);
+        texcoord = FixVFlip(GetFullScreenTriangleTexCoord(vertexID));
+    }
+ 
+    // Fragment shader
+    float4 Fragment(
+        float4 positionCS : SV_POSITION,
+        float2 texcoord : TEXCOORD0
+    ) : SV_Target
+    {
+        // just output the texture
+        return SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, texcoord);
+    }
+    ENDHLSL
+ 
+    SubShader
+    {
+        Cull Off ZWrite Off ZTest Always
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex Vertex
+            #pragma fragment Fragment
+            ENDHLSL
+        }
+    }
+}

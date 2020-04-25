@@ -1,0 +1,72 @@
+Whats new in 2.0.7
+------------------ 
+- Fixed issue causing SSAA VR to not render correctly under editor when downsampling filters were used.
+- Fixed issue causing SSAA VR to become blurry on PlayStation 4 after being disabled.
+- Fixed issue causing SSAA to break post processing in scene view when enabled
+
+Whats new in 2.0.6
+------------------ 
+- Fixed issue causing SSAA to not render correctly under built-in pipeline when added to a new camera
+- Fixed issue causing PostProcessingStack v2 integration to not apply correctly on enable
+- Updated documentation links open the new wiki
+
+Whats new in 2.0.5
+------------------ 
+- Fixed issue causing SSAA to create multiple non parented cameras on adding component - introduced with 2.0.4 (oops!)
+- Fixed issue causing SSAA to throw errors when destroying the gameobject or removing the component while enabled
+- Fixed issue causing SSAA to throw null reference exception for one frame after opening the project
+- Fixed issue causing blackscreen when application not playing
+- Fixed issue causing OnPreRender to not work correctly on SRP
+- Minor improvements to cinemachine support
+- Minor improvements to LWRP legacy support
+- Fixed missing render feature on LWRP
+
+Whats new in 2.0.4
+------------------
+- Fixed issue causing SSAA to throw null reference exceptions when switching pipelines on Unity 2019
+- Fixed issue causing SSAA to throw null reference exceptions when upgrading shader files on Scriptable Pipelines
+- Fixed issue causing SSAA to throw errors on Universal RP when MSAA is enabled. (SSAA Script will disable MSAA on initialization for now)
+- Fixed issue causing SSAA to go blackscreen after initial setup under Universal RP on Unity2019.3
+- Removed SSAA_UI Camera feature completely. Worldspace UI is now handled by render camera to allow depth testing and better quality.
+
+
+Whats new in 2.0.3
+------------------
+- Compatibility Improvements for Unity 2019.3
+- Compatibility Improvements for Editor No Domain Reload mode
+- Fixed issue causing SSAA to not compile when DXR enabled under HDRP
+- Fixed issue causing SSAA to go blackscreen after initial setup under HDRP 
+- Fixed issue causing SSAA to not compile when PostProcessingV2 was present in project with unsupported HDRP or URP versions
+
+
+Whats new in 2.0.2
+------------------
+- Fixed some lighting issues in demo scene
+- Mirror improvements to SSAA inspector and MadGoat Core classes
+
+
+Whats new in 2.0.1
+------------------
+- Fixed issue causing SSAA to not compile under Unity 2017.1 and lower
+
+
+Whats new in 2.0.0
+------------------
+
+- Added support for LightWeight and Universal Render Pipelines (2019.1+)
+- Added support for HighDefinition Render Pipeline (2019.1+)
+- Added support for HighDefinition Render Pipeline with Ray Tracing (2019.3+)
+- Added support for temporal super sampling (only HDRP currently)
+- Added support for extensions and 3rd party asset integration
+- Added integration for cinemachine 
+- Added integration for PostProcessingStack v2
+
+- Improved performance on lower end devices (lower CPU time on SSAA components)
+- Improved performance on low memory GPUs (SSAA use less render textures now)
+
+- Improved downsampling filters implementation
+- Improved FSSAA implementation
+- Improved support for Offscreen Renderers
+- Improved support for VR devices
+- Improved support for Post Processing
+- Improved support for UI

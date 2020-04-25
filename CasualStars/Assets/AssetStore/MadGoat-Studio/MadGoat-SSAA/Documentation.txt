@@ -1,0 +1,2 @@
+Complete documentation of MadGoat SSAA & Resolution Scale is available at 
+https://github.com/MadGoat-Studio/MadGoat-SSAA-Resolution-Scale/wiki

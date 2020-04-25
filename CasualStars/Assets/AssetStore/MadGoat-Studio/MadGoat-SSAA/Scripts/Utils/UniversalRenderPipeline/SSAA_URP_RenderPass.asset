@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de640fe3d0db1804a85f9fc8f5cadab6, type: 3}
+  m_Name: SSAA_URP_RenderPass
+  m_EditorClassIdentifier: 
+  m_RendererFeatures:
+  - {fileID: 1652484139855863542}
+  m_BlitShader: {fileID: 0}
+  m_CopyDepthShader: {fileID: 0}
+  m_ScreenSpaceShadowShader: {fileID: 0}
+  m_SamplingShader: {fileID: 0}
+  m_OpaqueLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_TransparentLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_DefaultStencilState:
+    overrideStencilState: 0
+    stencilReference: 0
+    stencilCompareFunction: 5
+    passOperation: 0
+    failOperation: 1
+    zFailOperation: 2
+--- !u!114 &1652484139855863542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e6163c968cd4844817c2cb84917bb5, type: 3}
+  m_Name: NewSSAARenderPassFeature
+  m_EditorClassIdentifier: 
