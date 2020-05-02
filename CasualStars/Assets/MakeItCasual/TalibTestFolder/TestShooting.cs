@@ -5,53 +5,58 @@ using UnityEngine;
 
 public class TestShooting : MonoBehaviour
 {
-    public Transform target;
-
     public GameObject bullet;
+
+    public Transform target;
+    public Transform turret;
     public Transform fireTransform;
 
     public float bulletSpeed = 10f;
-    public float bulletDamage = 100f;
-    public float shootCooldown = 2f;
-    [HideInInspector] public float cooldown;
+    //public float bulletDamage = 100f;
+    int bulletRate = 10;
+    public int shootedBullets;
 
     public Rigidbody rb;
-    public SphereCollider shootRadius;
-    public Transform turret;
-
+    
     bool enemyInRadius = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        shootRadius = GetComponent<SphereCollider>();
+        shootedBullets = 0;
     }
 
     private void Update()
     {
-        cooldown -= Time.deltaTime;
-        if(enemyInRadius == true)
+        if (enemyInRadius)
         {
-            if(cooldown <= 0f)
-            {
-                Fire();
-                cooldown = shootCooldown;
-            }
+            Fire();
+        }
+        if(shootedBullets == bulletRate)
+        {
+           
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        enemyInRadius = true;
+        Debug.Log("Enemy in Radius");
         turret.transform.LookAt(target);
         fireTransform.transform.LookAt(target);
-        Debug.Log("Enemy in Radius");
-        enemyInRadius = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        enemyInRadius = false;
+        Debug.Log("Enemy not in Radius");
     }
 
     private void Fire()
     {
         GameObject shootBullet = Instantiate(bullet, fireTransform.position, fireTransform.rotation);
-        
+        shootedBullets += 1;
+
         shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 
