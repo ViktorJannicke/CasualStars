@@ -14,31 +14,30 @@ public class TestShooting : MonoBehaviour
     public float bulletSpeed = 10f;
     //public float bulletDamage = 100f;
     int bulletRate = 10;
-    public float shootDelay;
+    public float fireDelay;
     private float delay = 1;
+
+    public float time;
 
     public Rigidbody rb;
     
-    bool enemyInRadius = false;
-
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         time = 0;
     }
 
-    public float time;
     private void Update()
     {
-        if (target != null && time > shootDelay + delay)
+        if (target != null && time > fireDelay + delay)
         {
             for (int x = 0; x < bulletRate; x++)
             {
                 Fire();
             }
-
             time = 0;
-        } else
+        } 
+        else
         {
             time += Time.deltaTime;
         }
@@ -46,7 +45,6 @@ public class TestShooting : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        enemyInRadius = true;
         Debug.Log("Enemy in Radius");
         turret.transform.LookAt(target);
         //fireTransform.transform.LookAt(target);
@@ -54,7 +52,6 @@ public class TestShooting : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        enemyInRadius = false;
         Debug.Log("Enemy not in Radius");
     }
 
@@ -64,9 +61,4 @@ public class TestShooting : MonoBehaviour
 
         shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
-
-    /*private void ClickAimShoot()
-    {
-
-    }*/
 }
