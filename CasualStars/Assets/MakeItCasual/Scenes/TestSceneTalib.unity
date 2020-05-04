@@ -411,6 +411,21 @@ PrefabInstance:
       propertyPath: shootDelay
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 4006821587536125293, guid: 7784795fde81f0943a72a8bdbf80129d,
+        type: 3}
+      propertyPath: fireDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006821587536125293, guid: 7784795fde81f0943a72a8bdbf80129d,
+        type: 3}
+      propertyPath: time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006821587536125293, guid: 7784795fde81f0943a72a8bdbf80129d,
+        type: 3}
+      propertyPath: targetPlayer
+      value: 
+      objectReference: {fileID: 1533869494}
     - target: {fileID: 4505357628936474882, guid: 7784795fde81f0943a72a8bdbf80129d,
         type: 3}
       propertyPath: m_Center.x

@@ -43,6 +43,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
 						break;
+					case FireBulletNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new FireBulletNetworkObject(networker, id, frame);
+						break;
 				}
 
 				if (!availableCallback)

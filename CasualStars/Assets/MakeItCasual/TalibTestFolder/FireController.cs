@@ -1,42 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using BeardedManStudios.Forge.Networking.Generated;
 
-public class TestShooting : MonoBehaviour
+public class FireController : FireBulletBehavior
 {
-    public GameObject bullet;
+    public GameObject bulletPrefab;
 
-    public Transform target;
-    public Transform turret;
+    public Transform targetPlayer;
+    public Transform shipTurret;
     public Transform fireTransform;
 
     public float bulletSpeed = 10f;
-    //public float bulletDamage = 100f;
     private int bulletRate = 10;
     public float fireDelay;
-    private float delay = 1;
-
+    private float delay = 1f;
     public float time;
 
-    public Rigidbody rb;
-    
+    public Rigidbody shipRb;
+
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        time = 0;
+        shipRb = GetComponent<Rigidbody>();
+        time = 0f;
     }
 
     private void Update()
     {
-        if (target != null && time > fireDelay + delay)
+        if(targetPlayer != null && time > fireDelay + delay)
         {
             for (int x = 0; x < bulletRate; x++)
             {
                 Fire();
             }
             time = 0;
-        } 
+        }
         else
         {
             time += Time.deltaTime;
@@ -46,8 +44,7 @@ public class TestShooting : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Enemy in Radius");
-        turret.transform.LookAt(target);
-        //fireTransform.transform.LookAt(target);
+        shipTurret.transform.LookAt(targetPlayer);
     }
 
     private void OnTriggerExit(Collider other)
@@ -57,7 +54,7 @@ public class TestShooting : MonoBehaviour
 
     private void Fire()
     {
-        GameObject shootBullet = Instantiate(bullet, fireTransform.position, fireTransform.rotation);
+        GameObject shootBullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
 
         shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
