@@ -14,39 +14,38 @@ public class DoInput : MonoBehaviour
 
 		input = new MakeItCasualInput();
 
-		input.Game.Tap.performed += _ => { touch(); };
+		input.Game.Tap.performed += _ => touch();
 
-
+		input.Enable();
 
 	}
 
 	void touch()
 	{
-		Debug.Log("Test? Hörst du mich Welt, ich bin ein einsamer Mensch Rufst du mich überhaupt auf!!!!!!??????");
 		RaycastHit raycastHit = new RaycastHit();
 
 		Vector2 screensposition = input.Game.Position.ReadValue<Vector2>();
 
-		Vector3 MousWorldPosition = Main.ScreenToWorldPoint(screensposition);
-
-		if (Physics.Raycast(MousWorldPosition, Main.transform.forward, out raycastHit, 10000))
+		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000))
 		{
+			Debug.Log(raycastHit.point);
+
 			if (raycastHit.collider.gameObject.CompareTag("Player"))
 			{
 
 			}
 			if (raycastHit.collider.gameObject.CompareTag("MapGrouznd"))
 			{
-				FliegJungeFlieg.move(MousWorldPosition);
+				FliegJungeFlieg.move(raycastHit.point);
 			}
 		}
 
 	}
 
 	// Start is called before the first frame update
-	void Start()
+	private void OnDisable()
 	{
-
+		input.Disable();
 	}
 
 }

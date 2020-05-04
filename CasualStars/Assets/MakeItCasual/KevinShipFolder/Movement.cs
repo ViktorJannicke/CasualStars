@@ -14,6 +14,5 @@ public class Movement : MonoBehaviour
 	public void move(Vector3 touchposition)
 	{
 		SpaceShip.SetDestination(touchposition);
-		Debug.Log("Test? Hörst du mich Welt, ich bin ein einsamer Mensch Rufst du mich überhaupt auf!!!!!!??????");
 	}
 }
