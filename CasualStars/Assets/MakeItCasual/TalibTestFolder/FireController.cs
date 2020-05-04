@@ -1,33 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using BeardedManStudios.Forge.Networking.Generated;
 
 public class FireController : FireBulletBehavior
 {
     public GameObject bulletPrefab;
+    public Text kdfkf;
 
     public Transform targetPlayer;
-    public Transform shipTurret;
     public Transform fireTransform;
 
-    public float bulletSpeed = 10f;
-    private int bulletRate = 10;
-    public float fireDelay;
-    private float delay = 1f;
-    public float time;
+    public Vector3 maxRot;
+    public Vector3 minRot;
 
-    public Rigidbody shipRb;
+    public float bulletSpeed = 10f;
+    private int bulletRate = 1;
+    public float fireDelay;
+    public float time;
 
     private void Start()
     {
-        shipRb = GetComponent<Rigidbody>();
         time = 0f;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if(targetPlayer != null && time > fireDelay + delay)
+        Vector3 rotation1 = transform.eulerAngles;
+
+        transform.LookAt(targetPlayer);
+
+        Vector3 rotation2 = transform.eulerAngles;
+
+        if (rotation2.y > maxRot.y || rotation2.y < minRot.y)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation2.y, rotation1.z));
+        }
+        
+
+
+
+        if (kdfkf != null)
+        {
+            kdfkf.text = rotation2.y.ToString();
+        }
+
+        if (targetPlayer != null && time > fireDelay)
         {
             for (int x = 0; x < bulletRate; x++)
             {
@@ -41,21 +64,9 @@ public class FireController : FireBulletBehavior
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Enemy in Radius");
-        shipTurret.transform.LookAt(targetPlayer);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        Debug.Log("Enemy not in Radius");
-    }
-
     private void Fire()
     {
-        GameObject shootBullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
-
+        GameObject shootBullet  = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
         shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 }
