@@ -13,7 +13,7 @@ public class TestShooting : MonoBehaviour
 
     public float bulletSpeed = 10f;
     //public float bulletDamage = 100f;
-    int bulletRate = 10;
+    private int bulletRate = 10;
     public float fireDelay;
     private float delay = 1;
 

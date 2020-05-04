@@ -161,7 +161,7 @@ public class MultiplayerMenu : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.H))
+		/*if (Input.GetKeyDown(KeyCode.H))
 			Host();
 		else if (Input.GetKeyDown(KeyCode.C))
 			Connect();
@@ -170,7 +170,7 @@ public class MultiplayerMenu : MonoBehaviour
 			NetWorker.localServerLocated -= TestLocalServerFind;
 			NetWorker.localServerLocated += TestLocalServerFind;
 			NetWorker.RefreshLocalUdpListings();
-		}
+		}*/
 	}
 
 	private void TestLocalServerFind(NetWorker.BroadcastEndpoints endpoint, NetWorker sender)
