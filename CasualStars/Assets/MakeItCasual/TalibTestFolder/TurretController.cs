@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking.Unity;
 
-public class TurretController : MonoBehaviour
+public class TurretController : TurretNetworkBehavior
 {
     public GameObject bulletPrefab;
 
@@ -73,7 +75,7 @@ public class TurretController : MonoBehaviour
 
     private void Fire()
     {
-        GameObject shootBullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
-        shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
+        BulletNetworkBehavior shootBullet = NetworkManager.Instance.InstantiateBulletNetwork();
+        shootBullet.gameObject.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 }

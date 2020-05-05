@@ -5,47 +5,16 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedInterpol("{\"inter\":[0.15,0.15]")]
-	public partial class BulletNetworkNetworkObject : NetworkObject
+	[GeneratedInterpol("{\"inter\":[0.15]")]
+	public partial class TurretNetworkNetworkObject : NetworkObject
 	{
-		public const int IDENTITY = 2;
+		public const int IDENTITY = 9;
 
 		private byte[] _dirtyFields = new byte[1];
 
 		#pragma warning disable 0067
 		public event FieldChangedEvent fieldAltered;
 		#pragma warning restore 0067
-		[ForgeGeneratedField]
-		private Vector3 _position;
-		public event FieldEvent<Vector3> positionChanged;
-		public InterpolateVector3 positionInterpolation = new InterpolateVector3() { LerpT = 0.15f, Enabled = true };
-		public Vector3 position
-		{
-			get { return _position; }
-			set
-			{
-				// Don't do anything if the value is the same
-				if (_position == value)
-					return;
-
-				// Mark the field as dirty for the network to transmit
-				_dirtyFields[0] |= 0x1;
-				_position = value;
-				hasDirtyFields = true;
-			}
-		}
-
-		public void SetpositionDirty()
-		{
-			_dirtyFields[0] |= 0x1;
-			hasDirtyFields = true;
-		}
-
-		private void RunChange_position(ulong timestep)
-		{
-			if (positionChanged != null) positionChanged(_position, timestep);
-			if (fieldAltered != null) fieldAltered("position", _position, timestep);
-		}
 		[ForgeGeneratedField]
 		private Quaternion _rotation;
 		public event FieldEvent<Quaternion> rotationChanged;
@@ -60,7 +29,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					return;
 
 				// Mark the field as dirty for the network to transmit
-				_dirtyFields[0] |= 0x2;
+				_dirtyFields[0] |= 0x1;
 				_rotation = value;
 				hasDirtyFields = true;
 			}
@@ -68,7 +37,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public void SetrotationDirty()
 		{
-			_dirtyFields[0] |= 0x2;
+			_dirtyFields[0] |= 0x1;
 			hasDirtyFields = true;
 		}
 
@@ -86,7 +55,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		
 		public void SnapInterpolations()
 		{
-			positionInterpolation.current = positionInterpolation.target;
 			rotationInterpolation.current = rotationInterpolation.target;
 		}
 
@@ -94,7 +62,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		protected override BMSByte WritePayload(BMSByte data)
 		{
-			UnityObjectMapper.Instance.MapBytes(data, _position);
 			UnityObjectMapper.Instance.MapBytes(data, _rotation);
 
 			return data;
@@ -102,10 +69,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		protected override void ReadPayload(BMSByte payload, ulong timestep)
 		{
-			_position = UnityObjectMapper.Instance.Map<Vector3>(payload);
-			positionInterpolation.current = _position;
-			positionInterpolation.target = _position;
-			RunChange_position(timestep);
 			_rotation = UnityObjectMapper.Instance.Map<Quaternion>(payload);
 			rotationInterpolation.current = _rotation;
 			rotationInterpolation.target = _rotation;
@@ -118,8 +81,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			dirtyFieldsData.Append(_dirtyFields);
 
 			if ((0x1 & _dirtyFields[0]) != 0)
-				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _position);
-			if ((0x2 & _dirtyFields[0]) != 0)
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _rotation);
 
 			// Reset all the dirty fields
@@ -139,19 +100,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 			if ((0x1 & readDirtyFlags[0]) != 0)
 			{
-				if (positionInterpolation.Enabled)
-				{
-					positionInterpolation.target = UnityObjectMapper.Instance.Map<Vector3>(data);
-					positionInterpolation.Timestep = timestep;
-				}
-				else
-				{
-					_position = UnityObjectMapper.Instance.Map<Vector3>(data);
-					RunChange_position(timestep);
-				}
-			}
-			if ((0x2 & readDirtyFlags[0]) != 0)
-			{
 				if (rotationInterpolation.Enabled)
 				{
 					rotationInterpolation.target = UnityObjectMapper.Instance.Map<Quaternion>(data);
@@ -170,11 +118,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (IsOwner)
 				return;
 
-			if (positionInterpolation.Enabled && !positionInterpolation.current.UnityNear(positionInterpolation.target, 0.0015f))
-			{
-				_position = (Vector3)positionInterpolation.Interpolate();
-				//RunChange_position(positionInterpolation.Timestep);
-			}
 			if (rotationInterpolation.Enabled && !rotationInterpolation.current.UnityNear(rotationInterpolation.target, 0.0015f))
 			{
 				_rotation = (Quaternion)rotationInterpolation.Interpolate();
@@ -189,9 +132,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		}
 
-		public BulletNetworkNetworkObject() : base() { Initialize(); }
-		public BulletNetworkNetworkObject(NetWorker networker, INetworkBehavior networkBehavior = null, int createCode = 0, byte[] metadata = null) : base(networker, networkBehavior, createCode, metadata) { Initialize(); }
-		public BulletNetworkNetworkObject(NetWorker networker, uint serverId, FrameStream frame) : base(networker, serverId, frame) { Initialize(); }
+		public TurretNetworkNetworkObject() : base() { Initialize(); }
+		public TurretNetworkNetworkObject(NetWorker networker, INetworkBehavior networkBehavior = null, int createCode = 0, byte[] metadata = null) : base(networker, networkBehavior, createCode, metadata) { Initialize(); }
+		public TurretNetworkNetworkObject(NetWorker networker, uint serverId, FrameStream frame) : base(networker, serverId, frame) { Initialize(); }
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

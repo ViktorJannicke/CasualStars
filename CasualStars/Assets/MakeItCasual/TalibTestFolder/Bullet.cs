@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using BeardedManStudios.Forge.Networking.Generated;
 
-
 public class Bullet : BulletNetworkBehavior
 {
     public float bulletDamage = 100f;
