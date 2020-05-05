@@ -18,11 +18,7 @@ namespace BeardedManStudios.Forge.Networking.Unity
 		public GameObject[] InputNetworkObject = null;
 		public GameObject[] NetworkCameraNetworkObject = null;
 		public GameObject[] TestNetworkObject = null;
-<<<<<<< Updated upstream
 		public GameObject[] TurretNetworkNetworkObject = null;
-=======
-		public GameObject[] NetworkHealthNetworkObject = null;
->>>>>>> Stashed changes
 
 		protected virtual void SetupObjectCreatedEvent()
 		{
@@ -224,28 +220,17 @@ namespace BeardedManStudios.Forge.Networking.Unity
 						objectInitialized(newObj, obj);
 				});
 			}
-<<<<<<< Updated upstream
 			else if (obj is TurretNetworkNetworkObject)
-=======
-			else if (obj is NetworkHealthNetworkObject)
->>>>>>> Stashed changes
 			{
 				MainThreadManager.Run(() =>
 				{
 					NetworkBehavior newObj = null;
 					if (!NetworkBehavior.skipAttachIds.TryGetValue(obj.NetworkId, out newObj))
 					{
-<<<<<<< Updated upstream
 						if (TurretNetworkNetworkObject.Length > 0 && TurretNetworkNetworkObject[obj.CreateCode] != null)
 						{
 							var go = Instantiate(TurretNetworkNetworkObject[obj.CreateCode]);
 							newObj = go.GetComponent<TurretNetworkBehavior>();
-=======
-						if (NetworkHealthNetworkObject.Length > 0 && NetworkHealthNetworkObject[obj.CreateCode] != null)
-						{
-							var go = Instantiate(NetworkHealthNetworkObject[obj.CreateCode]);
-							newObj = go.GetComponent<NetworkHealthBehavior>();
->>>>>>> Stashed changes
 						}
 					}
 
@@ -364,7 +349,6 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			
 			return netBehavior;
 		}
-<<<<<<< Updated upstream
 		[Obsolete("Use InstantiateTurretNetwork instead, its shorter and easier to type out ;)")]
 		public TurretNetworkBehavior InstantiateTurretNetworkNetworkObject(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
 		{
@@ -372,15 +356,6 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			var netBehavior = go.GetComponent<TurretNetworkBehavior>();
 			var obj = netBehavior.CreateNetworkObject(Networker, index);
 			go.GetComponent<TurretNetworkBehavior>().networkObject = (TurretNetworkNetworkObject)obj;
-=======
-		[Obsolete("Use InstantiateNetworkHealth instead, its shorter and easier to type out ;)")]
-		public NetworkHealthBehavior InstantiateNetworkHealthNetworkObject(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
-		{
-			var go = Instantiate(NetworkHealthNetworkObject[index]);
-			var netBehavior = go.GetComponent<NetworkHealthBehavior>();
-			var obj = netBehavior.CreateNetworkObject(Networker, index);
-			go.GetComponent<NetworkHealthBehavior>().networkObject = (NetworkHealthNetworkObject)obj;
->>>>>>> Stashed changes
 
 			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
 			
@@ -796,7 +771,6 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			return netBehavior;
 		}
 		/// <summary>
-<<<<<<< Updated upstream
 		/// Instantiate an instance of TurretNetwork
 		/// </summary>
 		/// <returns>
@@ -810,21 +784,6 @@ namespace BeardedManStudios.Forge.Networking.Unity
 		{
 			var go = Instantiate(TurretNetworkNetworkObject[index]);
 			var netBehavior = go.GetComponent<TurretNetworkBehavior>();
-=======
-		/// Instantiate an instance of NetworkHealth
-		/// </summary>
-		/// <returns>
-		/// A local instance of NetworkHealthBehavior
-		/// </returns>
-		/// <param name="index">The index of the NetworkHealth prefab in the NetworkManager to Instantiate</param>
-		/// <param name="position">Optional parameter which defines the position of the created GameObject</param>
-		/// <param name="rotation">Optional parameter which defines the rotation of the created GameObject</param>
-		/// <param name="sendTransform">Optional Parameter to send transform data to other connected clients on Instantiation</param>
-		public NetworkHealthBehavior InstantiateNetworkHealth(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
-		{
-			var go = Instantiate(NetworkHealthNetworkObject[index]);
-			var netBehavior = go.GetComponent<NetworkHealthBehavior>();
->>>>>>> Stashed changes
 
 			NetworkObject obj = null;
 			if (!sendTransform && position == null && rotation == null)
@@ -856,11 +815,7 @@ namespace BeardedManStudios.Forge.Networking.Unity
 				obj = netBehavior.CreateNetworkObject(Networker, index, metadata.CompressBytes());
 			}
 
-<<<<<<< Updated upstream
 			go.GetComponent<TurretNetworkBehavior>().networkObject = (TurretNetworkNetworkObject)obj;
-=======
-			go.GetComponent<NetworkHealthBehavior>().networkObject = (NetworkHealthNetworkObject)obj;
->>>>>>> Stashed changes
 
 			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
 			

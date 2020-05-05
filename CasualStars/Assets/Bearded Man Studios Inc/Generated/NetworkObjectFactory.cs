@@ -55,15 +55,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
 						break;
-<<<<<<< Updated upstream
 					case TurretNetworkNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new TurretNetworkNetworkObject(networker, id, frame);
-=======
-					case NetworkHealthNetworkObject.IDENTITY:
-						availableCallback = true;
-						obj = new NetworkHealthNetworkObject(networker, id, frame);
->>>>>>> Stashed changes
 						break;
 				}
 
