@@ -7,6 +7,7 @@ public class DoInput : MonoBehaviour
 	public Movement FliegJungeFlieg;
 
 	Camera Main;
+	public CameraController controller;
 
 	MakeItCasualInput input;
 
@@ -19,7 +20,6 @@ public class DoInput : MonoBehaviour
 		input = new MakeItCasualInput();
 		input.Game.Tap.performed += _ => touch();
 		input.Enable();
-
 	}
 
 	void touch()
@@ -30,7 +30,6 @@ public class DoInput : MonoBehaviour
 
 		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000))
 		{
-
 			if (raycastHit.collider.gameObject.CompareTag("Player"))
 			{
 				if(raycastHit.collider.gameObject.transform != transform)
@@ -45,15 +44,15 @@ public class DoInput : MonoBehaviour
 					FliegJungeFlieg.hyperdrive(raycastHit.point);
 
 					hyperdrive = false;
+					controller.translateTowards();
 				}
 				else
 				{
 					FliegJungeFlieg.move(raycastHit.point);
-				}
 
+				}
 			}
 		}
-
 	}
 
 	// Start is called before the first frame update
@@ -61,5 +60,4 @@ public class DoInput : MonoBehaviour
 	{
 		input.Disable();
 	}
-
 }
