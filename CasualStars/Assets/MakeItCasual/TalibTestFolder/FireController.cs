@@ -41,14 +41,8 @@ public class FireController : FireBulletBehavior
         {
             transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation2.y, rotation1.z));
         }
-        
 
-
-
-        if (kdfkf != null)
-        {
-            kdfkf.text = rotation2.y.ToString();
-        }
+        kdfkf.text = rotation2.ToString();
 
         if (targetPlayer != null && time > fireDelay)
         {

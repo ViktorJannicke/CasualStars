@@ -23,6 +23,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			{
 				switch (identity)
 				{
+					case BasicNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new BasicNetworkObject(networker, id, frame);
+						break;
 					case ChatManagerNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new ChatManagerNetworkObject(networker, id, frame);
@@ -35,6 +39,14 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new ExampleProximityPlayerNetworkObject(networker, id, frame);
 						break;
+					case FireBulletNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new FireBulletNetworkObject(networker, id, frame);
+						break;
+					case InputNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new InputNetworkObject(networker, id, frame);
+						break;
 					case NetworkCameraNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new NetworkCameraNetworkObject(networker, id, frame);
@@ -42,10 +54,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					case TestNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
-						break;
-					case FireBulletNetworkObject.IDENTITY:
-						availableCallback = true;
-						obj = new FireBulletNetworkObject(networker, id, frame);
 						break;
 				}
 

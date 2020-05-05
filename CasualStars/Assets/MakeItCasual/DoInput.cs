@@ -10,6 +10,7 @@ public class DoInput : MonoBehaviour
 
 	private void Awake()
 	{
+
 		Main = Camera.main;
 
 		input = new MakeItCasualInput();
@@ -28,11 +29,13 @@ public class DoInput : MonoBehaviour
 
 		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000))
 		{
-			Debug.Log(raycastHit.point);
 
 			if (raycastHit.collider.gameObject.CompareTag("Player"))
 			{
+				if(raycastHit.collider.gameObject.transform != transform)
+				{
 
+				}
 			}
 			if (raycastHit.collider.gameObject.CompareTag("MapGrouznd"))
 			{
