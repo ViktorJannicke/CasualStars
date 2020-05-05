@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"Vector3\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"touchposition\"]]")]
+	[GeneratedRPC("{\"types\":[[\"Vector3\"][\"Vector3\"]]")]
+	[GeneratedRPCVariableNames("{\"types\":[[\"touchposition\"][\"Teleportposition\"]]")]
 	public abstract partial class BasicBehavior : NetworkBehavior
 	{
 		public const byte RPC_MOVE_TO = 0 + 5;
+		public const byte RPC_HYPERDRIVE = 1 + 5;
 		
 		public BasicNetworkObject networkObject = null;
 
@@ -23,6 +24,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 			base.SetupHelperRpcs(networkObject);
 			networkObject.RegisterRpc("MoveTo", MoveTo, typeof(Vector3));
+			networkObject.RegisterRpc("Hyperdrive", Hyperdrive, typeof(Vector3));
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -104,6 +106,11 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		/// Vector3 touchposition
 		/// </summary>
 		public abstract void MoveTo(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// Vector3 Teleportposition
+		/// </summary>
+		public abstract void Hyperdrive(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

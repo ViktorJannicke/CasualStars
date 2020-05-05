@@ -33,6 +33,10 @@ public class Movement : BasicBehavior
 		}
 	}
 
+	public void hyperdrive(Vector3 touchposition)
+	{
+		networkObject.SendRpc(RPC_HYPERDRIVE, Receivers.Server, touchposition);
+	}
 	public void move(Vector3 touchposition)
 	{
 		networkObject.SendRpc(RPC_MOVE_TO, Receivers.Server, touchposition);
@@ -46,6 +50,14 @@ public class Movement : BasicBehavior
 		MainThreadManager.Run(() =>
 		{
 			SpaceShip.SetDestination(args.GetNext<Vector3>());
+			
 		});
+	}
+	public override void Hyperdrive(RpcArgs args)
+	{
+		Vector3 position = (args.GetNext<Vector3>());
+		transform.position = position;
+
+		SpaceShip.SetDestination(position);
 	}
 }

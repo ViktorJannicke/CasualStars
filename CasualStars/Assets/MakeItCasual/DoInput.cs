@@ -5,18 +5,19 @@ using UnityEngine;
 public class DoInput : MonoBehaviour
 {
 	public Movement FliegJungeFlieg;
+
 	Camera Main;
+
 	MakeItCasualInput input;
+
+	public bool hyperdrive;
 
 	private void Awake()
 	{
 
 		Main = Camera.main;
-
 		input = new MakeItCasualInput();
-
 		input.Game.Tap.performed += _ => touch();
-
 		input.Enable();
 
 	}
@@ -39,7 +40,17 @@ public class DoInput : MonoBehaviour
 			}
 			if (raycastHit.collider.gameObject.CompareTag("MapGrouznd"))
 			{
-				FliegJungeFlieg.move(raycastHit.point);
+				if (hyperdrive)
+				{
+					FliegJungeFlieg.hyperdrive(raycastHit.point);
+
+					hyperdrive = false;
+				}
+				else
+				{
+					FliegJungeFlieg.move(raycastHit.point);
+				}
+
 			}
 		}
 
