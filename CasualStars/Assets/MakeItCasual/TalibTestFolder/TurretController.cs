@@ -13,8 +13,14 @@ public class TurretController : TurretNetworkBehavior
     public Transform fireTransform;
     public Transform canonHandle;
 
-    public Vector3 maxRot;
-    public Vector3 minRot;
+    public Vector3 maxRot1;
+    public Vector3 maxRot2;
+    public Vector3 minRot1;
+    public Vector3 minRot2;
+
+    public bool enableXRotation;
+    public bool enableYRotation;
+    public bool enableZRotation;
 
     public float bulletSpeed = 10f;
     public float fireDelay;
@@ -32,7 +38,7 @@ public class TurretController : TurretNetworkBehavior
 
         Vector3 rotation2 = transform.eulerAngles;
 
-        if (rotation2.y > maxRot.y || rotation2.y < minRot.y)
+        if (!enableYRotation && (rotation2.y > maxRot1.y && rotation2.y > maxRot2.y || rotation2.y < minRot1.y && rotation2.y < minRot2.y))
         {
             transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
         }
@@ -47,7 +53,7 @@ public class TurretController : TurretNetworkBehavior
 
         rotation2 = canonHandle.eulerAngles;
 
-        if (rotation2.x > maxRot.x || rotation2.x < minRot.x)
+        if (!enableXRotation && (rotation2.x > maxRot1.x && rotation2.x > maxRot2.x || rotation2.x < minRot1.x && rotation2.x < minRot2.x))
         {
            canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
         }
@@ -56,7 +62,22 @@ public class TurretController : TurretNetworkBehavior
            canonHandle.rotation = Quaternion.Euler(new Vector3(rotation2.x, rotation1.y, rotation1.z));
         }
 
-        if(debug)
+        rotation1 = canonHandle.eulerAngles;
+
+        canonHandle.LookAt(targetPlayer);
+
+        rotation2 = canonHandle.eulerAngles;
+
+        if (!enableZRotation && (rotation2.z > maxRot1.z && rotation2.z > maxRot2.z || rotation2.z < minRot1.z && rotation2.z < minRot2.z))
+        {
+            canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
+        }
+        else
+        {
+            canonHandle.rotation = Quaternion.Euler(new Vector3(rotation2.x, rotation1.y, rotation2.z));
+        }
+
+        if (debug)
         debugText.text = rotation2.ToString();
 
         if (targetPlayer != null && time > fireDelay)

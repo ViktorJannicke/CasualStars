@@ -22,6 +22,11 @@ public class DoInput : MonoBehaviour
 		input.Enable();
 	}
 
+	public void setHyperdrive(bool val)
+	{
+		hyperdrive = val;
+	}
+
 	void touch()
 	{
 		RaycastHit raycastHit = new RaycastHit();

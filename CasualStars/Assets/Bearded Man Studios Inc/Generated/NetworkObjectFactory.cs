@@ -59,6 +59,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new TurretNetworkNetworkObject(networker, id, frame);
 						break;
+					case NetworkHealthNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new NetworkHealthNetworkObject(networker, id, frame);
+						break;
 				}
 
 				if (!availableCallback)
