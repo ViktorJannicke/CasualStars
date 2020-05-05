@@ -6,10 +6,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 {
 	[GeneratedRPC("{\"types\":[]")]
 	[GeneratedRPCVariableNames("{\"types\":[]")]
-	public abstract partial class FireBulletBehavior : NetworkBehavior
+	public abstract partial class BulletNetworkBehavior : NetworkBehavior
 	{
 		
-		public FireBulletNetworkObject networkObject = null;
+		public BulletNetworkNetworkObject networkObject = null;
 
 		public override void Initialize(NetworkObject obj)
 		{
@@ -17,7 +17,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (networkObject != null && networkObject.AttachedBehavior != null)
 				return;
 			
-			networkObject = (FireBulletNetworkObject)obj;
+			networkObject = (BulletNetworkNetworkObject)obj;
 			networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
@@ -78,7 +78,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override void Initialize(NetWorker networker, byte[] metadata = null)
 		{
-			Initialize(new FireBulletNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
+			Initialize(new BulletNetworkNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
 		}
 
 		private void DestroyGameObject(NetWorker sender)
@@ -89,7 +89,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override NetworkObject CreateNetworkObject(NetWorker networker, int createCode, byte[] metadata = null)
 		{
-			return new FireBulletNetworkObject(networker, this, createCode, metadata);
+			return new BulletNetworkNetworkObject(networker, this, createCode, metadata);
 		}
 
 		protected override void InitializedTransform()

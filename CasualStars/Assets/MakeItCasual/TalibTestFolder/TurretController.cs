@@ -2,28 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using BeardedManStudios.Forge.Networking.Generated;
 
-public class FireController : FireBulletBehavior
+public class TurretController : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    public Text kdfkf;
 
     public Transform targetPlayer;
     public Transform fireTransform;
+    public Transform canonHandle;
 
     public Vector3 maxRot;
     public Vector3 minRot;
 
     public float bulletSpeed = 10f;
-    private int bulletRate = 1;
     public float fireDelay;
-    public float time;
+    private float time;
+    private int bulletRate = 1;
 
-    private void Start()
-    {
-        time = 0f;
-    }
+    public bool debug;
+    public Text debugText;
 
     private void FixedUpdate()
     {
@@ -42,7 +39,23 @@ public class FireController : FireBulletBehavior
             transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation2.y, rotation1.z));
         }
 
-        kdfkf.text = rotation2.ToString();
+        rotation1 = canonHandle.eulerAngles;
+
+        canonHandle.LookAt(targetPlayer);
+
+        rotation2 = canonHandle.eulerAngles;
+
+        if (rotation2.x > maxRot.x || rotation2.x < minRot.x)
+        {
+           canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
+        }
+        else
+        {
+           canonHandle.rotation = Quaternion.Euler(new Vector3(rotation2.x, rotation1.y, rotation1.z));
+        }
+
+        if(debug)
+        debugText.text = rotation2.ToString();
 
         if (targetPlayer != null && time > fireDelay)
         {
@@ -60,7 +73,7 @@ public class FireController : FireBulletBehavior
 
     private void Fire()
     {
-        GameObject shootBullet  = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
+        GameObject shootBullet = Instantiate(bulletPrefab, fireTransform.position, fireTransform.rotation);
         shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 }
