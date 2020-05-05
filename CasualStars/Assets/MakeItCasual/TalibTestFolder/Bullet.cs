@@ -5,7 +5,7 @@ using BeardedManStudios.Forge.Networking.Generated;
 
 public class Bullet : BulletNetworkBehavior
 {
-    public float bulletDamage = 100f;
+    public int bulletDamage = 100;
 
     private void Update()
     {

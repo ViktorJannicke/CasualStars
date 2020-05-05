@@ -213,10 +213,11 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   fireTransform: {fileID: 2946770778218530797}
   canonHandle: {fileID: 7380697550346118990}
-  maxRot: {x: 0, y: 360, z: 0}
+  maxRot: {x: 360, y: 360, z: 0}
   minRot: {x: 0, y: 265, z: 0}
   bulletSpeed: 50
   fireDelay: 0.25
+  debug: 1
   debugText: {fileID: 0}
 --- !u!1 &1986332631580486193
 GameObject:
@@ -316,10 +317,11 @@ MonoBehaviour:
   targetPlayer: {fileID: 0}
   fireTransform: {fileID: 1586426740930216886}
   canonHandle: {fileID: 4775203428383765158}
-  maxRot: {x: 0, y: 90, z: 0}
+  maxRot: {x: 360, y: 90, z: 0}
   minRot: {x: 0, y: 0, z: 0}
   bulletSpeed: 50
   fireDelay: 0.25
+  debug: 0
   debugText: {fileID: 0}
 --- !u!1 &2463358077206896318
 GameObject:
