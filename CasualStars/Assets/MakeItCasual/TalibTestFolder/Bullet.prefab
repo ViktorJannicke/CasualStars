@@ -124,4 +124,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamage: 100
-  targetPlayer: {fileID: 0}
+  timer: 0
+  timeTillDeath: 3

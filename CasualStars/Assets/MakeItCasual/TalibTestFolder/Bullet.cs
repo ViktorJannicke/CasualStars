@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BeardedManStudios.Forge.Networking.Generated;
+using System.Threading;
 
 public class Bullet : BulletNetworkBehavior
 {
     public int bulletDamage = 100;
-
+    public float timer;
+    public float timeTillDeath;
     private void Update()
     {
         if (networkObject == null)
@@ -21,6 +23,15 @@ public class Bullet : BulletNetworkBehavior
         {
             networkObject.position = transform.position;
             networkObject.rotation = transform.rotation;
+        }
+
+        if(timer >= timeTillDeath)
+        {
+            networkObject.Destroy();
+        }
+        else if (timer < timeTillDeath)
+        {
+            timer += Time.deltaTime;
         }
     }
 }
