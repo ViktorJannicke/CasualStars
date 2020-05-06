@@ -51,6 +51,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new NetworkCameraNetworkObject(networker, id, frame);
 						break;
+					case NetworkHealthNetworkObject.IDENTITY:
+						availableCallback = true;
+						obj = new NetworkHealthNetworkObject(networker, id, frame);
+						break;
 					case TestNetworkObject.IDENTITY:
 						availableCallback = true;
 						obj = new TestNetworkObject(networker, id, frame);
@@ -59,9 +63,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 						availableCallback = true;
 						obj = new TurretNetworkNetworkObject(networker, id, frame);
 						break;
-					case NetworkHealthNetworkObject.IDENTITY:
+					case DummyNetworkObject.IDENTITY:
 						availableCallback = true;
-						obj = new NetworkHealthNetworkObject(networker, id, frame);
+						obj = new DummyNetworkObject(networker, id, frame);
 						break;
 				}
 

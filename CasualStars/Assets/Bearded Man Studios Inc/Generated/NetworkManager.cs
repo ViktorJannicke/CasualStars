@@ -17,9 +17,10 @@ namespace BeardedManStudios.Forge.Networking.Unity
 		public GameObject[] ExampleProximityPlayerNetworkObject = null;
 		public GameObject[] InputNetworkObject = null;
 		public GameObject[] NetworkCameraNetworkObject = null;
+		public GameObject[] NetworkHealthNetworkObject = null;
 		public GameObject[] TestNetworkObject = null;
 		public GameObject[] TurretNetworkNetworkObject = null;
-		public GameObject[] NetworkHealthNetworkObject = null;
+		public GameObject[] DummyNetworkObject = null;
 
 		protected virtual void SetupObjectCreatedEvent()
 		{
@@ -198,6 +199,29 @@ namespace BeardedManStudios.Forge.Networking.Unity
 						objectInitialized(newObj, obj);
 				});
 			}
+			else if (obj is NetworkHealthNetworkObject)
+			{
+				MainThreadManager.Run(() =>
+				{
+					NetworkBehavior newObj = null;
+					if (!NetworkBehavior.skipAttachIds.TryGetValue(obj.NetworkId, out newObj))
+					{
+						if (NetworkHealthNetworkObject.Length > 0 && NetworkHealthNetworkObject[obj.CreateCode] != null)
+						{
+							var go = Instantiate(NetworkHealthNetworkObject[obj.CreateCode]);
+							newObj = go.GetComponent<NetworkHealthBehavior>();
+						}
+					}
+
+					if (newObj == null)
+						return;
+						
+					newObj.Initialize(obj);
+
+					if (objectInitialized != null)
+						objectInitialized(newObj, obj);
+				});
+			}
 			else if (obj is TestNetworkObject)
 			{
 				MainThreadManager.Run(() =>
@@ -244,17 +268,17 @@ namespace BeardedManStudios.Forge.Networking.Unity
 						objectInitialized(newObj, obj);
 				});
 			}
-			else if (obj is NetworkHealthNetworkObject)
+			else if (obj is DummyNetworkObject)
 			{
 				MainThreadManager.Run(() =>
 				{
 					NetworkBehavior newObj = null;
 					if (!NetworkBehavior.skipAttachIds.TryGetValue(obj.NetworkId, out newObj))
 					{
-						if (NetworkHealthNetworkObject.Length > 0 && NetworkHealthNetworkObject[obj.CreateCode] != null)
+						if (DummyNetworkObject.Length > 0 && DummyNetworkObject[obj.CreateCode] != null)
 						{
-							var go = Instantiate(NetworkHealthNetworkObject[obj.CreateCode]);
-							newObj = go.GetComponent<NetworkHealthBehavior>();
+							var go = Instantiate(DummyNetworkObject[obj.CreateCode]);
+							newObj = go.GetComponent<DummyBehavior>();
 						}
 					}
 
@@ -361,6 +385,18 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			
 			return netBehavior;
 		}
+		[Obsolete("Use InstantiateNetworkHealth instead, its shorter and easier to type out ;)")]
+		public NetworkHealthBehavior InstantiateNetworkHealthNetworkObject(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
+		{
+			var go = Instantiate(NetworkHealthNetworkObject[index]);
+			var netBehavior = go.GetComponent<NetworkHealthBehavior>();
+			var obj = netBehavior.CreateNetworkObject(Networker, index);
+			go.GetComponent<NetworkHealthBehavior>().networkObject = (NetworkHealthNetworkObject)obj;
+
+			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
+			
+			return netBehavior;
+		}
 		[Obsolete("Use InstantiateTest instead, its shorter and easier to type out ;)")]
 		public TestBehavior InstantiateTestNetworkObject(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
 		{
@@ -385,13 +421,13 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			
 			return netBehavior;
 		}
-		[Obsolete("Use InstantiateNetworkHealth instead, its shorter and easier to type out ;)")]
-		public NetworkHealthBehavior InstantiateNetworkHealthNetworkObject(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
+		[Obsolete("Use InstantiateDummy instead, its shorter and easier to type out ;)")]
+		public DummyBehavior InstantiateDummyNetworkObject(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
 		{
-			var go = Instantiate(NetworkHealthNetworkObject[index]);
-			var netBehavior = go.GetComponent<NetworkHealthBehavior>();
+			var go = Instantiate(DummyNetworkObject[index]);
+			var netBehavior = go.GetComponent<DummyBehavior>();
 			var obj = netBehavior.CreateNetworkObject(Networker, index);
-			go.GetComponent<NetworkHealthBehavior>().networkObject = (NetworkHealthNetworkObject)obj;
+			go.GetComponent<DummyBehavior>().networkObject = (DummyNetworkObject)obj;
 
 			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
 			
@@ -756,6 +792,57 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			return netBehavior;
 		}
 		/// <summary>
+		/// Instantiate an instance of NetworkHealth
+		/// </summary>
+		/// <returns>
+		/// A local instance of NetworkHealthBehavior
+		/// </returns>
+		/// <param name="index">The index of the NetworkHealth prefab in the NetworkManager to Instantiate</param>
+		/// <param name="position">Optional parameter which defines the position of the created GameObject</param>
+		/// <param name="rotation">Optional parameter which defines the rotation of the created GameObject</param>
+		/// <param name="sendTransform">Optional Parameter to send transform data to other connected clients on Instantiation</param>
+		public NetworkHealthBehavior InstantiateNetworkHealth(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
+		{
+			var go = Instantiate(NetworkHealthNetworkObject[index]);
+			var netBehavior = go.GetComponent<NetworkHealthBehavior>();
+
+			NetworkObject obj = null;
+			if (!sendTransform && position == null && rotation == null)
+				obj = netBehavior.CreateNetworkObject(Networker, index);
+			else
+			{
+				metadata.Clear();
+
+				if (position == null && rotation == null)
+				{
+					byte transformFlags = 0x1 | 0x2;
+					ObjectMapper.Instance.MapBytes(metadata, transformFlags);
+					ObjectMapper.Instance.MapBytes(metadata, go.transform.position, go.transform.rotation);
+				}
+				else
+				{
+					byte transformFlags = 0x0;
+					transformFlags |= (byte)(position != null ? 0x1 : 0x0);
+					transformFlags |= (byte)(rotation != null ? 0x2 : 0x0);
+					ObjectMapper.Instance.MapBytes(metadata, transformFlags);
+
+					if (position != null)
+						ObjectMapper.Instance.MapBytes(metadata, position.Value);
+
+					if (rotation != null)
+						ObjectMapper.Instance.MapBytes(metadata, rotation.Value);
+				}
+
+				obj = netBehavior.CreateNetworkObject(Networker, index, metadata.CompressBytes());
+			}
+
+			go.GetComponent<NetworkHealthBehavior>().networkObject = (NetworkHealthNetworkObject)obj;
+
+			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
+			
+			return netBehavior;
+		}
+		/// <summary>
 		/// Instantiate an instance of Test
 		/// </summary>
 		/// <returns>
@@ -858,19 +945,19 @@ namespace BeardedManStudios.Forge.Networking.Unity
 			return netBehavior;
 		}
 		/// <summary>
-		/// Instantiate an instance of NetworkHealth
+		/// Instantiate an instance of Dummy
 		/// </summary>
 		/// <returns>
-		/// A local instance of NetworkHealthBehavior
+		/// A local instance of DummyBehavior
 		/// </returns>
-		/// <param name="index">The index of the NetworkHealth prefab in the NetworkManager to Instantiate</param>
+		/// <param name="index">The index of the Dummy prefab in the NetworkManager to Instantiate</param>
 		/// <param name="position">Optional parameter which defines the position of the created GameObject</param>
 		/// <param name="rotation">Optional parameter which defines the rotation of the created GameObject</param>
 		/// <param name="sendTransform">Optional Parameter to send transform data to other connected clients on Instantiation</param>
-		public NetworkHealthBehavior InstantiateNetworkHealth(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
+		public DummyBehavior InstantiateDummy(int index = 0, Vector3? position = null, Quaternion? rotation = null, bool sendTransform = true)
 		{
-			var go = Instantiate(NetworkHealthNetworkObject[index]);
-			var netBehavior = go.GetComponent<NetworkHealthBehavior>();
+			var go = Instantiate(DummyNetworkObject[index]);
+			var netBehavior = go.GetComponent<DummyBehavior>();
 
 			NetworkObject obj = null;
 			if (!sendTransform && position == null && rotation == null)
@@ -902,7 +989,7 @@ namespace BeardedManStudios.Forge.Networking.Unity
 				obj = netBehavior.CreateNetworkObject(Networker, index, metadata.CompressBytes());
 			}
 
-			go.GetComponent<NetworkHealthBehavior>().networkObject = (NetworkHealthNetworkObject)obj;
+			go.GetComponent<DummyBehavior>().networkObject = (DummyNetworkObject)obj;
 
 			FinalizeInitialization(go, netBehavior, obj, position, rotation, sendTransform);
 			

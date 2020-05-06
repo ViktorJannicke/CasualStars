@@ -4,13 +4,12 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"Vector3\", \"bool\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"enemyPosition\", \"attack\"]]")]
-	public abstract partial class TurretNetworkBehavior : NetworkBehavior
+	[GeneratedRPC("{\"types\":[]")]
+	[GeneratedRPCVariableNames("{\"types\":[]")]
+	public abstract partial class DummyBehavior : NetworkBehavior
 	{
-		public const byte RPC_SET_TARGET_PLAYER = 0 + 5;
 		
-		public TurretNetworkNetworkObject networkObject = null;
+		public DummyNetworkObject networkObject = null;
 
 		public override void Initialize(NetworkObject obj)
 		{
@@ -18,11 +17,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (networkObject != null && networkObject.AttachedBehavior != null)
 				return;
 			
-			networkObject = (TurretNetworkNetworkObject)obj;
+			networkObject = (DummyNetworkObject)obj;
 			networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
-			networkObject.RegisterRpc("SetTargetPlayer", SetTargetPlayer, typeof(Vector3), typeof(bool));
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -80,7 +78,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override void Initialize(NetWorker networker, byte[] metadata = null)
 		{
-			Initialize(new TurretNetworkNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
+			Initialize(new DummyNetworkObject(networker, createCode: TempAttachCode, metadata: metadata));
 		}
 
 		private void DestroyGameObject(NetWorker sender)
@@ -91,7 +89,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		public override NetworkObject CreateNetworkObject(NetWorker networker, int createCode, byte[] metadata = null)
 		{
-			return new TurretNetworkNetworkObject(networker, this, createCode, metadata);
+			return new DummyNetworkObject(networker, this, createCode, metadata);
 		}
 
 		protected override void InitializedTransform()
@@ -99,12 +97,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.SnapInterpolations();
 		}
 
-		/// <summary>
-		/// Arguments:
-		/// Vector3 enemyPosition
-		/// bool attack
-		/// </summary>
-		public abstract void SetTargetPlayer(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

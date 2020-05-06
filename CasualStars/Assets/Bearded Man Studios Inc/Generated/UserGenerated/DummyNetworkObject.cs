@@ -6,9 +6,9 @@ using UnityEngine;
 namespace BeardedManStudios.Forge.Networking.Generated
 {
 	[GeneratedInterpol("{\"inter\":[0]")]
-	public partial class NetworkHealthNetworkObject : NetworkObject
+	public partial class DummyNetworkObject : NetworkObject
 	{
-		public const int IDENTITY = 8;
+		public const int IDENTITY = 11;
 
 		private byte[] _dirtyFields = new byte[1];
 
@@ -16,35 +16,35 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		public event FieldChangedEvent fieldAltered;
 		#pragma warning restore 0067
 		[ForgeGeneratedField]
-		private int _Health;
-		public event FieldEvent<int> HealthChanged;
-		public Interpolated<int> HealthInterpolation = new Interpolated<int>() { LerpT = 0f, Enabled = false };
-		public int Health
+		private byte _dummy;
+		public event FieldEvent<byte> dummyChanged;
+		public Interpolated<byte> dummyInterpolation = new Interpolated<byte>() { LerpT = 0f, Enabled = false };
+		public byte dummy
 		{
-			get { return _Health; }
+			get { return _dummy; }
 			set
 			{
 				// Don't do anything if the value is the same
-				if (_Health == value)
+				if (_dummy == value)
 					return;
 
 				// Mark the field as dirty for the network to transmit
 				_dirtyFields[0] |= 0x1;
-				_Health = value;
+				_dummy = value;
 				hasDirtyFields = true;
 			}
 		}
 
-		public void SetHealthDirty()
+		public void SetdummyDirty()
 		{
 			_dirtyFields[0] |= 0x1;
 			hasDirtyFields = true;
 		}
 
-		private void RunChange_Health(ulong timestep)
+		private void RunChange_dummy(ulong timestep)
 		{
-			if (HealthChanged != null) HealthChanged(_Health, timestep);
-			if (fieldAltered != null) fieldAltered("Health", _Health, timestep);
+			if (dummyChanged != null) dummyChanged(_dummy, timestep);
+			if (fieldAltered != null) fieldAltered("dummy", _dummy, timestep);
 		}
 
 		protected override void OwnershipChanged()
@@ -55,24 +55,24 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		
 		public void SnapInterpolations()
 		{
-			HealthInterpolation.current = HealthInterpolation.target;
+			dummyInterpolation.current = dummyInterpolation.target;
 		}
 
 		public override int UniqueIdentity { get { return IDENTITY; } }
 
 		protected override BMSByte WritePayload(BMSByte data)
 		{
-			UnityObjectMapper.Instance.MapBytes(data, _Health);
+			UnityObjectMapper.Instance.MapBytes(data, _dummy);
 
 			return data;
 		}
 
 		protected override void ReadPayload(BMSByte payload, ulong timestep)
 		{
-			_Health = UnityObjectMapper.Instance.Map<int>(payload);
-			HealthInterpolation.current = _Health;
-			HealthInterpolation.target = _Health;
-			RunChange_Health(timestep);
+			_dummy = UnityObjectMapper.Instance.Map<byte>(payload);
+			dummyInterpolation.current = _dummy;
+			dummyInterpolation.target = _dummy;
+			RunChange_dummy(timestep);
 		}
 
 		protected override BMSByte SerializeDirtyFields()
@@ -81,7 +81,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			dirtyFieldsData.Append(_dirtyFields);
 
 			if ((0x1 & _dirtyFields[0]) != 0)
-				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _Health);
+				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _dummy);
 
 			// Reset all the dirty fields
 			for (int i = 0; i < _dirtyFields.Length; i++)
@@ -100,15 +100,15 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 			if ((0x1 & readDirtyFlags[0]) != 0)
 			{
-				if (HealthInterpolation.Enabled)
+				if (dummyInterpolation.Enabled)
 				{
-					HealthInterpolation.target = UnityObjectMapper.Instance.Map<int>(data);
-					HealthInterpolation.Timestep = timestep;
+					dummyInterpolation.target = UnityObjectMapper.Instance.Map<byte>(data);
+					dummyInterpolation.Timestep = timestep;
 				}
 				else
 				{
-					_Health = UnityObjectMapper.Instance.Map<int>(data);
-					RunChange_Health(timestep);
+					_dummy = UnityObjectMapper.Instance.Map<byte>(data);
+					RunChange_dummy(timestep);
 				}
 			}
 		}
@@ -118,10 +118,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (IsOwner)
 				return;
 
-			if (HealthInterpolation.Enabled && !HealthInterpolation.current.UnityNear(HealthInterpolation.target, 0.0015f))
+			if (dummyInterpolation.Enabled && !dummyInterpolation.current.UnityNear(dummyInterpolation.target, 0.0015f))
 			{
-				_Health = (int)HealthInterpolation.Interpolate();
-				//RunChange_Health(HealthInterpolation.Timestep);
+				_dummy = (byte)dummyInterpolation.Interpolate();
+				//RunChange_dummy(dummyInterpolation.Timestep);
 			}
 		}
 
@@ -132,9 +132,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		}
 
-		public NetworkHealthNetworkObject() : base() { Initialize(); }
-		public NetworkHealthNetworkObject(NetWorker networker, INetworkBehavior networkBehavior = null, int createCode = 0, byte[] metadata = null) : base(networker, networkBehavior, createCode, metadata) { Initialize(); }
-		public NetworkHealthNetworkObject(NetWorker networker, uint serverId, FrameStream frame) : base(networker, serverId, frame) { Initialize(); }
+		public DummyNetworkObject() : base() { Initialize(); }
+		public DummyNetworkObject(NetWorker networker, INetworkBehavior networkBehavior = null, int createCode = 0, byte[] metadata = null) : base(networker, networkBehavior, createCode, metadata) { Initialize(); }
+		public DummyNetworkObject(NetWorker networker, uint serverId, FrameStream frame) : base(networker, serverId, frame) { Initialize(); }
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}
