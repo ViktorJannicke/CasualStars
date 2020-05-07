@@ -12,10 +12,9 @@ public class TurretController : TurretNetworkBehavior
     public Transform fireTransform;
     public Transform canonHandle;
 
-    public Vector3 maxRot1;
-    public Vector3 maxRot2;
-    public Vector3 minRot1;
-    public Vector3 minRot2;
+    public Vector3 maxRot;
+    public Vector3 minRot;
+    public Vector3 baseRot;
 
     public bool enableXRotation;
     public bool enableYRotation;
@@ -52,7 +51,7 @@ public class TurretController : TurretNetworkBehavior
 
                 Vector3 rotation2 = transform.eulerAngles;
 
-                if (!enableYRotation && (rotation2.y > maxRot1.y && rotation2.y > maxRot2.y || rotation2.y < minRot1.y && rotation2.y < minRot2.y))
+                if (!enableYRotation && (rotation2.y > maxRot.y || rotation2.y < minRot.y))
                 {
                     transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
                 }
@@ -67,7 +66,7 @@ public class TurretController : TurretNetworkBehavior
 
                 rotation2 = canonHandle.eulerAngles;
 
-                if (!enableXRotation && (rotation2.x > maxRot1.x && rotation2.x > maxRot2.x || rotation2.x < minRot1.x && rotation2.x < minRot2.x))
+                if (!enableXRotation && (rotation2.x > maxRot.x || rotation2.x < minRot.x))
                 {
                     canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
                 }
@@ -82,7 +81,7 @@ public class TurretController : TurretNetworkBehavior
 
                 rotation2 = canonHandle.eulerAngles;
 
-                if (!enableZRotation && (rotation2.z > maxRot1.z && rotation2.z > maxRot2.z || rotation2.z < minRot1.z && rotation2.z < minRot2.z))
+                if (!enableZRotation && (rotation2.z > maxRot.z || rotation2.z < minRot.z))
                 {
                     canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
                 }
@@ -109,8 +108,8 @@ public class TurretController : TurretNetworkBehavior
             }
             else
             {
-                transform.rotation = Quaternion.Euler(Vector3.zero);
-                canonHandle.rotation = Quaternion.Euler(Vector3.zero);
+                transform.localRotation = Quaternion.Euler(new Vector3(180, baseRot.y, 0));
+                canonHandle.localRotation = Quaternion.Euler(new Vector3(baseRot.x,0,baseRot.z));
             }
 
             networkObject.turretPosition = transform.position;
@@ -126,14 +125,12 @@ public class TurretController : TurretNetworkBehavior
         shootBullet.gameObject.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 
-    public override void SetTargetPlayer(RpcArgs args)
+    public void SetTargetPlayer(Vector3 _position, bool _attack)
     {
-        targetPlayer.position = args.GetNext<Vector3>();
-        attack = args.GetNext<bool>();
-    }
-
-    public void TriggerSetTargetPlayer(Vector3 position, bool attack)
-    {
-        networkObject.SendRpc(RPC_SET_TARGET_PLAYER,Receivers.Server,position, attack);
+        if(networkObject.IsServer)
+        {
+            targetPlayer.position = _position;
+            attack = _attack;
+        }
     }
 }

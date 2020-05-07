@@ -8,6 +8,7 @@ using BeardedManStudios.Forge.Networking.Generated;
 public class Health : NetworkHealthBehavior
 {
 
+	public Movement parentus;
 	public int health = 50;
 	GameObject lastHit;
 
@@ -23,7 +24,14 @@ public class Health : NetworkHealthBehavior
 
 			if(health <= 0)
 			{
-				networkObject.Destroy();
+				if (parentus == null)
+				{
+					networkObject.Destroy();
+				}
+				else
+				{
+					parentus.networkObject.Destroy();
+				}
 			}
 
 		}

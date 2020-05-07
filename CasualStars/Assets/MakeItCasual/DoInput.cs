@@ -1,9 +1,14 @@
-﻿using System.Collections;
+﻿using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DoInput : MonoBehaviour
 {
+	float cooldown;
+
 	public Movement FliegJungeFlieg;
 
 	Camera Main;
@@ -18,13 +23,21 @@ public class DoInput : MonoBehaviour
 
 		Main = Camera.main;
 		input = new MakeItCasualInput();
-		input.Game.Tap.performed += _ => touch();
 		input.Enable();
+	}
+
+	private void Start()
+	{
+		input.Game.Tap.performed += _ => { if(!IsPointerOverUIObject()) touch(); };
 	}
 
 	public void setHyperdrive(bool val)
 	{
-		hyperdrive = val;
+		if (cooldown <= 0)
+		{
+			controller.translateAway();
+			hyperdrive = val;
+		}
 	}
 
 	void touch()
@@ -37,7 +50,7 @@ public class DoInput : MonoBehaviour
 		{
 			if (raycastHit.collider.gameObject.CompareTag("Player"))
 			{
-				if(raycastHit.collider.gameObject.transform != transform)
+				if (raycastHit.collider.gameObject.transform != transform)
 				{
 
 				}
@@ -46,6 +59,7 @@ public class DoInput : MonoBehaviour
 			{
 				if (hyperdrive)
 				{
+					cooldown = 30f;
 					FliegJungeFlieg.hyperdrive(raycastHit.point);
 
 					hyperdrive = false;
@@ -60,9 +74,26 @@ public class DoInput : MonoBehaviour
 		}
 	}
 
+	private void Update()
+	{
+		if(cooldown > 0)
+		{
+			cooldown -= Time.deltaTime;
+		}
+	}
+
 	// Start is called before the first frame update
 	private void OnDisable()
 	{
-		input.Disable();
+
+	}
+
+	private bool IsPointerOverUIObject()
+	{
+		PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+		eventDataCurrentPosition.position = input.Game.Position.ReadValue<Vector2>();
+		List<RaycastResult> results = new List<RaycastResult>();
+		EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+		return results.Count > 0;
 	}
 }

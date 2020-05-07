@@ -6,7 +6,7 @@ using System.Threading;
 
 public class Bullet : BulletNetworkBehavior
 {
-    public int bulletDamage = 25;
+    public int bulletDamage = 0;
     public float timer;
     public float timeTillDeath;
     private void Update()

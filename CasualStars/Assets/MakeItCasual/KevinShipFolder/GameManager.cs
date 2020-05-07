@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,16 +14,43 @@ public class GameManager : MonoBehaviour
 	public int spawnDelay;
 	public int spawnRadius;
 
+	public DoInput input;
+
+	public void triggerSetHyperdrive(bool val)
+	{
+		input.setHyperdrive(val);
+	}
+
 	private void Start()
 	{
-		Asteroidsspawn();
+		spawnPlayer();
+
+		//Asteroidsspawn();
+	}
+
+	public void spawnPlayer()
+	{
+		Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
+		
+		while(Physics.CheckSphere(pos, spawnRadius))
+		{
+			pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
+		}
+
+		BasicBehavior bh = NetworkManager.Instance.InstantiateBasic(0, pos, Quaternion.identity);
+
+		input = bh.gameObject.GetComponent<DoInput>();
+		input.enabled = true;
 	}
 
 	public void Asteroidsspawn()
 	{
 		Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
 
-		if(!Physics.CheckSphere(pos, spawnRadius))
+		while(Physics.CheckSphere(pos, spawnRadius))
+		{
+			pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+		}
 		Instantiate(Asteroidprefab, pos, Quaternion.identity);
 
 	}

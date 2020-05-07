@@ -43,7 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe5b082a785e7641bf1a62b930a3f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BasicNetworkObject: []
+  BasicNetworkObject:
+  - {fileID: 4725692208373130706, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc, type: 3}
   BulletNetworkNetworkObject:
   - {fileID: 4267885688621620027, guid: ebfb2328d78bcb5489974d7f730c7f69, type: 3}
   ChatManagerNetworkObject:
@@ -54,6 +55,8 @@ MonoBehaviour:
   InputNetworkObject: []
   NetworkCameraNetworkObject:
   - {fileID: 139536, guid: 661f29f0c0c86fa47b6015bd602d0ac6, type: 3}
+  NetworkHealthNetworkObject: []
   TestNetworkObject: []
   TurretNetworkNetworkObject: []
+  DummyNetworkObject: []
   automaticScenes: 1

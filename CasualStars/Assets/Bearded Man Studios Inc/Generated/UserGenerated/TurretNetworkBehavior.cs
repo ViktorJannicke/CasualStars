@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"Vector3\", \"bool\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"enemyPosition\", \"attack\"]]")]
+	[GeneratedRPC("{\"types\":[]")]
+	[GeneratedRPCVariableNames("{\"types\":[]")]
 	public abstract partial class TurretNetworkBehavior : NetworkBehavior
 	{
-		public const byte RPC_SET_TARGET_PLAYER = 0 + 5;
 		
 		public TurretNetworkNetworkObject networkObject = null;
 
@@ -22,7 +21,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
-			networkObject.RegisterRpc("SetTargetPlayer", SetTargetPlayer, typeof(Vector3), typeof(bool));
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -99,12 +97,6 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.SnapInterpolations();
 		}
 
-		/// <summary>
-		/// Arguments:
-		/// Vector3 enemyPosition
-		/// bool attack
-		/// </summary>
-		public abstract void SetTargetPlayer(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

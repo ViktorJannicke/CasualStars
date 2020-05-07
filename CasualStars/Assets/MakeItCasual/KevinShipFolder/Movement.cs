@@ -55,11 +55,11 @@ public class Movement : BasicBehavior
 	}
 	public override void Hyperdrive(RpcArgs args)
 	{
-		SpaceShip.SetDestination(args.GetNext<Vector3>());
+		//SpaceShip.SetDestination(args.GetNext<Vector3>());
 
-		/*Vector3 position = args.GetNext<Vector3>();
-		transform.position = position;*/
+		Vector3 position = args.GetNext<Vector3>();
+		transform.position = position;
 
-		//SpaceShip.SetDestination(position);
+		SpaceShip.SetDestination(position);
 	}
 }
