@@ -19,5 +19,7 @@ public class Movement : MovementBehavior
             networkObject.position = transform.position;
             networkObject.rotation = transform.rotation;
         }
+
+        
     }
 }

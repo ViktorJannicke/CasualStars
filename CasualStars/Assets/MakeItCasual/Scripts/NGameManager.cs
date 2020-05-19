@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class NGameManager : NetworkedGameManagerBehavior
 {
-    public Dictionary<NetworkingPlayer, MovementBehavior> playerShipPair = new Dictionary<NetworkingPlayer, MovementBehavior>();
+    public Dictionary<uint, MovementBehavior> playerShipPair = new Dictionary<uint, MovementBehavior>();
 
     // Start is called before the first frame update
     void Start()
@@ -18,19 +18,19 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     private void Networker_playerConnected(BeardedManStudios.Forge.Networking.NetworkingPlayer player, BeardedManStudios.Forge.Networking.NetWorker sender)
     {
-        if (playerShipPair.ContainsKey(player)) return;
+        if (playerShipPair.ContainsKey(player.NetworkId)) return;
 
         MovementBehavior ship = spawnPlayer();
 
-        playerShipPair.Add(player, ship);
+        playerShipPair.Add(player.NetworkId, ship);
         Debug.Log(player.NetworkId);
     }
 
     private void Networker_playerDisconnected(BeardedManStudios.Forge.Networking.NetworkingPlayer player, BeardedManStudios.Forge.Networking.NetWorker sender)
     {
-        if (!playerShipPair.ContainsKey(player)) return;
+        if (!playerShipPair.ContainsKey(player.NetworkId)) return;
 
-        playerShipPair.Remove(player);
+        playerShipPair.Remove(player.NetworkId);
     }
 
     MovementBehavior spawnPlayer ()
