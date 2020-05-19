@@ -7,11 +7,21 @@ using UnityEngine;
 
 public class NGameManager : NetworkedGameManagerBehavior
 {
+    public static NGameManager manager;
+
     public Dictionary<uint, MovementBehavior> playerShipPair = new Dictionary<uint, MovementBehavior>();
 
     // Start is called before the first frame update
     void Start()
     {
+        if(manager != null)
+        {
+            networkObject.Destroy();
+            return;
+        }
+
+        manager = this;
+
         networkObject.Networker.playerConnected += Networker_playerConnected;
         networkObject.Networker.playerDisconnected += Networker_playerDisconnected;
     }
@@ -23,7 +33,6 @@ public class NGameManager : NetworkedGameManagerBehavior
         MovementBehavior ship = spawnPlayer();
 
         playerShipPair.Add(player.NetworkId, ship);
-        Debug.Log(player.NetworkId);
     }
 
     private void Networker_playerDisconnected(BeardedManStudios.Forge.Networking.NetworkingPlayer player, BeardedManStudios.Forge.Networking.NetWorker sender)
@@ -33,9 +42,16 @@ public class NGameManager : NetworkedGameManagerBehavior
         playerShipPair.Remove(player.NetworkId);
     }
 
-    MovementBehavior spawnPlayer ()
+    MovementBehavior spawnPlayer()
     {
         return NetworkManager.Instance.InstantiateMovement(0, transform.position, transform.rotation);
+    }
+
+    public MovementBehavior getShip(uint id)
+    {
+        MovementBehavior test;
+        playerShipPair.TryGetValue(id, out test);
+        return test;
     }
 
     // Update is called once per frame
