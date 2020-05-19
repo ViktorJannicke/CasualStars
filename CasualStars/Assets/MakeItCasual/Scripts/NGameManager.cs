@@ -9,9 +9,16 @@ public class NGameManager : NetworkedGameManagerBehavior
 {
     public static NGameManager manager;
 
+    public GameObject Asteroidprefab;
+    public Vector3 center;
+    public Vector3 size;
+    public bool stopSpawning = false;
+    public int spawnTime;
+    public int spawnDelay;
+    public int spawnRadius;
+
     public Dictionary<uint, MovementBehavior> playerShipPair = new Dictionary<uint, MovementBehavior>();
 
-    // Start is called before the first frame update
     void Start()
     {
         if(manager != null)
@@ -44,7 +51,14 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     MovementBehavior spawnPlayer()
     {
-        return NetworkManager.Instance.InstantiateMovement(0, transform.position, transform.rotation);
+        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
+
+        while (Physics.CheckSphere(pos, spawnRadius))
+        {
+            pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
+        }
+
+        return NetworkManager.Instance.InstantiateMovement(0, pos, Quaternion.identity);
     }
 
     public MovementBehavior getShip(uint id)
@@ -54,9 +68,45 @@ public class NGameManager : NetworkedGameManagerBehavior
         return test;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Asteroidsspawn()
     {
-        
+        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+
+        while (Physics.CheckSphere(pos, spawnRadius))
+        {
+            pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+        }
+        Instantiate(Asteroidprefab, pos, Quaternion.identity);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+
+        Gizmos.DrawCube(transform.localPosition + center, size);
+    }
+
+    public override void spaceShipMove(RpcArgs args)
+    {
+        Movement movement = (Movement)getShip(networkObject.MyPlayerId);
+
+        movement.move(args.GetNext<Vector3>());
+    }
+
+    public override void spaceShipHyperdrive(RpcArgs args)
+    {
+        Movement movement = (Movement)getShip(networkObject.MyPlayerId);
+
+        movement.hyperdrive(args.GetNext<Vector3>());
+    }
+
+    public void ExecuteMove(Vector3 position)
+    {
+        networkObject.SendRpc(RPC_SPACE_SHIP_MOVE, Receivers.Server, position);
+    }
+
+    public void ExecuteHyperDrive(Vector3 position)
+    {
+        networkObject.SendRpc(RPC_SPACE_SHIP_HYPERDRIVE, Receivers.Server, position);
     }
 }

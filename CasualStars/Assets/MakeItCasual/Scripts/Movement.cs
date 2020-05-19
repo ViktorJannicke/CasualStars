@@ -1,15 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
 using BeardedManStudios.Forge.Networking.Generated;
 
 public class Movement : MovementBehavior
 {
+    public NavMeshAgent SpaceShip;
 
-    // Update is called once per frame
     void Update()
     {
-        if(!networkObject.IsOwner)
+        if (networkObject == null)
+            return;
+
+        if (!networkObject.IsOwner)
         {
             transform.position = networkObject.position;
             transform.rotation = networkObject.rotation;
@@ -19,7 +21,15 @@ public class Movement : MovementBehavior
             networkObject.position = transform.position;
             networkObject.rotation = transform.rotation;
         }
+    }
 
-        
+    public void hyperdrive(Vector3 touchposition)
+    {
+        SpaceShip.SetDestination(touchposition);
+        transform.position = touchposition;
+    }
+    public void move(Vector3 touchposition)
+    {
+        SpaceShip.SetDestination(touchposition);
     }
 }
