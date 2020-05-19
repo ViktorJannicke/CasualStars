@@ -16,13 +16,13 @@ public class Bullet : BulletNetworkBehavior
 
         if (!networkObject.IsOwner)
         {
-            transform.position = networkObject.bulletPosition;
-            transform.rotation = networkObject.bulletRotation;
+            transform.position = networkObject.position;
+            transform.rotation = networkObject.rotation;
         }
         else
         {
-            networkObject.bulletPosition = transform.position;
-            networkObject.bulletRotation = transform.rotation;
+            networkObject.position = transform.position;
+            networkObject.rotation = transform.rotation;
         }
 
         if (timer >= timeTillDeath)

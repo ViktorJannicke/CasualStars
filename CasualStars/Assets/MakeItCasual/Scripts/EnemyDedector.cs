@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDetector : enemyDedectorBehavior
+public class EnemyDetector : DummyBehavior
 {
     public List<TurretController> turrets = new List<TurretController>();
     public List<GameObject> enemys = new List<GameObject>();
