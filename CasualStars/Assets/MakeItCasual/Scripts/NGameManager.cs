@@ -38,6 +38,7 @@ public class NGameManager : NetworkedGameManagerBehavior
         if (playerShipPair.ContainsKey(player.NetworkId)) return;
 
         MovementBehavior ship = spawnPlayer();
+        //ship.gameObject.GetComponent<Camera>().enabled = true;
 
         playerShipPair.Add(player.NetworkId, ship);
     }
@@ -79,6 +80,18 @@ public class NGameManager : NetworkedGameManagerBehavior
         Instantiate(Asteroidprefab, pos, Quaternion.identity);
     }
 
+    public Vector3 getNextPosition()
+    {
+        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+
+        while (Physics.CheckSphere(pos, spawnRadius))
+        {
+            pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+        }
+
+        return pos;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, 0, 0, 0.5f);
@@ -88,25 +101,31 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     public override void spaceShipMove(RpcArgs args)
     {
-        Movement movement = (Movement)getShip(networkObject.MyPlayerId);
+        Movement movement = (Movement)getShip(networkObject.Networker.GetPlayerById(networkObject.MyPlayerId).NetworkId);
+
+        Debug.Log(movement);
 
         movement.move(args.GetNext<Vector3>());
     }
 
     public override void spaceShipHyperdrive(RpcArgs args)
     {
-        Movement movement = (Movement)getShip(networkObject.MyPlayerId);
+        Movement movement = (Movement)getShip(networkObject.Networker.GetPlayerById(networkObject.MyPlayerId).NetworkId);
+
+        Debug.Log(movement);
 
         movement.hyperdrive(args.GetNext<Vector3>());
     }
 
     public void ExecuteMove(Vector3 position)
     {
+        Debug.Log(position);
         networkObject.SendRpc(RPC_SPACE_SHIP_MOVE, Receivers.Server, position);
     }
 
     public void ExecuteHyperDrive(Vector3 position)
     {
+        Debug.Log(position);
         networkObject.SendRpc(RPC_SPACE_SHIP_HYPERDRIVE, Receivers.Server, position);
     }
 }
