@@ -4,6 +4,8 @@ using BeardedManStudios.Forge.Networking.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class NGameManager : NetworkedGameManagerBehavior
 {
@@ -20,6 +22,7 @@ public class NGameManager : NetworkedGameManagerBehavior
     public GameObject myCamera;
 
     public Dictionary<uint, Movement> playerShipPair = new Dictionary<uint, Movement>();
+
 
     void Start()
     {
@@ -142,3 +145,92 @@ public class NGameManager : NetworkedGameManagerBehavior
         playerShipPair.Add(pid, ship);
     }
 }
+
+
+
+
+[System.Serializable]
+public class PlayerData
+{
+
+	public int health;
+	public int shield;
+
+	public PlayerData(int _health, int _shield)
+	{
+
+		health = _health;
+		shield = _shield;
+
+	}
+}
+
+
+public static class SaveSystem
+{
+
+	public static void SavePlayer(int _health, int _shield)
+	{
+		BinaryFormatter formatter = new BinaryFormatter();
+		string path = Application.dataPath + "/database.stars";
+		FileStream stream = new FileStream(path, FileMode.Create);
+
+		PlayerData data = new PlayerData(_health, _shield);
+
+		formatter.Serialize(stream, data);
+		stream.Close();
+
+	}
+
+
+	public static PlayerData LoadPlayer()
+	{
+
+		string path = Application.dataPath + "/database.stars";
+		if (File.Exists(path))
+		{
+
+			BinaryFormatter formatter = new BinaryFormatter();
+			FileStream stream = new FileStream(path, FileMode.Open);
+
+			PlayerData data = formatter.Deserialize(stream) as PlayerData;
+			stream.Close();
+
+			return data;
+
+		}
+		else
+		{
+
+			Debug.LogError("Save file not found in" + path);
+			return null;
+
+		}
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
