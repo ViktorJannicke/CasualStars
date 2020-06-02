@@ -17,7 +17,9 @@ public class NGameManager : NetworkedGameManagerBehavior
     public int spawnDelay;
     public int spawnRadius;
 
-    public Dictionary<uint, MovementBehavior> playerShipPair = new Dictionary<uint, MovementBehavior>();
+    public GameObject myCamera;
+
+    public Dictionary<uint, Movement> playerShipPair = new Dictionary<uint, Movement>();
 
     void Start()
     {
@@ -29,28 +31,32 @@ public class NGameManager : NetworkedGameManagerBehavior
 
         manager = this;
 
-        networkObject.Networker.playerConnected += Networker_playerConnected;
-        networkObject.Networker.playerDisconnected += Networker_playerDisconnected;
-    }
+        if (networkObject.IsServer)
+        {
+            networkObject.Networker.playerDisconnected += Networker_playerDisconnected;
+            Instantiate(myCamera);
+        }
 
-    private void Networker_playerConnected(BeardedManStudios.Forge.Networking.NetworkingPlayer player, BeardedManStudios.Forge.Networking.NetWorker sender)
-    {
-        if (playerShipPair.ContainsKey(player.NetworkId)) return;
-
-        MovementBehavior ship = spawnPlayer();
-        //ship.gameObject.GetComponent<Camera>().enabled = true;
-
-        playerShipPair.Add(player.NetworkId, ship);
+        if(!networkObject.IsServer)
+        {
+            networkObject.SendRpc(RPC_SPAWN_MY_SHIP, Receivers.Server, networkObject.Networker.Me.NetworkId);
+        }
     }
 
     private void Networker_playerDisconnected(BeardedManStudios.Forge.Networking.NetworkingPlayer player, BeardedManStudios.Forge.Networking.NetWorker sender)
     {
+        if (!networkObject.IsServer) return;
+
         if (!playerShipPair.ContainsKey(player.NetworkId)) return;
+
+        Movement movement;
+        playerShipPair.TryGetValue(player.NetworkId, out movement);
+        movement.networkObject.Destroy();
 
         playerShipPair.Remove(player.NetworkId);
     }
 
-    MovementBehavior spawnPlayer()
+    Movement spawnPlayer()
     {
         Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
 
@@ -59,14 +65,9 @@ public class NGameManager : NetworkedGameManagerBehavior
             pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
         }
 
-        return NetworkManager.Instance.InstantiateMovement(0, pos, Quaternion.identity);
-    }
+        MovementBehavior bh = NetworkManager.Instance.InstantiateMovement(0, pos, Quaternion.identity);
 
-    public MovementBehavior getShip(uint id)
-    {
-        MovementBehavior test;
-        playerShipPair.TryGetValue(id, out test);
-        return test;
+        return (Movement)bh;
     }
 
     public void Asteroidsspawn()
@@ -101,18 +102,16 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     public override void spaceShipMove(RpcArgs args)
     {
-        Movement movement = (Movement)getShip(networkObject.Networker.GetPlayerById(networkObject.MyPlayerId).NetworkId);
-
-        Debug.Log(movement);
+        Movement movement;
+        playerShipPair.TryGetValue(args.GetNext<uint>(), out movement);
 
         movement.move(args.GetNext<Vector3>());
     }
 
     public override void spaceShipHyperdrive(RpcArgs args)
     {
-        Movement movement = (Movement)getShip(networkObject.Networker.GetPlayerById(networkObject.MyPlayerId).NetworkId);
-
-        Debug.Log(movement);
+        Movement movement;
+        playerShipPair.TryGetValue(args.GetNext<uint>(), out movement);
 
         movement.hyperdrive(args.GetNext<Vector3>());
     }
@@ -120,12 +119,26 @@ public class NGameManager : NetworkedGameManagerBehavior
     public void ExecuteMove(Vector3 position)
     {
         Debug.Log(position);
-        networkObject.SendRpc(RPC_SPACE_SHIP_MOVE, Receivers.Server, position);
+
+        networkObject.SendRpc(RPC_SPACE_SHIP_MOVE, Receivers.Server, networkObject.Networker.Me.NetworkId, position);
     }
 
     public void ExecuteHyperDrive(Vector3 position)
     {
         Debug.Log(position);
-        networkObject.SendRpc(RPC_SPACE_SHIP_HYPERDRIVE, Receivers.Server, position);
+        networkObject.SendRpc(RPC_SPACE_SHIP_HYPERDRIVE, Receivers.Server, networkObject.Networker.Me.NetworkId, position);
+    }
+
+    public override void spawnMyShip(RpcArgs args)
+    {
+        uint pid = args.GetNext<uint>();
+
+        if (playerShipPair.ContainsKey(pid)) return;
+
+        Movement ship = spawnPlayer();
+        //ship.gameObject.GetComponent<Camera>().enabled = true;
+        ship.networkObject.myPlayerID = pid;
+
+        playerShipPair.Add(pid, ship);
     }
 }

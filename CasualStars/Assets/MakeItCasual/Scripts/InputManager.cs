@@ -1,23 +1,25 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+
 	private NGameManager manager;
 
     private float cooldown;
 
-    private Camera Main;
-    public CameraController controller;
+    public Camera Main;
+    public CameraController camController;
 
     MakeItCasualInput input;
 
     public bool hyperdrive;
+	public Button hyperdriveButton;
 
     private void Awake()
     {
-        Main = Camera.main;
         input = new MakeItCasualInput();
         input.Enable();
 		manager = GetComponent<NGameManager>();
@@ -32,7 +34,7 @@ public class InputManager : MonoBehaviour
     {
         if (cooldown <= 0)
         {
-            controller.translateAway();
+			camController.translateAway();
             hyperdrive = val;
         }
     }
@@ -57,11 +59,13 @@ public class InputManager : MonoBehaviour
 			{
 				if (hyperdrive)
 				{
-					cooldown = 30f;
+					cooldown = 5f;
+					hyperdriveButton.interactable = false;
+
 					manager.ExecuteHyperDrive(raycastHit.point);
 
 					hyperdrive = false;
-					controller.translateTowards();
+					camController.translateTowards();
 				}
 				else
 				{
@@ -71,11 +75,17 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
+	bool updateVal = false;
 	private void Update()
 	{
 		if (cooldown > 0)
 		{
+			updateVal = true;
 			cooldown -= Time.deltaTime;
+		} else if (cooldown <= 0 && updateVal)
+		{
+			hyperdriveButton.interactable = true;
+			updateVal = false;
 		}
 	}
 

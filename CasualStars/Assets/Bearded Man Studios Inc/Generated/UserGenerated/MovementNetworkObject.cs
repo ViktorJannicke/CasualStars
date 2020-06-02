@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedInterpol("{\"inter\":[0.15,0.15]")]
+	[GeneratedInterpol("{\"inter\":[0.15,0.15,0]")]
 	public partial class MovementNetworkObject : NetworkObject
 	{
-		public const int IDENTITY = 6;
+		public const int IDENTITY = 12;
 
 		private byte[] _dirtyFields = new byte[1];
 
@@ -77,6 +77,37 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (rotationChanged != null) rotationChanged(_rotation, timestep);
 			if (fieldAltered != null) fieldAltered("rotation", _rotation, timestep);
 		}
+		[ForgeGeneratedField]
+		private uint _myPlayerID;
+		public event FieldEvent<uint> myPlayerIDChanged;
+		public Interpolated<uint> myPlayerIDInterpolation = new Interpolated<uint>() { LerpT = 0f, Enabled = false };
+		public uint myPlayerID
+		{
+			get { return _myPlayerID; }
+			set
+			{
+				// Don't do anything if the value is the same
+				if (_myPlayerID == value)
+					return;
+
+				// Mark the field as dirty for the network to transmit
+				_dirtyFields[0] |= 0x4;
+				_myPlayerID = value;
+				hasDirtyFields = true;
+			}
+		}
+
+		public void SetmyPlayerIDDirty()
+		{
+			_dirtyFields[0] |= 0x4;
+			hasDirtyFields = true;
+		}
+
+		private void RunChange_myPlayerID(ulong timestep)
+		{
+			if (myPlayerIDChanged != null) myPlayerIDChanged(_myPlayerID, timestep);
+			if (fieldAltered != null) fieldAltered("myPlayerID", _myPlayerID, timestep);
+		}
 
 		protected override void OwnershipChanged()
 		{
@@ -88,6 +119,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		{
 			positionInterpolation.current = positionInterpolation.target;
 			rotationInterpolation.current = rotationInterpolation.target;
+			myPlayerIDInterpolation.current = myPlayerIDInterpolation.target;
 		}
 
 		public override int UniqueIdentity { get { return IDENTITY; } }
@@ -96,6 +128,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		{
 			UnityObjectMapper.Instance.MapBytes(data, _position);
 			UnityObjectMapper.Instance.MapBytes(data, _rotation);
+			UnityObjectMapper.Instance.MapBytes(data, _myPlayerID);
 
 			return data;
 		}
@@ -110,6 +143,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			rotationInterpolation.current = _rotation;
 			rotationInterpolation.target = _rotation;
 			RunChange_rotation(timestep);
+			_myPlayerID = UnityObjectMapper.Instance.Map<uint>(payload);
+			myPlayerIDInterpolation.current = _myPlayerID;
+			myPlayerIDInterpolation.target = _myPlayerID;
+			RunChange_myPlayerID(timestep);
 		}
 
 		protected override BMSByte SerializeDirtyFields()
@@ -121,6 +158,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _position);
 			if ((0x2 & _dirtyFields[0]) != 0)
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _rotation);
+			if ((0x4 & _dirtyFields[0]) != 0)
+				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _myPlayerID);
 
 			// Reset all the dirty fields
 			for (int i = 0; i < _dirtyFields.Length; i++)
@@ -163,6 +202,19 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					RunChange_rotation(timestep);
 				}
 			}
+			if ((0x4 & readDirtyFlags[0]) != 0)
+			{
+				if (myPlayerIDInterpolation.Enabled)
+				{
+					myPlayerIDInterpolation.target = UnityObjectMapper.Instance.Map<uint>(data);
+					myPlayerIDInterpolation.Timestep = timestep;
+				}
+				else
+				{
+					_myPlayerID = UnityObjectMapper.Instance.Map<uint>(data);
+					RunChange_myPlayerID(timestep);
+				}
+			}
 		}
 
 		public override void InterpolateUpdate()
@@ -179,6 +231,11 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			{
 				_rotation = (Quaternion)rotationInterpolation.Interpolate();
 				//RunChange_rotation(rotationInterpolation.Timestep);
+			}
+			if (myPlayerIDInterpolation.Enabled && !myPlayerIDInterpolation.current.UnityNear(myPlayerIDInterpolation.target, 0.0015f))
+			{
+				_myPlayerID = (uint)myPlayerIDInterpolation.Interpolate();
+				//RunChange_myPlayerID(myPlayerIDInterpolation.Timestep);
 			}
 		}
 

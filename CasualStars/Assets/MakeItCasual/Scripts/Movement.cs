@@ -5,9 +5,18 @@ using BeardedManStudios.Forge.Networking.Generated;
 public class Movement : MovementBehavior
 {
     public NavMeshAgent SpaceShip;
+    public GameObject cameraControllerObject;
 
+    bool enable = true;
     void Update()
     {
+        if (enable && networkObject != null && networkObject.myPlayerID == networkObject.Networker.Me.NetworkId)
+        {
+            cameraControllerObject.SetActive(true);
+
+            enable = false;
+        }
+
         if (networkObject == null)
             return;
 

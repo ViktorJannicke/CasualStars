@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1814112466}
   - component: {fileID: 1814112465}
   - component: {fileID: 4409284838740904334}
+  - component: {fileID: 6475148269089253417}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -115,6 +116,20 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &6475148269089253417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814112464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059323d20276144489bbd66b43313c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraPos1: {x: 10, y: 12, z: 0}
+  cameraPos2: {x: 14, y: 16, z: 0}
 --- !u!1 &489670591223950367
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +439,7 @@ GameObject:
   - component: {fileID: 6548564312586341155}
   - component: {fileID: 8894610676151304059}
   - component: {fileID: -4265387784622485867}
+  - component: {fileID: 2710425910164200653}
   m_Layer: 0
   m_Name: DemoShipShooting
   m_TagString: Untagged
@@ -484,6 +500,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &2710425910164200653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4725692208373130706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e846f318ca112e419dbb46f1826fce0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpaceShip: {fileID: 8894610676151304059}
+  cameraControllerObject: {fileID: 1814112464}
 --- !u!1 &5364301470368860488
 GameObject:
   m_ObjectHideFlags: 0

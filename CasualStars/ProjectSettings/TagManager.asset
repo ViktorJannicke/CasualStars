@@ -6,6 +6,8 @@ TagManager:
   tags:
   - MapGrouznd
   - Bullet
+  - MapGround
+  - GameManager
   layers:
   - Default
   - TransparentFX

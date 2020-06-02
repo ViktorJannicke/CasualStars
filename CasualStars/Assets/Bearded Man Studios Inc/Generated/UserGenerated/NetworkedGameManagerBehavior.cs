@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"Vector3\"][\"Vector3\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"position\"][\"position\"]]")]
+	[GeneratedRPC("{\"types\":[[\"uint\", \"Vector3\"][\"uint\", \"Vector3\"][\"uint\"]]")]
+	[GeneratedRPCVariableNames("{\"types\":[[\"PlayerID\", \"position\"][\"PlayerID\", \"position\"][\"PlayerID\"]]")]
 	public abstract partial class NetworkedGameManagerBehavior : NetworkBehavior
 	{
 		public const byte RPC_SPACE_SHIP_MOVE = 0 + 5;
 		public const byte RPC_SPACE_SHIP_HYPERDRIVE = 1 + 5;
+		public const byte RPC_SPAWN_MY_SHIP = 2 + 5;
 		
 		public NetworkedGameManagerNetworkObject networkObject = null;
 
@@ -23,8 +24,9 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.AttachedBehavior = this;
 
 			base.SetupHelperRpcs(networkObject);
-			networkObject.RegisterRpc("spaceShipMove", spaceShipMove, typeof(Vector3));
-			networkObject.RegisterRpc("spaceShipHyperdrive", spaceShipHyperdrive, typeof(Vector3));
+			networkObject.RegisterRpc("spaceShipMove", spaceShipMove, typeof(uint), typeof(Vector3));
+			networkObject.RegisterRpc("spaceShipHyperdrive", spaceShipHyperdrive, typeof(uint), typeof(Vector3));
+			networkObject.RegisterRpc("spawnMyShip", spawnMyShip, typeof(uint));
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -103,14 +105,21 @@ namespace BeardedManStudios.Forge.Networking.Generated
 
 		/// <summary>
 		/// Arguments:
+		/// uint PlayerID
 		/// Vector3 position
 		/// </summary>
 		public abstract void spaceShipMove(RpcArgs args);
 		/// <summary>
 		/// Arguments:
+		/// uint PlayerID
 		/// Vector3 position
 		/// </summary>
 		public abstract void spaceShipHyperdrive(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// uint PlayerID
+		/// </summary>
+		public abstract void spawnMyShip(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}
