@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using BeardedManStudios.Forge.Networking.Generated;
+using BeardedManStudios.Forge.Networking;
 
 public class Movement : MovementBehavior
 {

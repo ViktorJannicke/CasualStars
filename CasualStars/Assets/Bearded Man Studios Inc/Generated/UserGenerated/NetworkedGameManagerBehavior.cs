@@ -4,13 +4,15 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedRPC("{\"types\":[[\"uint\", \"Vector3\"][\"uint\", \"Vector3\"][\"uint\"]]")]
-	[GeneratedRPCVariableNames("{\"types\":[[\"PlayerID\", \"position\"][\"PlayerID\", \"position\"][\"PlayerID\"]]")]
+	[GeneratedRPC("{\"types\":[[\"uint\", \"Vector3\"][\"uint\", \"Vector3\"][\"uint\"][\"uint\"][\"uint\", \"string\"]]")]
+	[GeneratedRPCVariableNames("{\"types\":[[\"PlayerID\", \"position\"][\"PlayerID\", \"position\"][\"PlayerID\"][\"networkID\"][\"networkID\", \"DataID\"]]")]
 	public abstract partial class NetworkedGameManagerBehavior : NetworkBehavior
 	{
 		public const byte RPC_SPACE_SHIP_MOVE = 0 + 5;
 		public const byte RPC_SPACE_SHIP_HYPERDRIVE = 1 + 5;
 		public const byte RPC_SPAWN_MY_SHIP = 2 + 5;
+		public const byte RPC_GET_PLAYER_DATA_I_D = 3 + 5;
+		public const byte RPC_SEND_PLAYERS_DATA_I_D = 4 + 5;
 		
 		public NetworkedGameManagerNetworkObject networkObject = null;
 
@@ -27,6 +29,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			networkObject.RegisterRpc("spaceShipMove", spaceShipMove, typeof(uint), typeof(Vector3));
 			networkObject.RegisterRpc("spaceShipHyperdrive", spaceShipHyperdrive, typeof(uint), typeof(Vector3));
 			networkObject.RegisterRpc("spawnMyShip", spawnMyShip, typeof(uint));
+			networkObject.RegisterRpc("GetPlayerDataID", GetPlayerDataID, typeof(uint));
+			networkObject.RegisterRpc("SendPlayersDataID", SendPlayersDataID, typeof(uint), typeof(string));
 
 			networkObject.onDestroy += DestroyGameObject;
 
@@ -120,6 +124,17 @@ namespace BeardedManStudios.Forge.Networking.Generated
 		/// uint PlayerID
 		/// </summary>
 		public abstract void spawnMyShip(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// uint networkID
+		/// </summary>
+		public abstract void GetPlayerDataID(RpcArgs args);
+		/// <summary>
+		/// Arguments:
+		/// uint networkID
+		/// string DataID
+		/// </summary>
+		public abstract void SendPlayersDataID(RpcArgs args);
 
 		// DO NOT TOUCH, THIS GETS GENERATED PLEASE EXTEND THIS CLASS IF YOU WISH TO HAVE CUSTOM CODE ADDITIONS
 	}

@@ -6,11 +6,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Policy;
 
 public class NGameManager : NetworkedGameManagerBehavior
 {
     public static NGameManager manager;
 
+    [Header("Player Base Values")]
+    public int bHealth;
+    public int bShield;
+    public int bScore;
+    public int bCredits;
+
+    [Header("Player Indentifier Values")]
+    public string PlayerDataID;
+
+    [Header("Other Values")]
     public GameObject Asteroidprefab;
     public Vector3 center;
     public Vector3 size;
@@ -22,7 +33,10 @@ public class NGameManager : NetworkedGameManagerBehavior
     public GameObject myCamera;
 
     public Dictionary<uint, Movement> playerShipPair = new Dictionary<uint, Movement>();
+    public Dictionary<string, PlayerData> playerDataPair;
 
+    public float timer = 0;
+    public float maxTime = 300;
 
     void Start()
     {
@@ -38,11 +52,45 @@ public class NGameManager : NetworkedGameManagerBehavior
         {
             networkObject.Networker.playerDisconnected += Networker_playerDisconnected;
             Instantiate(myCamera);
+
+            if(SaveSystem.PlayerDataExists())
+            {
+                playerDataPair = SaveSystem.LoadPlayer();
+            }
+            else
+            {
+                playerDataPair = new Dictionary<string, PlayerData>();
+                playerDataPair.Add("0", new PlayerData("0",0,0,0,0));
+
+                SaveSystem.SavePlayer(playerDataPair);
+            }
         }
 
         if(!networkObject.IsServer)
         {
-            networkObject.SendRpc(RPC_SPAWN_MY_SHIP, Receivers.Server, networkObject.Networker.Me.NetworkId);
+            Instantiate(myCamera);
+            //
+
+            if (SaveSystem.PlayerDataIDExists())
+            {
+                PlayerDataID = SaveSystem.LoadPlayerDataID();
+            }
+            else
+            {
+                networkObject.SendRpc(RPC_GET_PLAYER_DATA_I_D, Receivers.Server, networkObject.Networker.Me.NetworkId);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if(timer >= maxTime)
+        {
+            timer = 0;
+            SaveSystem.SavePlayer(playerDataPair);
+        } else
+        {
+            timer += Time.deltaTime;
         }
     }
 
@@ -57,6 +105,11 @@ public class NGameManager : NetworkedGameManagerBehavior
         movement.networkObject.Destroy();
 
         playerShipPair.Remove(player.NetworkId);
+    }
+
+    public void startGame()
+    {
+        networkObject.SendRpc(RPC_SPAWN_MY_SHIP, Receivers.Server, networkObject.Networker.Me.NetworkId);
     }
 
     Movement spawnPlayer()
@@ -144,93 +197,37 @@ public class NGameManager : NetworkedGameManagerBehavior
 
         playerShipPair.Add(pid, ship);
     }
+
+    public override void GetPlayerDataID(RpcArgs args)
+    {
+        uint networkid = args.GetNext<uint>();
+
+        string id;
+
+        do
+        {
+            id = " ";
+
+            for (int i = 0; i < 50; i++)
+            {
+                id += (int)Random.Range(1, 9);
+            }
+        }
+        while (playerDataPair.ContainsKey(id));
+        playerDataPair.Add(id, new PlayerData("0", bHealth, bShield, bScore, bCredits));
+
+        networkObject.SendRpc(RPC_SEND_PLAYERS_DATA_I_D, Receivers.Others, networkid, id);
+    }
+
+    public override void SendPlayersDataID(RpcArgs args)
+    {
+        uint networkid = args.GetNext<uint>();
+        
+        if (networkObject.Networker.Me.NetworkId == networkid)
+        {
+            string id = args.GetNext<string>();
+            PlayerDataID = id;
+            SaveSystem.SavePlayerDataID(id);
+        }
+    }
 }
-
-
-
-
-[System.Serializable]
-public class PlayerData
-{
-
-	public int health;
-	public int shield;
-
-	public PlayerData(int _health, int _shield)
-	{
-
-		health = _health;
-		shield = _shield;
-
-	}
-}
-
-
-public static class SaveSystem
-{
-
-	public static void SavePlayer(int _health, int _shield)
-	{
-		BinaryFormatter formatter = new BinaryFormatter();
-		string path = Application.dataPath + "/database.stars";
-		FileStream stream = new FileStream(path, FileMode.Create);
-
-		PlayerData data = new PlayerData(_health, _shield);
-
-		formatter.Serialize(stream, data);
-		stream.Close();
-
-	}
-
-
-	public static PlayerData LoadPlayer()
-	{
-
-		string path = Application.dataPath + "/database.stars";
-		if (File.Exists(path))
-		{
-
-			BinaryFormatter formatter = new BinaryFormatter();
-			FileStream stream = new FileStream(path, FileMode.Open);
-
-			PlayerData data = formatter.Deserialize(stream) as PlayerData;
-			stream.Close();
-
-			return data;
-
-		}
-		else
-		{
-
-			Debug.LogError("Save file not found in" + path);
-			return null;
-
-		}
-
-
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-

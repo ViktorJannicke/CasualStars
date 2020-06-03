@@ -5,10 +5,10 @@ using UnityEngine;
 
 namespace BeardedManStudios.Forge.Networking.Generated
 {
-	[GeneratedInterpol("{\"inter\":[0.15,0.15,0]")]
+	[GeneratedInterpol("{\"inter\":[0.15,0.15,0,0]")]
 	public partial class MovementNetworkObject : NetworkObject
 	{
-		public const int IDENTITY = 12;
+		public const int IDENTITY = 6;
 
 		private byte[] _dirtyFields = new byte[1];
 
@@ -108,6 +108,37 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			if (myPlayerIDChanged != null) myPlayerIDChanged(_myPlayerID, timestep);
 			if (fieldAltered != null) fieldAltered("myPlayerID", _myPlayerID, timestep);
 		}
+		[ForgeGeneratedField]
+		private int _myPlayerDataID;
+		public event FieldEvent<int> myPlayerDataIDChanged;
+		public Interpolated<int> myPlayerDataIDInterpolation = new Interpolated<int>() { LerpT = 0f, Enabled = false };
+		public int myPlayerDataID
+		{
+			get { return _myPlayerDataID; }
+			set
+			{
+				// Don't do anything if the value is the same
+				if (_myPlayerDataID == value)
+					return;
+
+				// Mark the field as dirty for the network to transmit
+				_dirtyFields[0] |= 0x8;
+				_myPlayerDataID = value;
+				hasDirtyFields = true;
+			}
+		}
+
+		public void SetmyPlayerDataIDDirty()
+		{
+			_dirtyFields[0] |= 0x8;
+			hasDirtyFields = true;
+		}
+
+		private void RunChange_myPlayerDataID(ulong timestep)
+		{
+			if (myPlayerDataIDChanged != null) myPlayerDataIDChanged(_myPlayerDataID, timestep);
+			if (fieldAltered != null) fieldAltered("myPlayerDataID", _myPlayerDataID, timestep);
+		}
 
 		protected override void OwnershipChanged()
 		{
@@ -120,6 +151,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			positionInterpolation.current = positionInterpolation.target;
 			rotationInterpolation.current = rotationInterpolation.target;
 			myPlayerIDInterpolation.current = myPlayerIDInterpolation.target;
+			myPlayerDataIDInterpolation.current = myPlayerDataIDInterpolation.target;
 		}
 
 		public override int UniqueIdentity { get { return IDENTITY; } }
@@ -129,6 +161,7 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			UnityObjectMapper.Instance.MapBytes(data, _position);
 			UnityObjectMapper.Instance.MapBytes(data, _rotation);
 			UnityObjectMapper.Instance.MapBytes(data, _myPlayerID);
+			UnityObjectMapper.Instance.MapBytes(data, _myPlayerDataID);
 
 			return data;
 		}
@@ -147,6 +180,10 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			myPlayerIDInterpolation.current = _myPlayerID;
 			myPlayerIDInterpolation.target = _myPlayerID;
 			RunChange_myPlayerID(timestep);
+			_myPlayerDataID = UnityObjectMapper.Instance.Map<int>(payload);
+			myPlayerDataIDInterpolation.current = _myPlayerDataID;
+			myPlayerDataIDInterpolation.target = _myPlayerDataID;
+			RunChange_myPlayerDataID(timestep);
 		}
 
 		protected override BMSByte SerializeDirtyFields()
@@ -160,6 +197,8 @@ namespace BeardedManStudios.Forge.Networking.Generated
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _rotation);
 			if ((0x4 & _dirtyFields[0]) != 0)
 				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _myPlayerID);
+			if ((0x8 & _dirtyFields[0]) != 0)
+				UnityObjectMapper.Instance.MapBytes(dirtyFieldsData, _myPlayerDataID);
 
 			// Reset all the dirty fields
 			for (int i = 0; i < _dirtyFields.Length; i++)
@@ -215,6 +254,19 @@ namespace BeardedManStudios.Forge.Networking.Generated
 					RunChange_myPlayerID(timestep);
 				}
 			}
+			if ((0x8 & readDirtyFlags[0]) != 0)
+			{
+				if (myPlayerDataIDInterpolation.Enabled)
+				{
+					myPlayerDataIDInterpolation.target = UnityObjectMapper.Instance.Map<int>(data);
+					myPlayerDataIDInterpolation.Timestep = timestep;
+				}
+				else
+				{
+					_myPlayerDataID = UnityObjectMapper.Instance.Map<int>(data);
+					RunChange_myPlayerDataID(timestep);
+				}
+			}
 		}
 
 		public override void InterpolateUpdate()
@@ -236,6 +288,11 @@ namespace BeardedManStudios.Forge.Networking.Generated
 			{
 				_myPlayerID = (uint)myPlayerIDInterpolation.Interpolate();
 				//RunChange_myPlayerID(myPlayerIDInterpolation.Timestep);
+			}
+			if (myPlayerDataIDInterpolation.Enabled && !myPlayerDataIDInterpolation.current.UnityNear(myPlayerDataIDInterpolation.target, 0.0015f))
+			{
+				_myPlayerDataID = (int)myPlayerDataIDInterpolation.Interpolate();
+				//RunChange_myPlayerDataID(myPlayerDataIDInterpolation.Timestep);
 			}
 		}
 
