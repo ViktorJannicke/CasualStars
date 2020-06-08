@@ -122,7 +122,7 @@ public class TurretController : TurretNetworkBehavior
     private void Fire()
     {
         BulletNetworkBehavior shootBullet = NetworkManager.Instance.InstantiateBulletNetwork(0, fireTransform.position, fireTransform.rotation);
-        shootBullet.gameObject.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
+        //shootBullet.gameObject.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 
     public void SetTargetPlayer(Vector3 _position, bool _attack)

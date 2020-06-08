@@ -74,7 +74,6 @@ public class EnemyDetector : EnemyDedectorBehavior
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter");
         if (other.gameObject.CompareTag("Player"))
         {
             if (!enemys.Contains(other.gameObject))

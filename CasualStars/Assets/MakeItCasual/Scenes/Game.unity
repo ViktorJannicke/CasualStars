@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 42387999}
   - component: {fileID: 42387998}
   - component: {fileID: 42387997}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane
   m_TagString: MapGround
   m_Icon: {fileID: 0}
@@ -482,7 +482,10 @@ MonoBehaviour:
   Main: {fileID: 0}
   camController: {fileID: 0}
   hyperdrive: 0
-  hyperdriveButton: {fileID: 0}
+  hyperdriveButton: {fileID: 1840527277}
+  mask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &653260035
 GameObject:
   m_ObjectHideFlags: 0

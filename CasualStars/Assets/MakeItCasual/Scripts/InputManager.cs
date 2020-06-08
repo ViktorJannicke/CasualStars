@@ -18,6 +18,8 @@ public class InputManager : MonoBehaviour
     public bool hyperdrive;
 	public Button hyperdriveButton;
 
+	public LayerMask mask;
+
     private void Awake()
     {
         input = new MakeItCasualInput();
@@ -41,20 +43,17 @@ public class InputManager : MonoBehaviour
 
 	void touch()
 	{
-		Debug.Log("test");
 		RaycastHit raycastHit = new RaycastHit();
 
 		Vector2 screensposition = input.Game.Position.ReadValue<Vector2>();
 
-		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000))
+		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000, mask))
 		{
 			if (raycastHit.collider.gameObject.CompareTag("Player"))
 			{
-				if (raycastHit.collider.gameObject.transform != transform)
-				{
 
-				}
 			}
+
 			if (raycastHit.collider.gameObject.CompareTag("MapGround"))
 			{
 				if (hyperdrive)
@@ -91,10 +90,19 @@ public class InputManager : MonoBehaviour
 
 	private bool IsPointerOverUIObject()
 	{
-		PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+		/*PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
 		eventDataCurrentPosition.position = input.Game.Position.ReadValue<Vector2>();
 		List<RaycastResult> results = new List<RaycastResult>();
 		EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-		return results.Count > 0;
+		return results.Count > 0;*/
+
+		if (EventSystem.current.IsPointerOverGameObject() ||
+			EventSystem.current.currentSelectedGameObject != null)
+		{
+			return true;
+		} else
+		{
+			return false;
+		}
 	}
 }

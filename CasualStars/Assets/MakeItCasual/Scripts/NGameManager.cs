@@ -40,6 +40,9 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     void Start()
     {
+        /*PlayerData[] db = new PlayerData[playerDataPair.Count];
+        playerDataPair.Values.CopyTo(db, 0);*/
+
         if(manager != null)
         {
             networkObject.Destroy();
@@ -68,8 +71,8 @@ public class NGameManager : NetworkedGameManagerBehavior
 
         if(!networkObject.IsServer)
         {
-            Instantiate(myCamera);
-            //
+            //Instantiate(myCamera);
+            startGame();
 
             if (SaveSystem.PlayerDataIDExists())
             {
@@ -114,12 +117,12 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     Movement spawnPlayer()
     {
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
+        Vector3 pos = new Vector3(25,0,25);//center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
 
-        while (Physics.CheckSphere(pos, spawnRadius))
+        /*while (Physics.CheckSphere(pos, spawnRadius))
         {
             pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
-        }
+        }*/
 
         MovementBehavior bh = NetworkManager.Instance.InstantiateMovement(0, pos, Quaternion.identity);
 
@@ -174,14 +177,12 @@ public class NGameManager : NetworkedGameManagerBehavior
 
     public void ExecuteMove(Vector3 position)
     {
-        Debug.Log(position);
 
         networkObject.SendRpc(RPC_SPACE_SHIP_MOVE, Receivers.Server, networkObject.Networker.Me.NetworkId, position);
     }
 
     public void ExecuteHyperDrive(Vector3 position)
     {
-        Debug.Log(position);
         networkObject.SendRpc(RPC_SPACE_SHIP_HYPERDRIVE, Receivers.Server, networkObject.Networker.Me.NetworkId, position);
     }
 
