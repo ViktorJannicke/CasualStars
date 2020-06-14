@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Unity;
-using BeardedManStudios.Forge.Networking.Generated;
 
-public class Shield : NetworkHealthBehavior
+public class Shield : MonoBehaviour
 {
 
 	public int health = 50;
@@ -19,39 +16,13 @@ public class Shield : NetworkHealthBehavior
 
 			lastHit = collision.gameObject;
 			health -= lastHit.GetComponent<Bullet>().bulletDamage;
-			lastHit.GetComponent<Bullet>().networkObject.Destroy();
+			Destroy(lastHit.GetComponent<Bullet>().gameObject);
 
 			if(health <= 0)
 			{
-				networkObject.Destroy();
+				Destroy(gameObject);
 			}
 
 		}
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-		// Unity's Update() running, before this object is instantiated
-		// on the network is **very** rare, but better be safe 100%
-		if (networkObject == null)
-			return;
-
-		// If we are not the owner of this network object then we should
-		// move this cube to the position/rotation dictated by the owner
-		if (!networkObject.IsOwner)
-		{
-
-			health = networkObject.health;
-			return;
-
-		}
-		else
-		{
-
-			networkObject.health = health;
-			
-		}
-	}
 }

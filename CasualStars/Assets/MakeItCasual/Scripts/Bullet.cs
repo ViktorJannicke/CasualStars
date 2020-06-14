@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using BeardedManStudios.Forge.Networking.Generated;
-using System.Threading;
-using UnityEngine.InputSystem.LowLevel;
 
-public class Bullet : BulletNetworkBehavior
+public class Bullet : MonoBehaviour
 {
 
     public int bulletDamage = 0;
@@ -30,23 +27,10 @@ public class Bullet : BulletNetworkBehavior
         }
         else
         {
-            if (networkObject == null)
-                return;
-
-            if (!networkObject.IsOwner)
-            {
-                transform.position = networkObject.bulletPosition;
-                transform.rotation = networkObject.bulletRotation;
-            }
-            else
-            {
-                networkObject.bulletPosition = transform.position;
-                networkObject.bulletRotation = transform.rotation;
-            }
 
             if (timer >= timeTillDeath)
             {
-                networkObject.Destroy();
+                Destroy(gameObject);
             }
             else if (timer < timeTillDeath)
             {

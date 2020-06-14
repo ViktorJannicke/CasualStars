@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using BeardedManStudios.Forge.Networking.Generated;
-using BeardedManStudios.Forge.Networking.Unity;
-using BeardedManStudios.Forge.Networking;
 
-public class TurretController : TurretNetworkBehavior
+public class TurretController : MonoBehaviour
 {
     public GameObject bulletPrefab;
 
@@ -31,18 +28,6 @@ public class TurretController : TurretNetworkBehavior
 
     private void FixedUpdate()
     {
-        if (networkObject == null)
-            return;
-
-        if (!networkObject.IsOwner)
-        {
-            transform.position = networkObject.turretPosition;
-            transform.rotation = networkObject.turretRotation;
-            canonHandle.localPosition = networkObject.handlePosition;
-            canonHandle.localRotation = networkObject.handleRotation;
-        }
-        else
-        {
             if (attack)
             {
                 Vector3 rotation1 = transform.eulerAngles;
@@ -111,26 +96,17 @@ public class TurretController : TurretNetworkBehavior
                 transform.localRotation = Quaternion.Euler(new Vector3(180, baseRot.y, 0));
                 canonHandle.localRotation = Quaternion.Euler(new Vector3(baseRot.x,0,baseRot.z));
             }
-
-            networkObject.turretPosition = transform.position;
-            networkObject.turretRotation = transform.rotation;
-            networkObject.handlePosition = canonHandle.localPosition;
-            networkObject.handleRotation = canonHandle.localRotation;
-        }
     }
 
     private void Fire()
     {
-        BulletNetworkBehavior shootBullet = NetworkManager.Instance.InstantiateBulletNetwork(0, fireTransform.position, fireTransform.rotation);
-        //shootBullet.gameObject.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
+        GameObject shootBullet = Instantiate(bulletPrefab, fireTransform);
+        shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
     }
 
     public void SetTargetPlayer(Vector3 _position, bool _attack)
     {
-        if(networkObject.IsServer)
-        {
             targetPlayer.position = _position;
             attack = _attack;
-        }
     }
 }

@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        input.Game.Tap.performed += _ => { if (!IsPointerOverUIObject()) touch(); };
+        input.Game.Tap.performed += _ => { touch(); };
     }
 
     public void setHyperdrive(bool val)
@@ -49,28 +49,7 @@ public class InputManager : MonoBehaviour
 
 		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000, mask))
 		{
-			if (raycastHit.collider.gameObject.CompareTag("Player"))
-			{
 
-			}
-
-			if (raycastHit.collider.gameObject.CompareTag("MapGround"))
-			{
-				if (hyperdrive)
-				{
-					cooldown = 5f;
-					hyperdriveButton.interactable = false;
-
-					manager.ExecuteHyperDrive(raycastHit.point);
-
-					hyperdrive = false;
-					camController.translateTowards();
-				}
-				else
-				{
-					manager.ExecuteMove(raycastHit.point);
-				}
-			}
 		}
 	}
 

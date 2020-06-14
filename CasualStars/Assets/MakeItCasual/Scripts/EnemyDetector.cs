@@ -1,10 +1,8 @@
-﻿using BeardedManStudios.Forge.Networking;
-using BeardedManStudios.Forge.Networking.Generated;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDetector : EnemyDedectorBehavior
+public class EnemyDetector : MonoBehaviour
 {
     public List<TurretController> turrets = new List<TurretController>();
     public List<GameObject> enemys = new List<GameObject>();
@@ -17,11 +15,6 @@ public class EnemyDetector : EnemyDedectorBehavior
 
     private void Update()
     {
-        if (networkObject == null)
-            return;
-
-        if (networkObject.IsOwner)
-        {
             if (forcedTarget == null)
             {
                 foreach (TurretController turret in turrets)
@@ -69,7 +62,6 @@ public class EnemyDetector : EnemyDedectorBehavior
                     turret.SetTargetPlayer(forcedTarget.transform.position, true);
                 }
             }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
