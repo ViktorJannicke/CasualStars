@@ -102,6 +102,7 @@ public class TurretController : MonoBehaviour
     {
         GameObject shootBullet = Instantiate(bulletPrefab, fireTransform);
         shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
+        shootBullet.transform.parent = null;
     }
 
     public void SetTargetPlayer(Vector3 _position, bool _attack)

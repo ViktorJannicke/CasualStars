@@ -8,14 +8,14 @@ public class Obstacle : MonoBehaviour
 
     private void Start()
     {
-        movement.move(transform.position + new Vector3(1,0,0));
+        movement.moveTo(transform.position + new Vector3(1,0,0));
     }
 
     private void Update()
     {
-        if (Vector3.Distance(agent.destination, transform.position) <= 1)
+        if (movement.isStopped)
         {
-            movement.move(NGameManager.manager.getNextPosition());
+            movement.move();
         }
     }
 }
