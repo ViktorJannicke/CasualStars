@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-
-	public Movement parentus;
 	public int health = 50;
 	GameObject lastHit;
 
-    // Start is called before the first frame update
-    private void OnCollisionEnter(Collision collision)
+	public bool split;
+	public Obstacle obstacle;
+
+	// Start is called before the first frame update
+	private void OnCollisionEnter(Collision collision)
     {
 		if (collision.gameObject.CompareTag("Bullet") && lastHit != collision.gameObject)
 		{
@@ -18,19 +19,14 @@ public class Health : MonoBehaviour
 			lastHit = collision.gameObject;
 			health -= lastHit.GetComponent<Bullet>().bulletDamage;
 			Destroy(lastHit.GetComponent<Bullet>().gameObject);
-
-			if(health <= 0)
+			
+			if (health <= 0)
 			{
-				if (parentus == null)
-				{
-					Destroy(gameObject);
-				}
+				if (split || obstacle != null)
+				obstacle.Kill();
 				else
-				{
-					Destroy(parentus.gameObject);
-				}
+				Destroy(gameObject);
 			}
-
 		}
     }
 }

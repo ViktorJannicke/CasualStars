@@ -11,14 +11,14 @@ public class Shield : MonoBehaviour
     // Start is called before the first frame update
     private void OnCollisionEnter(Collision collision)
     {
-		if (collision.gameObject.CompareTag("Bullet") && lastHit != collision.gameObject)
+		if ((collision.gameObject.CompareTag("Bullet") && lastHit != collision.gameObject))
 		{
 
 			lastHit = collision.gameObject;
 			health -= lastHit.GetComponent<Bullet>().bulletDamage;
 			Destroy(lastHit.GetComponent<Bullet>().gameObject);
 
-			if(health <= 0)
+			if (health <= 0)
 			{
 				Destroy(gameObject);
 			}

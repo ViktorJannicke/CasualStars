@@ -5,18 +5,10 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
-
-	private NGameManager manager;
-
-    private float cooldown;
-
-    public Camera Main;
-    public CameraController camController;
+	Camera main;
 
     MakeItCasualInput input;
-
-    public bool hyperdrive;
-	public Button hyperdriveButton;
+	public EnemyDetector detector;
 
 	public LayerMask mask;
 
@@ -24,21 +16,12 @@ public class InputManager : MonoBehaviour
     {
         input = new MakeItCasualInput();
         input.Enable();
-		manager = GetComponent<NGameManager>();
     }
 
     private void Start()
     {
-        input.Game.Tap.performed += _ => { touch(); };
-    }
-
-    public void setHyperdrive(bool val)
-    {
-        if (cooldown <= 0)
-        {
-			camController.translateAway();
-            hyperdrive = val;
-        }
+		main = Camera.main;
+		input.Game.Tap.performed += _ => { touch(); };
     }
 
 	void touch()
@@ -47,24 +30,18 @@ public class InputManager : MonoBehaviour
 
 		Vector2 screensposition = input.Game.Position.ReadValue<Vector2>();
 
-		if (Physics.Raycast(Main.ScreenPointToRay(screensposition), out raycastHit, 10000, mask))
+		if (Physics.Raycast(main.ScreenPointToRay(screensposition), out raycastHit, 10000, mask))
 		{
-
+			if (raycastHit.collider.CompareTag("Asteroid"))
+			{
+				detector.setTarget(raycastHit.collider.transform);
+			}
 		}
 	}
 
-	bool updateVal = false;
 	private void Update()
 	{
-		if (cooldown > 0)
-		{
-			updateVal = true;
-			cooldown -= Time.deltaTime;
-		} else if (cooldown <= 0 && updateVal)
-		{
-			hyperdriveButton.interactable = true;
-			updateVal = false;
-		}
+
 	}
 
 	private bool IsPointerOverUIObject()

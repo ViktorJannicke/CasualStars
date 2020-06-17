@@ -38,7 +38,7 @@ public class Scoreboard : MonoBehaviour
 			return;
 		}
 
-		boardscore	 = this;
+		boardscore = this;
 	}
 
 

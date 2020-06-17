@@ -1,22 +1,57 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Obstacle : MonoBehaviour
 {
-    public NavMeshAgent agent;
     public Movement movement;
+    public GameObject target;
+    public GameObject splitObject;
+    public int splitCount;
+    public int ScoreBonus;
+
+    float timer = 0f;
 
     private void Start()
     {
-        movement.moveTo(transform.position + new Vector3(1,0,0));
+        movement.moveTo(target.transform.position);
     }
 
     private void Update()
     {
-        if (movement.isStopped)
+        if (timer > 1f && movement.isStopped)
         {
-            movement.move();
+            if (NGameManager.manager.Score - 25 <= 0)
+            {
+                NGameManager.manager.Score = 0;
+            }
+            else
+            {
+                NGameManager.manager.Score -= 25;
+            }
+            Destroy(gameObject);
+
         }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
+    public void Kill()
+    {
+        for (int i = 0; i < splitCount; i++)
+        {
+            GameObject splitO = Instantiate(splitObject, transform);
+            splitO.GetComponent<Obstacle>().target = target;
+            Movement mT = splitO.GetComponent<Movement>();
+            mT.checkX = movement.checkX;
+            mT.checkY = movement.checkY;
+            mT.checkZ = movement.checkZ;
+        }
+
+        NGameManager.manager.Score += ScoreBonus;
+        Destroy(gameObject);
     }
 }
 

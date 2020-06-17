@@ -1,41 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Bullet : MonoBehaviour
 {
+    float timer = 0;
+    public int bulletDamage = 25;
+    public float maxTime;
 
-    public int bulletDamage = 0;
-    public float timer;
-    public float timeTillDeath;
-    public float spawnDelay = 5;
 
-    bool disabled = true;
     private void Update()
     {
-        if (disabled)
-        {
-            if (timer >= spawnDelay)
-            {
-                timer = 0;
-                disabled = false;
-            }
-            else if (timer < spawnDelay)
-            {
-                timer += Time.deltaTime;
-            }
-        }
-        else
-        {
+        timer += Time.deltaTime;
 
-            if (timer >= timeTillDeath)
-            {
-                Destroy(gameObject);
-            }
-            else if (timer < timeTillDeath)
-            {
-                timer += Time.deltaTime;
-            }
-        }
+        if (timer >= maxTime)
+            Destroy(gameObject);
     }
 }

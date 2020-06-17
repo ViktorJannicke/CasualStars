@@ -9,105 +9,57 @@ public class TurretController : MonoBehaviour
     public Transform fireTransform;
     public Transform canonHandle;
 
-    public Vector3 maxRot;
-    public Vector3 minRot;
-    public Vector3 baseRot;
-
-    public bool enableXRotation;
-    public bool enableYRotation;
-    public bool enableZRotation;
-
     public float bulletSpeed = 10f;
     public float fireDelay;
-    private float time;
+    private float time = 0;
     private int bulletRate = 1;
 
     public bool attack = false;
     public bool debug;
     public Text debugText;
 
-    private void FixedUpdate()
+    private void Update()
     {
-            if (attack)
+        if (attack)
+        {
+            if (targetPlayer != null && time == 0)
             {
-                Vector3 rotation1 = transform.eulerAngles;
-
-                transform.LookAt(targetPlayer);
-
-                Vector3 rotation2 = transform.eulerAngles;
-
-                if (!enableYRotation && (rotation2.y > maxRot.y || rotation2.y < minRot.y))
+                for (int x = 0; x < bulletRate; x++)
                 {
-                    transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
+                    Fire();
+                    attack = false;
                 }
-                else
-                {
-                    transform.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation2.y, rotation1.z));
-                }
-
-                rotation1 = canonHandle.eulerAngles;
-
-                canonHandle.LookAt(targetPlayer);
-
-                rotation2 = canonHandle.eulerAngles;
-
-                if (!enableXRotation && (rotation2.x > maxRot.x || rotation2.x < minRot.x))
-                {
-                    canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
-                }
-                else
-                {
-                    canonHandle.rotation = Quaternion.Euler(new Vector3(rotation2.x, rotation1.y, rotation1.z));
-                }
-
-                rotation1 = canonHandle.eulerAngles;
-
-                canonHandle.LookAt(targetPlayer);
-
-                rotation2 = canonHandle.eulerAngles;
-
-                if (!enableZRotation && (rotation2.z > maxRot.z || rotation2.z < minRot.z))
-                {
-                    canonHandle.rotation = Quaternion.Euler(new Vector3(rotation1.x, rotation1.y, rotation1.z));
-                }
-                else
-                {
-                    canonHandle.rotation = Quaternion.Euler(new Vector3(rotation2.x, rotation1.y, rotation2.z));
-                }
-
-                if (debug)
-                    debugText.text = rotation2.ToString();
-
-                if (targetPlayer != null && time > fireDelay)
-                {
-                    for (int x = 0; x < bulletRate; x++)
-                    {
-                        Fire();
-                    }
-                    time = 0;
-                }
-                else
-                {
-                    time += Time.deltaTime;
-                }
+                time = fireDelay;
             }
             else
             {
-                transform.localRotation = Quaternion.Euler(new Vector3(180, baseRot.y, 0));
-                canonHandle.localRotation = Quaternion.Euler(new Vector3(baseRot.x,0,baseRot.z));
+                float t = Time.deltaTime;
+
+                if (time - t <= 0)
+                {
+                    time -= 0;
+                }
+                else
+                {
+                    time -= t;
+                }
             }
+        }
     }
 
     private void Fire()
     {
+        fireTransform.LookAt(targetPlayer);
         GameObject shootBullet = Instantiate(bulletPrefab, fireTransform);
-        shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;
         shootBullet.transform.parent = null;
+
+        //shootBullet.transform.position = targetPlayer.position;
+        shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward + (targetPlayer.position.y > fireTransform.position.y ? Vector3.up : Vector3.down);// + (targetPlayer.position.x > fireTransform.position.x ? Vector3.right : Vector3.left);
     }
 
-    public void SetTargetPlayer(Vector3 _position, bool _attack)
+    public void SetTargetPlayer(Transform _position, bool _attack)
     {
-            targetPlayer.position = _position;
+            targetPlayer = _position;
             attack = _attack;
     }
 }

@@ -1,32 +1,63 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
+using System.Runtime.Serialization;
+using System;
+using System.Globalization;
+using UnityEngine.SceneManagement;
 
 public class NGameManager : MonoBehaviour
 {
     public static NGameManager manager;
 
-    [Header("Player Base Values")]
-    public int bHealth;
-    public int bShield;
-    public int bScore;
-    public int bCredits;
+    public int Score = 25;
+    public TextMeshProUGUI score;
+    public TextMeshProUGUI time;
 
-    [Header("Other Values")]
+    public float timer = 120;
+
+    [Header("Asteroid Control Values")]
     public GameObject Asteroidprefab;
+    public bool checkX;
+    public bool checkY;
+    public bool checkZ;
+    public GameObject player;
+
+    [Header("Asteroid Spawn Values")]
+
     public Vector3 center;
     public Vector3 size;
     public bool stopSpawning = false;
+
     public int spawnTime;
     public int spawnDelay;
     public int spawnRadius;
+    public int spawnCount;
+    
+    private void Update()
+    {
+        score.text = "Score: \n" + Score;
+        int minutes = Mathf.FloorToInt(timer / 60);
+        int seconds = Mathf.FloorToInt(timer) - (minutes * 60);
 
-    public float timer = 0;
-    public float maxTime = 300;
+        DateTime d = new DateTime(2001,01,01,01,minutes,seconds);
+
+
+        time.text = "Time: \n" + d.ToString("mm:ss");
+
+        float t = Time.deltaTime;
+        if (timer - t <= 0)
+        {
+            timer = 0;
+            SceneManager.LoadSceneAsync("MainMenu");
+        }
+        else
+        {
+            timer -= t;
+        }
+    }
 
     void Start()
     {
-        /*PlayerData[] db = new PlayerData[playerDataPair.Count];
-        playerDataPair.Values.CopyTo(db, 0);*/
 
         if(manager != null)
         {
@@ -36,42 +67,33 @@ public class NGameManager : MonoBehaviour
 
         manager = this;
 
-    }
-
-
-    GameObject spawnPlayer()
-    {
-        Vector3 pos = new Vector3(25,0,25);//center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
-
-        /*while (Physics.CheckSphere(pos, spawnRadius))
+        for(int i = 0; i < spawnCount; i++)
         {
-            pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), 3, Random.Range(-size.z / 2, size.z / 2));
-        }*/
-        GameObject m = Instantiate(Asteroidprefab, pos, Quaternion.identity);
-        return m;
+            Asteroidsspawn();
+        }
     }
 
     public void Asteroidsspawn()
     {
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+        int count = 0;
+
+        Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-size.x / 2, size.x / 2), UnityEngine.Random.Range(-size.y / 2, size.y / 2), UnityEngine.Random.Range(-size.z / 2, size.z / 2));
 
         while (Physics.CheckSphere(pos, spawnRadius))
         {
-            pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
+            pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-size.x / 2, size.x / 2), UnityEngine.Random.Range(-size.y / 2, size.y / 2), UnityEngine.Random.Range(-size.z / 2, size.z / 2));
+            count++;
+            if(count > 500)
+            {
+                return;
+            }
         }
-        Instantiate(Asteroidprefab, pos, Quaternion.identity);
-    }
-
-    public Vector3 getNextPosition()
-    {
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
-
-        while (Physics.CheckSphere(pos, spawnRadius))
-        {
-            pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.y / 2, size.y / 2), Random.Range(-size.z / 2, size.z / 2));
-        }
-
-        return pos;
+        GameObject asteroid = Instantiate(Asteroidprefab, pos, Quaternion.identity);
+        asteroid.GetComponent<Obstacle>().target = player;
+        Movement m = asteroid.GetComponent<Movement>();
+        m.checkX = checkX;
+        m.checkY = checkY;
+        m.checkZ = checkZ;
     }
 
     private void OnDrawGizmosSelected()
