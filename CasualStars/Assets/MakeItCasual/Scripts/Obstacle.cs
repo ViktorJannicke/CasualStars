@@ -9,6 +9,7 @@ public class Obstacle : MonoBehaviour
     public GameObject splitObject;
     public int splitCount;
     public int ScoreBonus;
+    public NGameManager manager;
 
     float timer = 0f;
 
@@ -21,13 +22,13 @@ public class Obstacle : MonoBehaviour
     {
         if (timer > 1f && movement.isStopped)
         {
-            if (NGameManager.manager.Score - 25 <= 0)
+            if (manager.Score - 25 <= 0)
             {
-                NGameManager.manager.Score = 0;
+                manager.Score = 0;
             }
             else
             {
-                NGameManager.manager.Score -= 25;
+                manager.Score -= 25;
             }
             Destroy(gameObject);
 
@@ -50,7 +51,7 @@ public class Obstacle : MonoBehaviour
             mT.checkZ = movement.checkZ;
         }
 
-        NGameManager.manager.Score += ScoreBonus;
+        manager.Score += ScoreBonus;
         Destroy(gameObject);
     }
 }

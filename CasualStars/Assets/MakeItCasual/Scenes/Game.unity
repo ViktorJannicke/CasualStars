@@ -255,6 +255,9 @@ MonoBehaviour:
   checkY: 0
   checkZ: 1
   player: {fileID: 2080925703}
+  mask:
+    serializedVersion: 2
+    m_Bits: 1024
   center: {x: 0, y: 0, z: 0}
   size: {x: 10, y: 15, z: 625}
   stopSpawning: 0
@@ -494,7 +497,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -1601,7 +1604,7 @@ PrefabInstance:
     - target: {fileID: 6042588921202426487, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.13052616
       objectReference: {fileID: 0}
     - target: {fileID: 6042588921202426487, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
@@ -1616,7 +1619,7 @@ PrefabInstance:
     - target: {fileID: 6042588921202426487, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9914449
       objectReference: {fileID: 0}
     - target: {fileID: 6042588921202426487, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
@@ -1626,7 +1629,7 @@ PrefabInstance:
     - target: {fileID: 6042588921202426487, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6042588921202426487, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}

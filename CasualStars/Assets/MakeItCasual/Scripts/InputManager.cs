@@ -39,6 +39,10 @@ public class InputManager : MonoBehaviour
 		}
 	}
 
+	private void OnDisable()
+	{
+		input.Disable();
+	}
 	private void Update()
 	{
 

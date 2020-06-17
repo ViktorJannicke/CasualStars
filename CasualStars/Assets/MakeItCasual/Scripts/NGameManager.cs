@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class NGameManager : MonoBehaviour
 {
-    public static NGameManager manager;
+   // public static NGameManager manager;
 
     public int Score = 25;
     public TextMeshProUGUI score;
@@ -23,7 +23,7 @@ public class NGameManager : MonoBehaviour
     public GameObject player;
 
     [Header("Asteroid Spawn Values")]
-
+    public LayerMask mask;
     public Vector3 center;
     public Vector3 size;
     public bool stopSpawning = false;
@@ -48,7 +48,7 @@ public class NGameManager : MonoBehaviour
         if (timer - t <= 0)
         {
             timer = 0;
-            SceneManager.LoadSceneAsync("MainMenu");
+            SceneManager.LoadSceneAsync("GameEnd");
         }
         else
         {
@@ -56,17 +56,11 @@ public class NGameManager : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
-
-        if(manager != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        manager = this;
-
+    }
+    private void Start()
+    {
         for(int i = 0; i < spawnCount; i++)
         {
             Asteroidsspawn();
@@ -79,7 +73,7 @@ public class NGameManager : MonoBehaviour
 
         Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-size.x / 2, size.x / 2), UnityEngine.Random.Range(-size.y / 2, size.y / 2), UnityEngine.Random.Range(-size.z / 2, size.z / 2));
 
-        while (Physics.CheckSphere(pos, spawnRadius))
+        while (Physics.CheckSphere(pos, spawnRadius, mask))
         {
             pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-size.x / 2, size.x / 2), UnityEngine.Random.Range(-size.y / 2, size.y / 2), UnityEngine.Random.Range(-size.z / 2, size.z / 2));
             count++;
@@ -89,7 +83,9 @@ public class NGameManager : MonoBehaviour
             }
         }
         GameObject asteroid = Instantiate(Asteroidprefab, pos, Quaternion.identity);
-        asteroid.GetComponent<Obstacle>().target = player;
+        Obstacle o = asteroid.GetComponent<Obstacle>();
+        o.target = player;
+        o.manager = this;
         Movement m = asteroid.GetComponent<Movement>();
         m.checkX = checkX;
         m.checkY = checkY;
