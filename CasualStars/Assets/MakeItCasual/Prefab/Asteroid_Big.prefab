@@ -194,9 +194,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: {fileID: 3693132329819856069}
   target: {fileID: 0}
-  splitObject: {fileID: 0}
-  splitCount: 0
+  splitObject: {fileID: 7895510901605495144, guid: 1386e066c0ce05541a62eab3323d4cd6,
+    type: 3}
+  splitCount: 2
   ScoreBonus: 15
+  manager: {fileID: 0}
 --- !u!114 &-420009428126476224
 MonoBehaviour:
   m_ObjectHideFlags: 0

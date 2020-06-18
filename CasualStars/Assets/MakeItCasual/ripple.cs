@@ -35,7 +35,7 @@ public class ripple : MonoBehaviour
                 rtsb.sb_Rot.z += val;
                 transform.rotation = Quaternion.Euler(rot);
                 Vector3 pos = transform.position;
-                pos.x += val/4;
+                pos.x += val/16;
                 transform.position = pos;
             }
         }
@@ -54,7 +54,7 @@ public class ripple : MonoBehaviour
                 rtsb.sb_Rot.z -= val;
                 transform.rotation = Quaternion.Euler(rot);
                 Vector3 pos = transform.position;
-                pos.x -= val/4;
+                pos.x -= val/16;
                 transform.position = pos;
             }
         }

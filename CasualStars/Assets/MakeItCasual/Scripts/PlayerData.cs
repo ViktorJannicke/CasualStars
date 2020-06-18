@@ -10,23 +10,12 @@ using System.Threading.Tasks;
 
         public string name;
 
-        public int health;
-        public int shield;
-
         //Scoreboard
         public int score;
 
-        //Shop
-        public int credits;
-
-        public PlayerData(string _name, int _health, int _shield, int _score, int _credits)
+        public PlayerData(string _name, int _score)
         {
-
             name = _name;
-            health = _health;
-            shield = _shield;
             score = _score;
-            credits = _credits;
-
         }
     }

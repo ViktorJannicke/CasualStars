@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/Game.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/Werbung.unity
+    guid: a610f9dd6f5fd5444ac67c86d5aa23e5
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/GameEnd.unity
+    guid: 325e762d8ad3eea4bb15fdf113a533ea
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/Scoreboard.unity
+    guid: 02252cb3af5338249814559cba4414b3
   m_configObjects: {}

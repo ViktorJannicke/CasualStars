@@ -18,7 +18,7 @@ public class RotateSkybox : MonoBehaviour
 
     private void Update()
     {
-        sb_Rot.x += 0.0003f * time;
+        sb_Rot.x += 0.0002f * time;
         time += Time.deltaTime;
         Quaternion rot = Quaternion.Euler(sb_Rot);
         Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, rot, new Vector3(1, 1, 1));

@@ -6,21 +6,19 @@ using UnityEngine.SceneManagement;
 public class scriptwerbung : MonoBehaviour
 {
 	float Zeit;
-	public float Max;
-
-
+    MasterManager mm;
     void Start()
     {
-        
+        mm = MasterManager.mm;
     }
 
     // Update is called once per frame
     void Update()
     {
 		Zeit += Time.deltaTime;
-		if (Zeit >= Max)
+		if (Zeit >= mm.AdSpotLength)
 		{
-			SceneManager.LoadSceneAsync("Game");
+			SceneManager.LoadSceneAsync(mm.nextScene);
 		}
 			
     }

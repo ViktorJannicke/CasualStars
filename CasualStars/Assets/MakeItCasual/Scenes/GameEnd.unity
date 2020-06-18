@@ -701,10 +701,10 @@ RectTransform:
   m_Father: {fileID: 1857126009}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -1193.1}
-  m_SizeDelta: {x: 0, y: 994.6388}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 129.69995}
+  m_SizeDelta: {x: 1242, y: 735.79236}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &970584091
 MonoBehaviour:
@@ -935,8 +935,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Connect
+      - m_Target: {fileID: 1857126005}
+        m_MethodName: LoadAdFromGameEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1241,7 +1241,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1857126005}
-        m_MethodName: LoadGame
+        m_MethodName: LoadAdFromGameStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1800,7 +1800,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 220.78027}
+  m_AnchoredPosition: {x: 0, y: 220.78125}
   m_SizeDelta: {x: 0, y: 441.55194}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2144592285
