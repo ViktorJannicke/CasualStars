@@ -1530,9 +1530,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   val: 0.01
-  maxLeft: 25
-  maxRight: -25
+  maxLeft: 10
+  maxRight: -10
   turnLeft: 0
+  mainmenu: 1
+  valmainMenu: 0.015
   rtsb: {fileID: 1842478223}
 --- !u!1 &1199863086
 GameObject:

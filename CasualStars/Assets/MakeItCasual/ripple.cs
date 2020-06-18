@@ -9,6 +9,9 @@ public class ripple : MonoBehaviour
     public float maxLeft;
     public float maxRight;
     public bool turnLeft;
+    [Header("Main Menu")]
+    public bool mainmenu;
+    public float valmainMenu;
 
     public RotateSkybox rtsb;
     // Start is called before the first frame update
@@ -31,11 +34,11 @@ public class ripple : MonoBehaviour
             }
             else
             {
-                rot.z += val;
-                rtsb.sb_Rot.z += val;
+                rot.z += (mainmenu ? valmainMenu : val);
+                rtsb.sb_Rot.z += (mainmenu ? valmainMenu : val);
                 transform.rotation = Quaternion.Euler(rot);
                 Vector3 pos = transform.position;
-                pos.x += val/16;
+                pos.x += (mainmenu ? valmainMenu : val) / 16;
                 transform.position = pos;
             }
         }
@@ -50,11 +53,11 @@ public class ripple : MonoBehaviour
             }
             else
             {
-                rot.z -= val;
-                rtsb.sb_Rot.z -= val;
+                rot.z -= (mainmenu ? valmainMenu : val);
+                rtsb.sb_Rot.z -= (mainmenu ? valmainMenu : val);
                 transform.rotation = Quaternion.Euler(rot);
                 Vector3 pos = transform.position;
-                pos.x -= val/16;
+                pos.x -= (mainmenu ? valmainMenu : val) / 16;
                 transform.position = pos;
             }
         }
