@@ -18,4 +18,4 @@ using System.Threading.Tasks;
             name = _name;
             score = _score;
         }
-    }
+}

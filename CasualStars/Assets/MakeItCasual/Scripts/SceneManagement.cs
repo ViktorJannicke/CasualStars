@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
+    public bool loadScoreSubmition;
+
+    private void Update()
+    {
+        if(loadScoreSubmition)
+        {
+            loadScoreSubmition = false;
+            LoadScoreSubmition();
+        }
+    }
+
     public void LoadMainMenu()
     {
         SceneManager.LoadSceneAsync("MainMenu");
@@ -12,6 +23,10 @@ public class SceneManagement : MonoBehaviour
     public void LoadScoreboard()
     {
         SceneManager.LoadSceneAsync("Scoreboard");
+    }
+    public void LoadScoreSubmition()
+    {
+        SceneManager.LoadSceneAsync("ScoreSubmition");
     }
     public void LoadSettings()
     {
@@ -31,7 +46,8 @@ public class SceneManagement : MonoBehaviour
 
     public void LoadAdFromGameEnd()
     {
-        MasterManager.mm.nextScene = "Scoreboard";
+        MasterManager.mm.nextScene = "ScoreSubmition";
+        MasterManager.mm.lastScore *= 2;
         SceneManager.LoadSceneAsync("Werbung");
     }
 }

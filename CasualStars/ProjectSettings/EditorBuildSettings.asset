@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/Scoreboard.unity
     guid: 02252cb3af5338249814559cba4414b3
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/ScoreSubmition.unity
+    guid: 0fe2a85e57aa78948b203fdd1e6683bd
   m_configObjects: {}

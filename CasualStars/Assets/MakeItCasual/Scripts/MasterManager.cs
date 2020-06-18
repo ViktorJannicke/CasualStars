@@ -8,7 +8,8 @@ public class MasterManager : MonoBehaviour
     public string nextScene;
     public int AdSpotLength;
 
-    public List<PlayerData> playerDatas = new List<PlayerData>();
+    public List<PlayerData> playerData;
+    public int lastScore;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +23,15 @@ public class MasterManager : MonoBehaviour
         mm = this;
         DontDestroyOnLoad(gameObject);
 
-        playerDatas.Add(new PlayerData("I", 0));
-        playerDatas.Add(new PlayerData("Bob", 10000000));
-        playerDatas.Add(new PlayerData("Sam", 2500));
+        if (SaveSystem.PlayerDataExists())
+        {
+            playerData = SaveSystem.LoadPlayer();
+        }
+        else
+        {
+            playerData = new List<PlayerData>();
+            SaveSystem.SavePlayer(playerData);
+        }
     }
 
     // Update is called once per frame

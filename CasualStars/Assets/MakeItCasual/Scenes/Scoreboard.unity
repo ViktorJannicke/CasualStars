@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa835afb4712afd4e942f846a3ec92db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadScoreSubmition: 0
 --- !u!114 &184984070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,6 +832,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreElement: {fileID: 5430087355524033537, guid: c8ed04bf543fe724a90c019dc531769f,
     type: 3}
+  input: {fileID: 0}
+  scoreboardOn: 1
+  sm: {fileID: 0}
 --- !u!1 &1147547045
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,7 +1280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 619.30664, y: -156.7}
+  m_AnchoredPosition: {x: 619.30664, y: -156.7002}
   m_SizeDelta: {x: 1243.2333, y: 160.3103}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1890916806
