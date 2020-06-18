@@ -214,6 +214,11 @@ MonoBehaviour:
   health: 50
   split: 0
   obstacle: {fileID: -3439700746272052135}
+  explosionSmall: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3,
+    type: 3}
+  explosionBig: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
+    type: 3}
+  TTED: 10
 --- !u!114 &3693132329819856069
 MonoBehaviour:
   m_ObjectHideFlags: 0
