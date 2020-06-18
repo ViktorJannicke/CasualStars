@@ -17,3 +17,17 @@ ShaderVariantCollection:
   - first: {fileID: 4800000, guid: 2a1fda71c9e820e42b9cd64424f8452e, type: 3}
     second:
       variants: []
+  - first: {fileID: 4800000, guid: ea4018e98671dbf40b0d47588bb71400, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 6dcb5aad1e2429e42abfa0d4370e73c6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _EMISSION
+        passType: 0
+      - keywords: _METALLICSPECGLOSSMAP _NORMALMAP
+        passType: 0

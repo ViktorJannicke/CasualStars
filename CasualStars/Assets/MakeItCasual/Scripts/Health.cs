@@ -35,7 +35,7 @@ public class Health : MonoBehaviour
 			}
 			else
 			{
-				GameObject explosion = Instantiate(explosionSmall, collision.gameObject.transform);
+				GameObject explosion = Instantiate(explosionSmall, collision.contacts[0].point, transform.rotation);
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 			}

@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6165095810603889732}
   - component: {fileID: 6894548650373410648}
   - component: {fileID: 5726358232049447788}
-  - component: {fileID: 9118445400444749851}
   - component: {fileID: -2137567831688246043}
   m_Layer: 10
   m_Name: Asteroid_Small
@@ -99,7 +98,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6165095810603889732
 MonoBehaviour:
@@ -116,6 +115,9 @@ MonoBehaviour:
   health: 50
   split: 0
   obstacle: {fileID: 6894548650373410648}
+  explosionSmall: {fileID: 0}
+  explosionBig: {fileID: 0}
+  TTED: 10
 --- !u!114 &6894548650373410648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,11 +130,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f168fb65be9c9b40ba7d541f94b9688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 9118445400444749851}
-  target: {fileID: 0}
   splitObject: {fileID: 0}
   splitCount: 0
   ScoreBonus: 5
+  manager: {fileID: 0}
 --- !u!114 &5726358232049447788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,24 +149,9 @@ MonoBehaviour:
   health: 50
   split: 0
   obstacle: {fileID: 6894548650373410648}
---- !u!114 &9118445400444749851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6165095810603889736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e846f318ca112e419dbb46f1826fce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.03
-  move: 0
-  targetPos: {x: 0, y: 0, z: 0}
-  checkX: 0
-  checkY: 0
-  checkZ: 0
+  explosionSmall: {fileID: 0}
+  explosionBig: {fileID: 0}
+  TTED: 10
 --- !u!135 &-2137567831688246043
 SphereCollider:
   m_ObjectHideFlags: 0

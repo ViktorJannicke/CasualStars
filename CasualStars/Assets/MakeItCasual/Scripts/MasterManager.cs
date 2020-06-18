@@ -11,6 +11,8 @@ public class MasterManager : MonoBehaviour
     public List<PlayerData> playerData;
     public int lastScore;
 
+    public int difficulty;
+
     // Start is called before the first frame update
     void Start()
     {

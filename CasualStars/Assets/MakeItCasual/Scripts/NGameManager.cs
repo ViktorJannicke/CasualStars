@@ -39,6 +39,9 @@ public class NGameManager : MonoBehaviour
     public bool gameStarted;
     public float gameStartTime = 4;
     public TextMeshProUGUI gameStartText;
+
+    [Header("GameEnd")]
+    public SceneManagement sm;
     
     private void Update()
     {
@@ -56,10 +59,10 @@ public class NGameManager : MonoBehaviour
             float t = Time.deltaTime;
             if (timer - t <= 0)
             {
-                timer = 0;
+                timer = -1000;
 
                 MasterManager.mm.lastScore = Score;
-                SceneManager.LoadSceneAsync("GameEnd");
+                sm.LoadGameEnd();
             }
             else
             {
@@ -90,10 +93,6 @@ public class NGameManager : MonoBehaviour
                 else if (gameStartTime - t <= 4)
                 {
                     gameStartText.text = "3";
-                    for (int i = 0; i < spawnCount; i++)
-                    {
-                        Asteroidsspawn();
-                    }
 
                 }
 
@@ -103,15 +102,18 @@ public class NGameManager : MonoBehaviour
 
         }
     }
-
-    void Awake()
-    {
-    }
     private void Start()
     {
+        int counter = 0;
+        for (int i = 0; i <= (spawnCount/3*(MasterManager.mm.difficulty+1)); i++)
+        {
+            counter += Asteroidsspawn();
+        }
+
+        Debug.Log(counter);
     }
 
-    public void Asteroidsspawn()
+    public int Asteroidsspawn()
     {
         int count = 0;
 
@@ -123,26 +125,19 @@ public class NGameManager : MonoBehaviour
             count++;
             if(count > 500)
             {
-                return;
+                return 0;
             }
         }
         GameObject asteroid = Instantiate(Asteroidprefab, pos, Asteroidprefab.transform.rotation);
+        asteroid.transform.parent = transform;
         Obstacle o = asteroid.GetComponent<Obstacle>();
-        o.target = player;
         o.manager = this;
-        Movement m = asteroid.GetComponent<Movement>();
-        m.checkX = checkX;
-        m.checkY = checkY;
-        m.checkZ = checkZ;
+        return 1;
     }
 
     public void Planetspawn()
     {
         GameObject planet = Instantiate(planetPrefab, planetSpawnPoint);
-        Movement m = planet.GetComponent<Movement>();
-        m.checkX = checkX;
-        m.checkY = checkY;
-        m.checkZ = checkZ;
     }
 
     private void OnDrawGizmosSelected()

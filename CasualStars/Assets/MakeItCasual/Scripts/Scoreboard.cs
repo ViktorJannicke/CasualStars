@@ -9,7 +9,9 @@ public class Scoreboard : MonoBehaviour
 	public GameObject scoreElement;
 
 	public TMP_InputField input;
+	public TextMeshProUGUI text;
 	public bool scoreboardOn;
+	public bool showScore;
 
 	public SceneManagement sm;
 	public void scoreboardzeichnen()
@@ -31,18 +33,21 @@ public class Scoreboard : MonoBehaviour
 	{
 		if(scoreboardOn)
 		scoreboardzeichnen();
+
+		if (showScore)
+			text.text = "Your Score: " + MasterManager.mm.lastScore;
 	}
 
-	public void SaveScore()
+	public void SaveScore_Scoreboard()
 	{
 		MasterManager.mm.playerData.Add(new PlayerData(input.text, MasterManager.mm.lastScore));
 		SaveSystem.SavePlayer(MasterManager.mm.playerData);
-		sm.LoadScoreboard();
+		sm.LoadScoreboardFromScoreSubmition();
 	}
-
-
-
-
-
-
+	public void SaveScore_newGame()
+	{
+		MasterManager.mm.playerData.Add(new PlayerData(input.text, MasterManager.mm.lastScore));
+		SaveSystem.SavePlayer(MasterManager.mm.playerData);
+		sm.LoadGameStartFromScoreSubmition();
+	}
 }

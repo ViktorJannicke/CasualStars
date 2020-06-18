@@ -6,16 +6,16 @@ public class Movement : MonoBehaviour
 {
     public float speed = 0.1f;
     public bool move;
+    public Transform target;
     public Vector3 targetPos;
 
     public bool checkX;
     public bool checkY;
     public bool checkZ;
 
-    public void hyperdriveTo(Vector3 touchposition)
+    private void Start()
     {
-
-        transform.position = touchposition;
+        targetPos = target.position;
     }
 
     private void Update()
@@ -57,12 +57,6 @@ public class Movement : MonoBehaviour
 
             transform.position += newPos;
         }
-    }
-
-    public void moveTo(Vector3 touchposition)
-    {
-        targetPos = touchposition;
-        move = true;
     }
 
     public void stop()

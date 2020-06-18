@@ -18,8 +18,30 @@ public class scriptwerbung : MonoBehaviour
 		Zeit += Time.deltaTime;
 		if (Zeit >= mm.AdSpotLength)
 		{
-			SceneManager.LoadSceneAsync(mm.nextScene);
+            if (mm.nextScene == "Game")
+            {
+                SceneManager.LoadSceneAsync(mm.nextScene);
+            }
+            else
+            {
+                SceneManager.UnloadSceneAsync("Werbung");
+                SceneManager.LoadSceneAsync(mm.nextScene, LoadSceneMode.Additive);
+            }
+            Zeit = -1000;
 		}
 			
+    }
+
+    public void skip()
+    {
+        if (mm.nextScene == "Game")
+        {
+            SceneManager.LoadSceneAsync(mm.nextScene);
+        }
+        else
+        {
+            SceneManager.UnloadSceneAsync("Werbung");
+            SceneManager.LoadSceneAsync(mm.nextScene, LoadSceneMode.Additive);
+        }
     }
 }

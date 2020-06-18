@@ -5,37 +5,91 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
-    public bool loadScoreSubmition;
-
-    private void Update()
+    public bool loadSpaceship;
+    public bool loadGameEnd;
+    private void Start()
     {
-        if(loadScoreSubmition)
+        if(loadSpaceship)
         {
-            loadScoreSubmition = false;
-            LoadScoreSubmition();
+            LoadMainMenuFromIngame();
+            loadSpaceship = false;
         }
     }
 
-    public void LoadMainMenu()
+    private void Update()
+    {
+        if(loadGameEnd)
+        {
+            loadGameEnd = false;
+            LoadGameEnd();
+        }
+    }
+
+    public void LoadSpaceship()
+    {
+        SceneManager.LoadSceneAsync("Spaceship", LoadSceneMode.Additive);
+    }
+    public void LoadMainMenuFromIngame()
     {
         SceneManager.LoadSceneAsync("MainMenu");
+        LoadSpaceship();
     }
-    public void LoadScoreboard()
+    public void LoadMainMenuFromScoreboard()
     {
-        SceneManager.LoadSceneAsync("Scoreboard");
+        SceneManager.UnloadSceneAsync("Scoreboard");
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
     }
-    public void LoadScoreSubmition()
+    public void LoadMainMenuFromSettings()
     {
-        SceneManager.LoadSceneAsync("ScoreSubmition");
+        SceneManager.UnloadSceneAsync("Settings");
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+    }
+    public void LoadMainMenuFromGameStart()
+    {
+        SceneManager.UnloadSceneAsync("GameStart");
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+    }
+    public void LoadGameStart()
+    {
+        SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("GameStart", LoadSceneMode.Additive);
+    }
+    public void LoadGameStartFromScoreSubmition()
+    {
+        SceneManager.UnloadSceneAsync("ScoreSubmition");
+        SceneManager.LoadSceneAsync("GameStart", LoadSceneMode.Additive);
+    }
+    
+
+    public void LoadScoreboardFromMainMenu()
+    {
+        SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("Scoreboard", LoadSceneMode.Additive);
+    }
+    public void LoadScoreboardFromScoreSubmition()
+    {
+        SceneManager.UnloadSceneAsync("ScoreSubmition");
+        SceneManager.LoadSceneAsync("Scoreboard", LoadSceneMode.Additive);
+    }
+    public void LoadScoreSubmitionFromGameEnd()
+    {
+        SceneManager.UnloadSceneAsync("GameEnd");
+        SceneManager.LoadSceneAsync("ScoreSubmition", LoadSceneMode.Additive);
     }
     public void LoadSettings()
     {
-        SceneManager.LoadSceneAsync("Settings");
+        SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
     }
 
     public void LoadGame()
     {
         SceneManager.LoadSceneAsync("Game");
+    }
+    public void LoadGameEnd()
+    {
+        SceneManager.LoadSceneAsync("GameEnd");
+        LoadSpaceship();
     }
 
     public void LoadAdFromGameStart()
@@ -48,6 +102,7 @@ public class SceneManagement : MonoBehaviour
     {
         MasterManager.mm.nextScene = "ScoreSubmition";
         MasterManager.mm.lastScore *= 2;
-        SceneManager.LoadSceneAsync("Werbung");
+        SceneManager.UnloadSceneAsync("GameEnd");
+        SceneManager.LoadSceneAsync("Werbung", LoadSceneMode.Additive);
     }
 }

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7895510901605495145}
   - component: {fileID: -4303138475066515581}
   - component: {fileID: -6683770725837527435}
-  - component: {fileID: -2291618767499672402}
   - component: {fileID: -7071718410472215275}
   m_Layer: 10
   m_Name: Asteroid_Medium
@@ -98,7 +97,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &-4303138475066515581
 MonoBehaviour:
@@ -112,11 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f168fb65be9c9b40ba7d541f94b9688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: -2291618767499672402}
-  target: {fileID: 0}
   splitObject: {fileID: 0}
   splitCount: 0
   ScoreBonus: 10
+  manager: {fileID: 0}
 --- !u!114 &-6683770725837527435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,24 +130,9 @@ MonoBehaviour:
   health: 50
   split: 0
   obstacle: {fileID: -4303138475066515581}
---- !u!114 &-2291618767499672402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7895510901605495144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e846f318ca112e419dbb46f1826fce0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.03
-  move: 0
-  targetPos: {x: 0, y: 0, z: 0}
-  checkX: 0
-  checkY: 0
-  checkZ: 0
+  explosionSmall: {fileID: 0}
+  explosionBig: {fileID: 0}
+  TTED: 10
 --- !u!135 &-7071718410472215275
 SphereCollider:
   m_ObjectHideFlags: 0

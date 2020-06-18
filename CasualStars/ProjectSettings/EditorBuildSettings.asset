@@ -9,21 +9,33 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/MakeItCasual/Scenes/First.unity
+    guid: 07a9ed2fac2d67041a69d4397c0a49c6
+  - enabled: 1
     path: Assets/MakeItCasual/Scenes/MainMenu.unity
     guid: db5ef153222bdbd4ab7030f1adb0d776
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/GameStart.unity
+    guid: 43a0e7042d5f140498ad2e5dfd7d8c86
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/Game.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
   - enabled: 1
-    path: Assets/MakeItCasual/Scenes/Werbung.unity
-    guid: a610f9dd6f5fd5444ac67c86d5aa23e5
-  - enabled: 1
     path: Assets/MakeItCasual/Scenes/GameEnd.unity
     guid: 325e762d8ad3eea4bb15fdf113a533ea
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/ScoreSubmition.unity
+    guid: 0fe2a85e57aa78948b203fdd1e6683bd
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/Scoreboard.unity
     guid: 02252cb3af5338249814559cba4414b3
   - enabled: 1
-    path: Assets/MakeItCasual/Scenes/ScoreSubmition.unity
-    guid: 0fe2a85e57aa78948b203fdd1e6683bd
+    path: Assets/MakeItCasual/Scenes/Werbung.unity
+    guid: a610f9dd6f5fd5444ac67c86d5aa23e5
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/Spaceship.unity
+    guid: 088830b9a1e01c844a3732dcb0d8ddc3
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/Settings.unity
+    guid: e531bc0229684684191d6138f282fcdd
   m_configObjects: {}

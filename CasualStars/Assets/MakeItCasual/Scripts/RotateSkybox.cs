@@ -5,6 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Skybox))]
 public class RotateSkybox : MonoBehaviour
 {
+    public Material skybox1;
+    public Material skybox2;
+    public Material skybox3;
+
     public Vector3 sb_Rot;
     Material mt;
 
@@ -13,7 +17,26 @@ public class RotateSkybox : MonoBehaviour
     {
         // Construct a rotation matrix and set it for the shader
 
-        mt = GetComponent<Skybox>().material;
+        Skybox sb = GetComponent<Skybox>();
+        
+        switch(Random.Range(0,4))
+        {
+            case 1:
+                sb.material = skybox1;
+                break;
+            case 2:
+                sb.material = skybox2;
+                break;
+            case 3:
+                sb.material = skybox3;
+                break;
+            default:
+                sb.material = skybox1;
+                break;
+        }
+
+        mt = sb.material;
+        sb.material.SetFloat("Exposure", Random.Range(0.5f, 1.5f));
     }
 
     private void Update()
