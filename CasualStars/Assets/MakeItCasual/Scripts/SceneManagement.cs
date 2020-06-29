@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
@@ -11,6 +9,7 @@ public class SceneManagement : MonoBehaviour
     {
         if(loadSpaceship)
         {
+
             LoadMainMenuFromIngame();
             loadSpaceship = false;
         }
@@ -95,7 +94,8 @@ public class SceneManagement : MonoBehaviour
     public void LoadAdFromGameStart()
     {
         MasterManager.mm.nextScene = "Game";
-        SceneManager.LoadSceneAsync("Werbung");
+        SceneManager.UnloadSceneAsync("GameStart");
+        SceneManager.LoadSceneAsync("Werbung", LoadSceneMode.Additive);
     }
 
     public void LoadAdFromGameEnd()

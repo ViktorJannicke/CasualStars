@@ -110,13 +110,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328e9d695d9221b4b9315958182e71b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherTag: Asteroid
+  otherTag1: AsteroidIn
+  otherTag2: AsteroidOut
   manager: {fileID: 0}
   explosion: 1
   explosionBig: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
   TTED: 10
-  scaleWithDifficulty: 0
 --- !u!54 &8486472912501455735
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -364,13 +364,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4623786011566026423}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.364563, z: -9.220261}
+  m_LocalRotation: {x: 0.04994878, y: -0.8811208, z: 0.27781254, w: 0.3794093}
+  m_LocalPosition: {x: 7.636754, y: 7.452435, z: 7.974701}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6042588921202426487}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6237544661704252449
 Camera:
   m_ObjectHideFlags: 0
@@ -478,6 +478,7 @@ MonoBehaviour:
   skybox2: {fileID: 2100000, guid: 269967744bbed1849a317b8175dc3f43, type: 2}
   skybox3: {fileID: 2100000, guid: 246d4b1ad4a63004d8fcf3949494e5b3, type: 2}
   sb_Rot: {x: 0, y: 0, z: 0}
+  activated: 0
 --- !u!114 &5514667462096807659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,12 +491,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128de4a3a373f0142a0ce8cd9e63e002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  val: 0.01
-  maxLeft: 10
-  maxRight: -10
+  val: 0.005
+  maxLeft: 5
+  maxRight: -5
   turnLeft: 0
   mainmenu: 0
   valmainMenu: 0
+  activated: 0
   rtsb: {fileID: 7289019504094660792}
 --- !u!1 &4992367652552357786
 GameObject:
@@ -624,7 +626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.1
-  move: 1
+  move: 0
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
   checkX: 0
@@ -770,7 +772,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 6ff5b26819ae9af47842327ce66e4377, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -817,12 +819,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328e9d695d9221b4b9315958182e71b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherTag: Asteroid
+  otherTag1: AsteroidIn
+  otherTag2: AsteroidOut
   manager: {fileID: 0}
   explosion: 0
   explosionBig: {fileID: 0}
   TTED: 10
-  scaleWithDifficulty: 1
 --- !u!54 &8200702756488478143
 Rigidbody:
   m_ObjectHideFlags: 0

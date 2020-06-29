@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Health : MonoBehaviour
 {
 	public int health = 50;
 	GameObject lastHit;
 
-	public bool split;
 	public Obstacle obstacle;
 
 	public GameObject explosionSmall;
@@ -28,10 +25,7 @@ public class Health : MonoBehaviour
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 
-				if (split || obstacle != null)
 				obstacle.Kill();
-				else
-				Destroy(gameObject);
 			}
 			else
 			{

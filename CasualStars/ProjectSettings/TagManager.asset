@@ -8,6 +8,8 @@ TagManager:
   - Bullet
   - MapGround
   - GameManager
+  - AsteroidIn
+  - AsteroidOut
   - Asteroid
   layers:
   - Default

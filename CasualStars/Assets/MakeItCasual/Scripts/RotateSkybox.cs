@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Skybox))]
 public class RotateSkybox : MonoBehaviour
@@ -11,6 +9,8 @@ public class RotateSkybox : MonoBehaviour
 
     public Vector3 sb_Rot;
     Material mt;
+
+    public bool activated = true;
 
     float time = 0;
     void Start()
@@ -41,10 +41,13 @@ public class RotateSkybox : MonoBehaviour
 
     private void Update()
     {
-        sb_Rot.x += 0.0002f * time;
-        time += Time.deltaTime;
-        Quaternion rot = Quaternion.Euler(sb_Rot);
-        Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, rot, new Vector3(1, 1, 1));
-        mt.SetMatrix("_Rotation", m);
+        if (activated)
+        {
+            sb_Rot.x += 0.0001f * time;
+            time += Time.deltaTime;
+            Quaternion rot = Quaternion.Euler(sb_Rot);
+            Matrix4x4 m = Matrix4x4.TRS(Vector3.zero, rot, new Vector3(1, 1, 1));
+            mt.SetMatrix("_Rotation", m);
+        }
     }
 }

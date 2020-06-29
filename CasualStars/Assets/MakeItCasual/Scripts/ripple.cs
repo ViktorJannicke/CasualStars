@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ripple : MonoBehaviour
 {
@@ -13,6 +11,8 @@ public class ripple : MonoBehaviour
     public bool mainmenu;
     public float valmainMenu;
 
+    public bool activated = true;
+
     public RotateSkybox rtsb;
     // Start is called before the first frame update
     void Start()
@@ -23,44 +23,46 @@ public class ripple : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(turnLeft)
+        if (activated)
         {
-            Vector3 rot = transform.rotation.eulerAngles;
-            float angle = rot.z;
-            angle = (angle > 180) ? angle - 360 : angle;
-            if (angle > maxLeft)
+            if (turnLeft)
             {
-                turnLeft = false;
+                Vector3 rot = transform.rotation.eulerAngles;
+                float angle = rot.z;
+                angle = (angle > 180) ? angle - 360 : angle;
+                if (angle > maxLeft)
+                {
+                    turnLeft = false;
+                }
+                else
+                {
+                    rot.z += (mainmenu ? valmainMenu : val);
+                    rtsb.sb_Rot.z += (mainmenu ? valmainMenu : val) / 2;
+                    transform.rotation = Quaternion.Euler(rot);
+                    Vector3 pos = transform.position;
+                    pos.x += (mainmenu ? valmainMenu : val) / (mainmenu ? 32 : 16);
+                    transform.position = pos;
+                }
             }
             else
             {
-                rot.z += (mainmenu ? valmainMenu : val);
-                rtsb.sb_Rot.z += (mainmenu ? valmainMenu : val);
-                transform.rotation = Quaternion.Euler(rot);
-                Vector3 pos = transform.position;
-                pos.x += (mainmenu ? valmainMenu : val) / (mainmenu ? 32 : 16);
-                transform.position = pos;
+                Vector3 rot = transform.rotation.eulerAngles;
+                float angle = rot.z;
+                angle = (angle > 180) ? angle - 360 : angle;
+                if (angle < maxRight)
+                {
+                    turnLeft = true;
+                }
+                else
+                {
+                    rot.z -= (mainmenu ? valmainMenu : val);
+                    rtsb.sb_Rot.z -= (mainmenu ? valmainMenu : val) / 2;
+                    transform.rotation = Quaternion.Euler(rot);
+                    Vector3 pos = transform.position;
+                    pos.x -= (mainmenu ? valmainMenu : val) / (mainmenu ? 32 : 16);
+                    transform.position = pos;
+                }
             }
         }
-        else
-        {
-            Vector3 rot = transform.rotation.eulerAngles;
-            float angle = rot.z;
-            angle = (angle > 180) ? angle - 360 : angle;
-            if (angle < maxRight)
-            {
-                turnLeft = true;
-            }
-            else
-            {
-                rot.z -= (mainmenu ? valmainMenu : val);
-                rtsb.sb_Rot.z -= (mainmenu ? valmainMenu : val);
-                transform.rotation = Quaternion.Euler(rot);
-                Vector3 pos = transform.position;
-                pos.x -= (mainmenu ? valmainMenu : val) / (mainmenu ? 32 : 16);
-                transform.position = pos;
-            }
-        }
-
     }
 }
