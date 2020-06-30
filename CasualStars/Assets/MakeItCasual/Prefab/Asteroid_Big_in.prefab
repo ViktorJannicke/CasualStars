@@ -215,6 +215,7 @@ MonoBehaviour:
   explosionBig: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
   TTED: 10
+  explosionOffset: {x: 0, y: 0, z: -5}
 --- !u!64 &8611477798913804311
 MeshCollider:
   m_ObjectHideFlags: 0

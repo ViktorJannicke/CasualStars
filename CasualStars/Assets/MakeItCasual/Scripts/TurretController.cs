@@ -52,9 +52,11 @@ public class TurretController : MonoBehaviour
         fireTransform.LookAt(targetPlayer);
         GameObject shootBullet = Instantiate(bulletPrefab, fireTransform);
         shootBullet.transform.parent = null;
-
+        Bullet b = shootBullet.GetComponent<Bullet>();
+        b.targetPlayer = targetPlayer;
+        b.move = true;
         //shootBullet.transform.position = targetPlayer.position;
-        shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;// + (targetPlayer.position.y > fireTransform.position.y ? Vector3.up : Vector3.down);// + (targetPlayer.position.x > fireTransform.position.x ? Vector3.right : Vector3.left);
+        //shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;// + (targetPlayer.position.y > fireTransform.position.y ? Vector3.up : Vector3.down);// + (targetPlayer.position.x > fireTransform.position.x ? Vector3.right : Vector3.left);
     }
 
     public void SetTargetPlayer(Transform _position, bool _attack)

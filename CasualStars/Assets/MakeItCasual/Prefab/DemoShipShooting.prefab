@@ -625,13 +625,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e846f318ca112e419dbb46f1826fce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 20
   move: 0
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
-  checkX: 0
-  checkY: 0
-  checkZ: 1
+  destoryOnTargetReached: 0
 --- !u!1 &6308926886243056095
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
 	public GameObject explosionSmall;
 	public GameObject explosionBig;
 	public float TTED = 10f;
+	public Vector3 explosionOffset;
 
 	// Start is called before the first frame update
 	private void OnCollisionEnter(Collision collision)
@@ -21,7 +22,7 @@ public class Health : MonoBehaviour
 			
 			if (health <= 0)
 			{
-				GameObject explosion = Instantiate(explosionBig, transform.position, transform.rotation);
+				GameObject explosion = Instantiate(explosionBig, transform.position + explosionOffset, transform.rotation);
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 
@@ -29,7 +30,7 @@ public class Health : MonoBehaviour
 			}
 			else
 			{
-				GameObject explosion = Instantiate(explosionSmall, collision.contacts[0].point, transform.rotation);
+				GameObject explosion = Instantiate(explosionSmall, transform.position + explosionOffset, transform.rotation);
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 			}

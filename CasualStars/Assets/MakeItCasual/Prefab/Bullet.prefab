@@ -125,3 +125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletDamage: 25
   maxTime: 60
+  targetPlayer: {fileID: 0}
+  move: 0
+  speed: 100

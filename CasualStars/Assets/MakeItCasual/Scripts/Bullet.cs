@@ -6,10 +6,29 @@ public class Bullet : MonoBehaviour
     public int bulletDamage = 25;
     public float maxTime;
 
+    public Transform targetPlayer;
+    public bool move;
+    public float speed = 10;
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        float deltaT = Time.deltaTime;
+        if (move)
+        {
+            if (targetPlayer == null)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                var heading = targetPlayer.position - transform.position;
+                var distance = heading.magnitude;
+                Vector3 direction = heading / distance;
+                transform.Translate(direction * deltaT * speed, Space.World);
+            }
+        }
+
+        timer += deltaT;
 
         if (timer >= maxTime)
             Destroy(gameObject);
