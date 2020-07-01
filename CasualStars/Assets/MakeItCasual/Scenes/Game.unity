@@ -216,14 +216,14 @@ MonoBehaviour:
   score: {fileID: 1065860114}
   time: {fileID: 528631012}
   timer: 120
-  AsteroidprefabIn: {fileID: 6515083680831690827, guid: cf7633f8c15b9af459ed53501260f3e1,
-    type: 3}
+  AsteroidprefabIn:
+  - {fileID: 6515083680831690827, guid: cf7633f8c15b9af459ed53501260f3e1, type: 3}
   InGroup: {fileID: 1515004470}
-  AsteroidprefabOut: {fileID: 8247107274390390050, guid: a1d09871fea81d14793fbad30f8fab65,
-    type: 3}
+  AsteroidprefabOut:
+  - {fileID: 8247107274390390050, guid: a1d09871fea81d14793fbad30f8fab65, type: 3}
   OutGroup: {fileID: 442747869}
-  AsteroidprefabMove: {fileID: 8247107274390390050, guid: dd7719a1a74995c4abf4ffe3fb855a6c,
-    type: 3}
+  AsteroidprefabMove:
+  - {fileID: 8247107274390390050, guid: dd7719a1a74995c4abf4ffe3fb855a6c, type: 3}
   MoveGroup: {fileID: 899417450}
   AsteroidprefabMoveSpawner: {fileID: 6019954811325117569, guid: a44e3d2b166e89d45b959c4239d4503a,
     type: 3}
@@ -236,7 +236,9 @@ MonoBehaviour:
   sizeIn: {x: 90, y: 180, z: 2000}
   sizeOut: {x: 180, y: 360, z: 2000}
   spawnRadius: 30
-  spawnCount: 399
+  spawnCountIn: 140000002800000050000000
+  spawnCountOut: c80000002c01000090010000
+  spawnCountMove: 0a000000140000001e000000
   movingSpawnOffsetX: 100
   movingSpawnOffsetY: 50
   drawIn: 0
@@ -247,7 +249,7 @@ MonoBehaviour:
   playerSpeed:
   - 20
   - 20
-  - 15
+  - 20
   gameEnd: 0
   gameEndTime: 6.5
   sm: {fileID: 513650985}
@@ -288,6 +290,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 1024
+  touchDelay: 060000000600000006000000
 --- !u!114 &513650985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1571,8 +1574,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 4874126678125670354, guid: 87c5ef66dca6a8244858a0fb12d854d5,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: 9dfdd0a82ac8fa94fb3717f6c880d08d, type: 2}
     - target: {fileID: 5322732734016713694, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
       propertyPath: m_IsActive

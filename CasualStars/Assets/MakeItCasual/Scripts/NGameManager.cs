@@ -14,11 +14,11 @@ public class NGameManager : MonoBehaviour
     public float timer = 120;
 
     [Header("Asteroid Control Values")]
-    public GameObject AsteroidprefabIn;
+    public GameObject[] AsteroidprefabIn;
     public Transform InGroup;
-    public GameObject AsteroidprefabOut;
+    public GameObject[] AsteroidprefabOut;
     public Transform OutGroup;
-    public GameObject AsteroidprefabMove;
+    public GameObject[] AsteroidprefabMove;
     public Transform MoveGroup;
     public GameObject AsteroidprefabMoveSpawner;
     public Transform SpawnGroup;
@@ -30,7 +30,9 @@ public class NGameManager : MonoBehaviour
     public Vector3 sizeIn;
     public Vector3 sizeOut;
     public int spawnRadius;
-    public int spawnCount;
+    public int[] spawnCountIn;
+    public int[] spawnCountOut;
+    public int[] spawnCountMove;
     public float movingSpawnOffsetX;
     public float movingSpawnOffsetY;
 
@@ -142,26 +144,29 @@ public class NGameManager : MonoBehaviour
     }
     private void Start()
     {
+        
+        player.GetComponent<Movement>().speed = playerSpeed[MasterManager.mm.difficulty];
 
         int counter = 0;
-        for (int i = 0; i <= (spawnCount / 4*(MasterManager.mm.difficulty+1)) / 4; i++)
+        for (int i = 0; i <= spawnCountIn[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnIn();
         }
+        Debug.Log(counter);
 
         counter = 0;
-        for (int i = 0; i <= (spawnCount / 4 * (MasterManager.mm.difficulty + 1)) * 2; i++)
+        for (int i = 0; i <= spawnCountOut[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnOut();
         }
-
-        player.GetComponent<Movement>().speed = playerSpeed[MasterManager.mm.difficulty];
+        Debug.Log(counter);
 
         counter = 0;
-        for (int i = 0; i <= (spawnCount / 4 * (MasterManager.mm.difficulty + 1)) / 8; i++)
+        for (int i = 0; i <= spawnCountMove[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnMovableSpawner();
         }
+        Debug.Log(counter);
     }
 
     public int AsteroidsspawnIn()
@@ -179,7 +184,8 @@ public class NGameManager : MonoBehaviour
                 return 0;
             }
         }
-        GameObject asteroid = Instantiate(AsteroidprefabIn, pos, AsteroidprefabIn.transform.rotation);
+        GameObject prefab = AsteroidprefabIn[UnityEngine.Random.Range(0, AsteroidprefabIn.Length)];
+        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = InGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;
@@ -201,8 +207,8 @@ public class NGameManager : MonoBehaviour
                 return 0;
             }
         }
-
-        GameObject asteroid = Instantiate(AsteroidprefabOut, pos, AsteroidprefabOut.transform.rotation);
+        GameObject prefab = AsteroidprefabOut[UnityEngine.Random.Range(0, AsteroidprefabOut.Length)];
+        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = OutGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;
@@ -212,10 +218,9 @@ public class NGameManager : MonoBehaviour
     {
         int count = 0;
 
-
         Vector3 pos = transform.localPosition + center + new Vector3(0, 4, UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 4));
-
-        GameObject asteroid = Instantiate(AsteroidprefabMoveSpawner, pos, AsteroidprefabMoveSpawner.transform.rotation);
+        GameObject prefab = AsteroidprefabMoveSpawner;
+        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = SpawnGroup;
         asteroid.GetComponent<SpawnAsteroid>().manager = this;
         return 1;
@@ -243,8 +248,8 @@ public class NGameManager : MonoBehaviour
                 return;
             }
         }
-
-        GameObject asteroid = Instantiate(AsteroidprefabMove, pos, AsteroidprefabMove.transform.rotation);
+        GameObject prefab = AsteroidprefabMove[UnityEngine.Random.Range(0, AsteroidprefabMove.Length)];
+        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = MoveGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;

@@ -48,6 +48,21 @@ public class SceneManagement : MonoBehaviour
         SceneManager.UnloadSceneAsync("GameStart");
         SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
     }
+    public void LoadMainMenuFromScoreSubmition()
+    {
+        SceneManager.UnloadSceneAsync("ScoreSubmition");
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+    }
+    public void LoadMainMenuFromCredits()
+    {
+        SceneManager.UnloadSceneAsync("Credits");
+        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+    }
+    public void LoadCreditsFromMainMenu()
+    {
+        SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("Credits", LoadSceneMode.Additive);
+    }
     public void LoadGameStart()
     {
         SceneManager.UnloadSceneAsync("MainMenu");

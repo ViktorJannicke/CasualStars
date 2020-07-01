@@ -6,7 +6,7 @@ public class AudioData
     
     public float[] sliderValues = new float[3];
 
-    public bool notFirstStart1;
+    public int version = 0;
 
     public AudioData(float _musicSlider, float _effectsSlider, float _adsSlider)
     {

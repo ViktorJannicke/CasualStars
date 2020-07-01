@@ -51,6 +51,7 @@ MonoBehaviour:
   canonHandle: {fileID: 0}
   bulletSpeed: 50
   fireDelay: 0
+  time: 0
   attack: 0
   debug: 0
   debugText: {fileID: 0}
@@ -688,7 +689,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 87c5ef66dca6a8244858a0fb12d854d5, type: 3}
+  - {fileID: 2100000, guid: 9dfdd0a82ac8fa94fb3717f6c880d08d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

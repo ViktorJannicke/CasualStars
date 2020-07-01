@@ -17,8 +17,6 @@ public class AudioSettingsControl : MonoBehaviour
         
         slider.value = MasterManager.mm.audioData.sliderValues[(int)audioType];
         SetLevel(slider.value);
-
-        Debug.Log(audioType + " Slider: " + MasterManager.mm.audioData.sliderValues[(int)audioType]);
     }
 
     private void Update()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -15,6 +16,7 @@ public class MasterManager : MonoBehaviour
     public int difficulty;
 
     public AudioMixer mixer;
+    public int version = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -37,16 +39,16 @@ public class MasterManager : MonoBehaviour
         {
             playerData = SaveSystem.LoadPlayer();
         }
-        if(!SaveSystem.PlayerDataExists() || audioData.notFirstStart1 == false)
+        if(!SaveSystem.PlayerDataExists() || audioData.version != version)
         {
             Debug.Log("reset Data");
             playerData = new List<PlayerData>();
             SaveSystem.SavePlayer(playerData);
         }
-        if (!SaveSystem.AudioDataExists() || audioData.notFirstStart1 == false)
+        if (!SaveSystem.AudioDataExists() || audioData.version != version)
         {
             audioData = new AudioData(0.5f, 0.5f, 0.25f);
-            audioData.notFirstStart1 = true;
+            audioData.version = version;
             SaveSystem.SaveAudio(audioData);
         }
     }

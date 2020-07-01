@@ -11,7 +11,7 @@ public class TurretController : MonoBehaviour
 
     public float bulletSpeed = 10f;
     public float fireDelay;
-    private float time = 0;
+    public float time = 0;
     private int bulletRate = 1;
 
     public bool attack = false;
@@ -27,22 +27,35 @@ public class TurretController : MonoBehaviour
                 for (int x = 0; x < bulletRate; x++)
                 {
                     Fire();
-                    attack = false;
                 }
                 time = fireDelay;
+                attack = false;
             }
             else
             {
                 float t = Time.deltaTime;
 
-                if (time - t <= 0)
+                if (time >= 0 && time - t < 0)
                 {
-                    time -= 0;
+                    time = 0;
                 }
                 else
                 {
                     time -= t;
                 }
+            }
+        }
+        else
+        {
+            float t = Time.deltaTime;
+
+            if (time >= 0 && time - t < 0)
+            {
+                time = 0;
+            }
+            else
+            {
+                time -= t;
             }
         }
     }

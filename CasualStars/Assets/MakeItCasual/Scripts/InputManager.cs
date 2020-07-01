@@ -5,28 +5,26 @@ public class InputManager : MonoBehaviour
 {
 	Camera main;
 
-    MakeItCasualInput input;
+    //MakeItCasualInput input;
 	public EnemyDetector detector;
 
 	public LayerMask mask;
-
+	public int[] touchDelay;//Frames
     private void Awake()
     {
-        input = new MakeItCasualInput();
-        input.Enable();
+        //input = new MakeItCasualInput();
+        //input.Enable();
     }
 
     private void Start()
     {
 		main = Camera.main;
-		input.Game.Tap.performed += _ => { touch(); };
+		//input.Game.Tap.performed += _ => { touch(); };
     }
 
-	void touch()
+	void touch(Vector3 screensposition)
 	{
 		RaycastHit raycastHit = new RaycastHit();
-
-		Vector2 screensposition = input.Game.Position.ReadValue<Vector2>();
 
 		if (Physics.Raycast(main.ScreenPointToRay(screensposition), out raycastHit, 10000, mask))
 		{
@@ -39,10 +37,22 @@ public class InputManager : MonoBehaviour
 
 	private void OnDisable()
 	{
-		input.Disable();
+		//input.Disable();
 	}
+	int stop;
 	private void Update()
 	{
-
+		if(Input.touchCount >= 1)
+		{
+			if (stop < touchDelay[MasterManager.mm.difficulty])
+			{
+				stop++;
+			}
+			else
+			{
+				stop = 0;
+				touch(Input.GetTouch(0).position);
+			}
+		}
 	}
 }
