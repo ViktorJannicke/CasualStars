@@ -587,7 +587,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 712660276}
-        m_MethodName: HideToolTip
+        m_MethodName: ToggleToolTip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1797,7 +1797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.00018310547}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &712660275
@@ -1823,8 +1823,8 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleWidth: 1
+  m_ChildScaleHeight: 1
 --- !u!114 &712660276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1837,7 +1837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11fbd997ee1cfd429711c93ac8e47a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreElement: {fileID: 5430087355524033537, guid: c8ed04bf543fe724a90c019dc531769f,
+  scoreElement: {fileID: 6444785999182037716, guid: c8ed04bf543fe724a90c019dc531769f,
     type: 3}
   input: {fileID: 1884572053}
   text: {fileID: 0}
@@ -1847,7 +1847,7 @@ MonoBehaviour:
   nextPage: {fileID: 0}
   toolTip: {fileID: 568303035}
   EditPage: {fileID: 368339784}
-  playerData:
+  DataSet:
     id: 0
     name: 
     score: 0
@@ -3572,7 +3572,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 950698285}
   m_HandleRect: {fileID: 950698284}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

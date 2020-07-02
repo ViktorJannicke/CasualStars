@@ -16,7 +16,7 @@ public class Scoreboard : MonoBehaviour
 
 	public GameObject toolTip;
 	public GameObject EditPage;
-	public PlayerData playerData;
+	public PlayerData DataSet;
 	public bool toggle;
 
 	public SceneManagement sm;
@@ -33,9 +33,8 @@ public class Scoreboard : MonoBehaviour
 			obj.Clear();
 		}
 
-		List<PlayerData> ScoreData = MasterManager.mm.playerData;
 
-		foreach(PlayerData data in ScoreData)
+		foreach(PlayerData data in MasterManager.mm.playerData)
 		{
 			GameObject objectS = Instantiate(scoreElement, transform);
 			ScoreElement se = objectS.GetComponent<ScoreElement>();
@@ -58,22 +57,20 @@ public class Scoreboard : MonoBehaviour
 
 	public void Submit()
 	{
-		List<PlayerData> ScoreData = MasterManager.mm.playerData;
-		ScoreData.Add(new PlayerData(ScoreData.Count, input.text, MasterManager.mm.lastScore));
-		ScoreData.Sort((x, y) => x.score.CompareTo(y.score));
-		ScoreData.Reverse();
-		SaveSystem.SavePlayer(ScoreData);
+		MasterManager.mm.playerData.Add(new PlayerData(MasterManager.mm.playerData.Count, input.text, MasterManager.mm.lastScore));
+		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
+		MasterManager.mm.playerData.Reverse();
+		SaveSystem.SavePlayer(MasterManager.mm.playerData);
 		nextPage.SetActive(true);
 		submitPage.SetActive(false);
 	}
 	public void SubmitEdit()
 	{
-		playerData.name = input.text;
-		List<PlayerData> ScoreData = MasterManager.mm.playerData;
-		ScoreData[playerData.id] = playerData;
-		ScoreData.Sort((x, y) => x.score.CompareTo(y.score));
-		ScoreData.Reverse();
-		SaveSystem.SavePlayer(ScoreData);
+		DataSet.name = input.text;
+		MasterManager.mm.playerData[DataSet.id] = DataSet;
+		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
+		MasterManager.mm.playerData.Reverse();
+		SaveSystem.SavePlayer(MasterManager.mm.playerData);
 		scoreboardzeichnen();
 		HideEditPage();
 	}
@@ -89,18 +86,30 @@ public class Scoreboard : MonoBehaviour
 		if (!toggle)
 		{
 			toggle = true;
-			List<PlayerData> ScoreData = MasterManager.mm.playerData;
-			playerData = ScoreData[element.id];
+			DataSet = MasterManager.mm.playerData[element.id];
 		} else
 		{
 			toggle = false;
 		}
 		toolTip.SetActive(toggle);
 	}
+	public void ToggleToolTip()
+	{
+		if (!toggle)
+		{
+			toggle = true;
+		}
+		else
+		{
+			toggle = false;
+		}
+		toolTip.SetActive(toggle);
+	}
+
 	public void ShowEditPage()
 	{
 		ToggleToolTip(null);
-		input.text = playerData.name;
+		input.text = DataSet.name;
 		EditPage.SetActive(true);
 	}
 
@@ -111,7 +120,7 @@ public class Scoreboard : MonoBehaviour
 
 	public void DeleteElement()
 	{
-		MasterManager.mm.playerData.Remove(playerData);
+		MasterManager.mm.playerData.Remove(DataSet);
 
 		scoreboardzeichnen();
 		ToggleToolTip(null);

@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca2d166a6853534fad8edf7dcd35b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Score: 25
+  Score: 0
   score: {fileID: 1065860114}
   time: {fileID: 528631012}
   timer: 120
@@ -247,9 +247,9 @@ MonoBehaviour:
   gameStartTime: 6
   gameStartText: {fileID: 1492041203}
   playerSpeed:
-  - 20
-  - 20
-  - 20
+  - 18
+  - 18
+  - 18
   gameEnd: 0
   gameEndTime: 6.5
   sm: {fileID: 513650985}
