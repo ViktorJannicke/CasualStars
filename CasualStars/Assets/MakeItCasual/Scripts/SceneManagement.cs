@@ -33,6 +33,11 @@ public class SceneManagement : MonoBehaviour
         SceneManager.LoadSceneAsync("MainMenu");
         LoadSpaceship();
     }
+    public void LoadMainMenuFromHowToPlay()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
+        LoadSpaceship();
+    }
     public void LoadMainMenuFromScoreboard()
     {
         SceneManager.UnloadSceneAsync("Scoreboard");
@@ -65,8 +70,21 @@ public class SceneManagement : MonoBehaviour
     }
     public void LoadGameStart()
     {
-        SceneManager.UnloadSceneAsync("MainMenu");
-        SceneManager.LoadSceneAsync("GameStart", LoadSceneMode.Additive);
+        if (MasterManager.mm.firstStart)
+        {
+            MasterManager.mm.firstStart = false;
+            SceneManager.LoadSceneAsync("HowToPlay");
+        }
+        else
+        {
+            SceneManager.UnloadSceneAsync("MainMenu");
+            SceneManager.LoadSceneAsync("GameStart", LoadSceneMode.Additive);
+        }
+    }
+    public void LoadGameStartFromHowToPlay()
+    {
+            SceneManager.LoadSceneAsync("GameStart");
+            LoadSpaceship();
     }
     public void LoadGameStartFromScoreSubmition()
     {

@@ -17,6 +17,7 @@ public class MasterManager : MonoBehaviour
 
     public AudioMixer mixer;
     public int version = 1;
+    public bool firstStart;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +43,7 @@ public class MasterManager : MonoBehaviour
         if(!SaveSystem.PlayerDataExists() || audioData.version != version)
         {
             Debug.Log("reset Data");
+            firstStart = true;
             playerData = new List<PlayerData>();
             SaveSystem.SavePlayer(playerData);
         }

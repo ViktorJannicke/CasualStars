@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public float maxTime;
 
     public Transform targetPlayer;
+    public Obstacle o;
     public bool move;
     public float speed = 10;
 

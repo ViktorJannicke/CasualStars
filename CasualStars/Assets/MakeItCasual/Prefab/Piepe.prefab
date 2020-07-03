@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6443084594615325406}
   - component: {fileID: 2607982148687866088}
   - component: {fileID: 8578759813445604369}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Piepe
   m_TagString: Untagged
   m_Icon: {fileID: 0}

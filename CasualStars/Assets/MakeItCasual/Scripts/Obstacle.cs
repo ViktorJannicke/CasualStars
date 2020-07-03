@@ -7,6 +7,9 @@ public class Obstacle : MonoBehaviour
     public int splitCount;
     public int ScoreBonus;
     public NGameManager manager;
+    public MeshRenderer targetRender;
+    public Material baseMaterial;
+    public Material replaceMaterial;
 
     public void Kill()
     {
@@ -24,6 +27,17 @@ public class Obstacle : MonoBehaviour
 
         manager.Score += ScoreBonus;
         Destroy(gameObject);
+    }
+
+    public void showOutline()
+    {
+        Debug.Log("Test1");
+        targetRender.material = replaceMaterial;
+    }
+    public void hideOutline()
+    {
+        Debug.Log("Test2");
+        targetRender.material = baseMaterial;
     }
 }
 

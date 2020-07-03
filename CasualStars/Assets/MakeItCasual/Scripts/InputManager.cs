@@ -22,6 +22,7 @@ public class InputManager : MonoBehaviour
 		//input.Game.Tap.performed += _ => { touch(); };
     }
 
+	public Obstacle lastObject;
 	void touch(Vector3 screensposition)
 	{
 		RaycastHit raycastHit = new RaycastHit();
@@ -30,6 +31,14 @@ public class InputManager : MonoBehaviour
 		{
 			if (raycastHit.collider.CompareTag("AsteroidIn") || raycastHit.collider.CompareTag("AsteroidOut"))
 			{
+				if(lastObject != null)
+				{
+					lastObject.hideOutline();
+				}
+				Obstacle obt = raycastHit.collider.gameObject.GetComponent<Obstacle>();
+				obt.showOutline();
+				lastObject = obt;
+
 				detector.setTarget(raycastHit.collider.transform);
 			}
 		}

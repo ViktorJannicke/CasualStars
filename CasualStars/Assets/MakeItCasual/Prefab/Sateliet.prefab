@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6546313248500583072}
   - component: {fileID: 2846885778162757782}
   - component: {fileID: 8412340251683146863}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sateliet
   m_TagString: Untagged
   m_Icon: {fileID: 0}

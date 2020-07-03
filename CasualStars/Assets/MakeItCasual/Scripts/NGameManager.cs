@@ -172,10 +172,11 @@ public class NGameManager : MonoBehaviour
     public int AsteroidsspawnIn()
     {
         int count = 0;
+        int selector = UnityEngine.Random.Range(0, AsteroidprefabIn.Length);
 
         Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
-
-        while (Physics.CheckSphere(pos, spawnRadius, mask))
+        float avarageScale = (AsteroidprefabIn[selector].transform.localScale.z + AsteroidprefabIn[selector].transform.localScale.y + AsteroidprefabIn[selector].transform.localScale.z) / 4;
+        while (Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
         {
             pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
             count++;
@@ -184,7 +185,7 @@ public class NGameManager : MonoBehaviour
                 return 0;
             }
         }
-        GameObject prefab = AsteroidprefabIn[UnityEngine.Random.Range(0, AsteroidprefabIn.Length)];
+        GameObject prefab = AsteroidprefabIn[selector];
         GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = InGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
@@ -194,11 +195,11 @@ public class NGameManager : MonoBehaviour
     public int AsteroidsspawnOut()
     {
         int count = 0;
-
+        int selector = UnityEngine.Random.Range(0, AsteroidprefabOut.Length);
 
         Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeOut.x / 2, sizeOut.x / 2), UnityEngine.Random.Range(-sizeOut.y / 2, sizeOut.y / 2), UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 2));
-
-        while (Physics.CheckSphere(pos, spawnRadius * ((pos.x+pos.y+pos.z*1.25) > (sizeIn.x + sizeIn.y + sizeIn.z) ? 1 : 2), mask))
+        float avarageScale = (AsteroidprefabOut[selector].transform.localScale.z + AsteroidprefabOut[selector].transform.localScale.y + AsteroidprefabOut[selector].transform.localScale.z) / 4;
+        while ((pos.x < (sizeIn.x / 2) || pos.y < (sizeIn.y / 2) || pos.x > -(sizeIn.x / 2) || pos.y > -(sizeIn.y / 2)) && Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
         {
             pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeOut.x / 2, sizeOut.x / 2), UnityEngine.Random.Range(-sizeOut.y / 2, sizeOut.y / 2), UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 2));
             count++;
@@ -207,7 +208,7 @@ public class NGameManager : MonoBehaviour
                 return 0;
             }
         }
-        GameObject prefab = AsteroidprefabOut[UnityEngine.Random.Range(0, AsteroidprefabOut.Length)];
+        GameObject prefab = AsteroidprefabOut[selector];
         GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = OutGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
@@ -218,7 +219,7 @@ public class NGameManager : MonoBehaviour
     {
         int count = 0;
 
-        Vector3 pos = transform.localPosition + center + new Vector3(0, 4, UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 4));
+        Vector3 pos = transform.localPosition + center + new Vector3(0, 4, UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z*0.25f));
         GameObject prefab = AsteroidprefabMoveSpawner;
         GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = SpawnGroup;
@@ -229,13 +230,14 @@ public class NGameManager : MonoBehaviour
     public void spawnMovingAsteroid(Vector3 posIn)
     {
         int count = 0;
+        int selector = UnityEngine.Random.Range(0, AsteroidprefabMove.Length);
 
         float x = UnityEngine.Random.Range(0, 2) == 0 ? sizeOut.x / 2 + movingSpawnOffsetX : -sizeOut.x / 2 - movingSpawnOffsetX;
         float y = UnityEngine.Random.Range(-movingSpawnOffsetY, movingSpawnOffsetY);
 
         Vector3 pos = new Vector3(x, y, posIn.z);
-
-        while (Physics.CheckSphere(pos, spawnRadius * ((pos.x + pos.y + pos.z * 1.25) > (sizeIn.x + sizeIn.y + sizeIn.z) ? 1 : 2), mask))
+        float avarageScale = (AsteroidprefabMove[selector].transform.localScale.z + AsteroidprefabMove[selector].transform.localScale.y + AsteroidprefabMove[selector].transform.localScale.z) / 4;
+        while ((pos.x < (sizeIn.x / 2) || pos.y < (sizeIn.y / 2) || pos.x > -(sizeIn.x / 2) || pos.y > -(sizeIn.y / 2)) && Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
         {
 
             x = UnityEngine.Random.Range(0, 2) == 0 ? sizeOut.x / 2 + movingSpawnOffsetX : -sizeOut.x / 2 - movingSpawnOffsetX;
@@ -248,7 +250,7 @@ public class NGameManager : MonoBehaviour
                 return;
             }
         }
-        GameObject prefab = AsteroidprefabMove[UnityEngine.Random.Range(0, AsteroidprefabMove.Length)];
+        GameObject prefab = AsteroidprefabMove[selector];
         GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = MoveGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
