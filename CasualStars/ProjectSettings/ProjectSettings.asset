@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Make It Casual
-  productName: Casual Stars
+  productName: Green Space Fighter
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -121,12 +121,13 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 0.2
   preloadedAssets:
   - {fileID: 6515083680831690827, guid: cf7633f8c15b9af459ed53501260f3e1, type: 3}
   - {fileID: 8247107274390390050, guid: a1d09871fea81d14793fbad30f8fab65, type: 3}
   - {fileID: 6042588921202426494, guid: fa41b43218c6bd94abb6f3d75ab858c0, type: 3}
   - {fileID: 6042588921202426494, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   metroInputSource: 0
@@ -248,7 +249,7 @@ PlayerSettings:
   templateDefaultScene: Assets/Scenes/SampleScene.unity
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 2800000, guid: 33bb4058bb27cfe4e89d7c517f5ab86d, type: 3}
+  androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
   AndroidBuildApkPerCpuArchitecture: 0
@@ -657,7 +658,8 @@ PlayerSettings:
   - libSceS3DConversion.prx
   ps4attribVROutputEnabled: 0
   monoEnv: 
-  splashScreenBackgroundSourceLandscape: {fileID: 0}
+  splashScreenBackgroundSourceLandscape: {fileID: 21300000, guid: 66e020f713271b0c8a045fed989ff7d4,
+    type: 3}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
   blurSplashScreenBackground: 1
   spritePackerPolicy: 
