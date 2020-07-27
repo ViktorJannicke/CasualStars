@@ -235,7 +235,7 @@ MonoBehaviour:
   center: {x: 0, y: 0, z: 0}
   sizeIn: {x: 115, y: 205, z: 2250}
   sizeOut: {x: 540, y: 720, z: 2750}
-  spawnRadius: 20
+  spawnRadius: 40
   spawnCountIn: 14000000280000003c000000
   spawnCountOut: 96000000c8000000fa000000
   spawnCountMove: 0a000000140000001e000000
@@ -247,7 +247,7 @@ MonoBehaviour:
   gameStartTime: 6
   gameStartText: {fileID: 1492041203}
   playerSpeed:
-  - 18
+  - 40
   - 18
   - 18
   gameEnd: 0
@@ -1628,11 +1628,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 43472980}
-    - target: {fileID: 2894835700092840985, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
-        type: 3}
-      propertyPath: speed
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 2894835700092840985, guid: 5025d8a15b99d6e45a8dd8bf494fa6cc,
         type: 3}
       propertyPath: checkZ

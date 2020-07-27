@@ -2,7 +2,7 @@
 
 public class Movement : MonoBehaviour
 {
-    public float speed = 50f;
+    public float speed = 51f; //vergessen im gamemanager einzustellen//
     public bool move;
     public Transform target;
     public Vector3 targetPos;
@@ -24,7 +24,7 @@ public class Movement : MonoBehaviour
             var heading = targetPos - transform.position;
             var distance = heading.magnitude;
             Vector3 direction = heading / distance;
-            transform.Translate(direction * Time.deltaTime * speed, Space.World);
+            transform.Translate(direction * speed * Time.deltaTime, Space.World);
 
             heading = targetPos - transform.position;
             distance = heading.magnitude;
