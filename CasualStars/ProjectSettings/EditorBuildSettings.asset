@@ -5,18 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/First.unity
     guid: 07a9ed2fac2d67041a69d4397c0a49c6
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/MainMenu.unity
     guid: db5ef153222bdbd4ab7030f1adb0d776
-  - enabled: 1
-    path: Assets/MakeItCasual/Scenes/GameStart.unity
-    guid: 43a0e7042d5f140498ad2e5dfd7d8c86
   - enabled: 1
     path: Assets/MakeItCasual/Scenes/Game.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
@@ -42,6 +36,12 @@ EditorBuildSettings:
     path: Assets/MakeItCasual/Scenes/Credits.unity
     guid: 89f994523d1d11d4d99e7a2ad6802fd3
   - enabled: 1
-    path: Assets/MakeItCasual/Scenes/HowToPlay.unity
-    guid: f2722bcd814b24440b00e3068c726210
+    path: Assets/MakeItCasual/Scenes/GameplayTransition.unity
+    guid: f31b80e569be9684aad905e512edc766
+  - enabled: 1
+    path: Assets/MakeItCasual/Scenes/LostGame.unity
+    guid: efbd4bef088eb1f40acbc551b3c9da71
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

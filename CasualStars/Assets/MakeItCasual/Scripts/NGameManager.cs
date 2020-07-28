@@ -2,6 +2,7 @@
 using TMPro;
 using System;
 using UnityEngine.Playables;
+using Boo.Lang;
 
 public class NGameManager : MonoBehaviour
 {
@@ -18,23 +19,17 @@ public class NGameManager : MonoBehaviour
     public Transform InGroup;
     public GameObject[] AsteroidprefabOut;
     public Transform OutGroup;
-    public GameObject[] AsteroidprefabMove;
-    public Transform MoveGroup;
-    public GameObject AsteroidprefabMoveSpawner;
-    public Transform SpawnGroup;
     public GameObject player;
 
     [Header("Asteroid Spawn Values")]
     public LayerMask mask;
     public Vector3 center;
     public Vector3 sizeIn;
+    public Vector3 sizeInOffset;
     public Vector3 sizeOut;
     public int spawnRadius;
     public int[] spawnCountIn;
     public int[] spawnCountOut;
-    public int[] spawnCountMove;
-    public float movingSpawnOffsetX;
-    public float movingSpawnOffsetY;
 
     [Header("Asteroid Debug")]
     public bool drawIn;
@@ -45,30 +40,31 @@ public class NGameManager : MonoBehaviour
     public float gameStartTime = 6;
     public TextMeshProUGUI gameStartText;
     public float[] playerSpeed;
+    public Transform portal;
+    public Transform targetPos;
 
     [Header("GameEnd")]
     public bool gameEnd = false;
-    public float gameEndTime = 6.5f;
     public SceneManagement sm;
-    public PlayableAsset playable;
-    public PlayableDirector director;
 
     bool once = true;
     private void Update()
     {
         if (gameEnd)
         {
-            float t = Time.deltaTime;
-            gameEndTime -= t;
-            if (gameEndTime <= 0)
-            {
                 if (once)
                 {
                     once = false;
-                    MasterManager.mm.lastScore = Score;
-                    sm.LoadGameEnd();
+                    MasterManager.mm.lastScore += Score;
+                    if (MasterManager.mm.difficulty < MasterManager.mm.maxDifficulty)
+                    {
+                        sm.LoadTransition();
+                    }
+                    else
+                    {
+                        sm.LoadAdFromGame();
+                    }
                 }
-            }
         }
         else if (gameStarted)
         {
@@ -86,11 +82,8 @@ public class NGameManager : MonoBehaviour
             {
                 if (once)
                 {
-                    director.playableAsset = playable;
-                    director.Play();
                     gameStarted = false;
                     gameEnd = true;
-                    player.GetComponent<Movement>().move = false;
                     Camera.main.gameObject.GetComponent<ripple>().activated = false;
                     Camera.main.gameObject.GetComponent<RotateSkybox>().activated = false;
                 }
@@ -142,43 +135,65 @@ public class NGameManager : MonoBehaviour
             }
         }
     }
+
     private void Start()
     {
-        
+        Vector3 pos = portal.position;
+        pos.z = sizeOut.z - 725;
+        portal.position = pos;
+        targetPos.transform.position = pos;
+
         player.GetComponent<Movement>().speed = playerSpeed[MasterManager.mm.difficulty];
 
         int counter = 0;
-        for (int i = 0; i <= spawnCountIn[MasterManager.mm.difficulty]; i++)
+        for (int i = 0; i < spawnCountIn[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnIn();
         }
         Debug.Log(counter);
 
         counter = 0;
-        for (int i = 0; i <= spawnCountOut[MasterManager.mm.difficulty]; i++)
+        for (int i = 0; i < spawnCountOut[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnOut();
         }
         Debug.Log(counter);
 
-        counter = 0;
-        for (int i = 0; i <= spawnCountMove[MasterManager.mm.difficulty]; i++)
+        checkAlongPath();
+    }
+
+    public void checkAlongPath()
+    {
+        for (int i = 0; i < sizeOut.z; i++)
         {
-            counter += AsteroidsspawnMovableSpawner();
+            Collider[] colliders = Physics.OverlapSphere(new Vector3(0,4,i), 50, mask);
+            foreach(Collider col in colliders)
+            {
+                if(col.CompareTag("AsteroidOut"))
+                {
+                    Destroy(col.gameObject);
+                }
+            }
         }
-        Debug.Log(counter);
     }
 
     public int AsteroidsspawnIn()
     {
         int count = 0;
-        int selector = UnityEngine.Random.Range(0, AsteroidprefabIn.Length);
+        int selector = UnityEngine.Random.Range(0, AsteroidprefabIn.Length+1);
+        if(selector == 0 || selector == 1)
+        {
+            selector = 0;
+        } else
+        {
+            selector = 1;
+        }
 
-        Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
+        Vector3 pos = transform.localPosition + center + sizeInOffset + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
         float avarageScale = (AsteroidprefabIn[selector].transform.localScale.z + AsteroidprefabIn[selector].transform.localScale.y + AsteroidprefabIn[selector].transform.localScale.z) / 4;
         while (Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
         {
-            pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
+            pos = transform.localPosition + center + sizeInOffset + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
             count++;
             if(count > 500)
             {
@@ -186,10 +201,13 @@ public class NGameManager : MonoBehaviour
             }
         }
         GameObject prefab = AsteroidprefabIn[selector];
-        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
+        GameObject asteroid = Instantiate(prefab, pos, Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360))));
         asteroid.transform.parent = InGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;
+        ApplyBehavior bh = asteroid.GetComponent<ApplyBehavior>();
+        bh.turnLeft = (UnityEngine.Random.Range(0, 2) == 1 ? true : false);
+        bh.player = player.transform;
         return 1;
     }
     public int AsteroidsspawnOut()
@@ -199,7 +217,8 @@ public class NGameManager : MonoBehaviour
 
         Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeOut.x / 2, sizeOut.x / 2), UnityEngine.Random.Range(-sizeOut.y / 2, sizeOut.y / 2), UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 2));
         float avarageScale = (AsteroidprefabOut[selector].transform.localScale.z + AsteroidprefabOut[selector].transform.localScale.y + AsteroidprefabOut[selector].transform.localScale.z) / 4;
-        while ((pos.x < (sizeIn.x / 2) || pos.y < (sizeIn.y / 2) || pos.x > -(sizeIn.x / 2) || pos.y > -(sizeIn.y / 2)) && Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
+
+        while (Physics.CheckSphere(pos, spawnRadius * 0.5f * avarageScale, mask))
         {
             pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeOut.x / 2, sizeOut.x / 2), UnityEngine.Random.Range(-sizeOut.y / 2, sizeOut.y / 2), UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 2));
             count++;
@@ -209,56 +228,14 @@ public class NGameManager : MonoBehaviour
             }
         }
         GameObject prefab = AsteroidprefabOut[selector];
-        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
+        GameObject asteroid = Instantiate(prefab, pos, Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360))));
         asteroid.transform.parent = OutGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;
+        ApplyBehavior bh = asteroid.GetComponent<ApplyBehavior>();
+        bh.turnLeft = (UnityEngine.Random.Range(0, 2) == 1 ? true : false);
+
         return 1;
-    }
-    public int AsteroidsspawnMovableSpawner()
-    {
-        int count = 0;
-
-        Vector3 pos = transform.localPosition + center + new Vector3(0, 4, UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z*0.25f));
-        GameObject prefab = AsteroidprefabMoveSpawner;
-        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
-        asteroid.transform.parent = SpawnGroup;
-        asteroid.GetComponent<SpawnAsteroid>().manager = this;
-        return 1;
-    }
-
-    public void spawnMovingAsteroid(Vector3 posIn)
-    {
-        int count = 0;
-        int selector = UnityEngine.Random.Range(0, AsteroidprefabMove.Length);
-
-        float x = UnityEngine.Random.Range(0, 2) == 0 ? sizeOut.x / 2 + movingSpawnOffsetX : -sizeOut.x / 2 - movingSpawnOffsetX;
-        float y = UnityEngine.Random.Range(-movingSpawnOffsetY, movingSpawnOffsetY);
-
-        Vector3 pos = new Vector3(x, y, posIn.z);
-        float avarageScale = (AsteroidprefabMove[selector].transform.localScale.z + AsteroidprefabMove[selector].transform.localScale.y + AsteroidprefabMove[selector].transform.localScale.z) / 4;
-        while ((pos.x < (sizeIn.x / 2) || pos.y < (sizeIn.y / 2) || pos.x > -(sizeIn.x / 2) || pos.y > -(sizeIn.y / 2)) && Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
-        {
-
-            x = UnityEngine.Random.Range(0, 2) == 0 ? sizeOut.x / 2 + movingSpawnOffsetX : -sizeOut.x / 2 - movingSpawnOffsetX;
-            y = UnityEngine.Random.Range(-movingSpawnOffsetY, movingSpawnOffsetY);
-
-            pos = new Vector3(x, y, posIn.z);
-            count++;
-            if (count > 25)
-            {
-                return;
-            }
-        }
-        GameObject prefab = AsteroidprefabMove[selector];
-        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
-        asteroid.transform.parent = MoveGroup;
-        Obstacle o = asteroid.GetComponent<Obstacle>();
-        o.manager = this;
-
-        Movement mv = asteroid.GetComponent<Movement>();
-        mv.targetPos = posIn + new Vector3(-x, -y, posIn.z);
-        mv.move = true;
     }
 
     private void OnDrawGizmosSelected()
@@ -268,7 +245,7 @@ public class NGameManager : MonoBehaviour
 
             Gizmos.color = new Color(1, 0, 0, 0.5f);
 
-            Gizmos.DrawCube(transform.localPosition + center, sizeIn);
+            Gizmos.DrawCube(transform.localPosition + center + sizeInOffset, sizeIn);
         }
         if (drawOut)
         {

@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 385023444}
   - component: {fileID: 385023443}
   - component: {fileID: 385023442}
+  - component: {fileID: 385023446}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -333,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998c977bbf1ccdf4b943c0fa42662ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sm: {fileID: 385023446}
 --- !u!114 &385023443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +395,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &385023446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385023440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa835afb4712afd4e942f846a3ec92db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadSpaceship: 0
+  loadGameEnd: 0
 --- !u!1 &587779863
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +729,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1448877179}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: a159252acc7e554f0b998d897b4fb9b0, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 6544f17b9b5eecf41b4efbe29affc056, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}

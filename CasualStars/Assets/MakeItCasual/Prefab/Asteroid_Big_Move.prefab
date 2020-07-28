@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3439700746272052135}
   - component: {fileID: -420009428126476224}
   - component: {fileID: 6889305829495084414}
-  - component: {fileID: 7731503695303172183}
+  - component: {fileID: 4306284659642388129}
   m_Layer: 10
   m_Name: Asteroid_Big_Move
   m_TagString: AsteroidIn
@@ -116,9 +116,10 @@ MonoBehaviour:
   splitObject: {fileID: 0}
   split: 0
   splitCount: 2
-  ScoreBonus: 15
+  ScoreBonus: 1
   manager: {fileID: 0}
-  targetRender: {fileID: 807441986036436255}
+  targetRender:
+  - {fileID: 807441986036436255}
   baseMaterial: {fileID: 2100000, guid: 21dd84b0a067f414e8b7f6f1cf7da36c, type: 2}
   replaceMaterial: {fileID: 2100000, guid: fa1753828c14bba44b30ebdee6573e5f, type: 2}
 --- !u!114 &-420009428126476224
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a97190f5677be84da5af6b87b9d5815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 1
   obstacle: {fileID: -3439700746272052135}
   explosionSmall: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3,
     type: 3}
@@ -155,7 +156,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &7731503695303172183
+--- !u!114 &4306284659642388129
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,14 +165,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8247107274390390050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e846f318ca112e419dbb46f1826fce0, type: 3}
+  m_Script: {fileID: 11500000, guid: ece0e224ec81a8049ad8437f8f8e563d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  move: 0
-  target: {fileID: 0}
-  targetPos: {x: 0, y: 0, z: 0}
-  destoryOnTargetReached: 1
+  behavior: 2
+  val: 0.5
+  maxLeft: 200
+  maxRight: -200
+  turnLeft: 0
+  activated: 1
+  player: {fileID: 0}
+  visual: {fileID: 1371427699098270147}
 --- !u!1001 &9190227079474135408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -261,6 +265,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c89bff638f11f049ba15295abe278ab, type: 3}
+--- !u!1 &1371427699098270147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7818940476586293427, guid: 0c89bff638f11f049ba15295abe278ab,
+    type: 3}
+  m_PrefabInstance: {fileID: 9190227079474135408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2689515259700759504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6546313248500583072, guid: 0c89bff638f11f049ba15295abe278ab,

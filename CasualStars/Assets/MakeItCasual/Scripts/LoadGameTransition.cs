@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class scriptwerbung : MonoBehaviour
+public class LoadGameTransition : MonoBehaviour
 {
-	float Zeit;
+    public float Zeit;
+    public float waitTill = 30f;
     MasterManager mm;
     public SceneManagement sm;
     void Start()
@@ -15,17 +16,11 @@ public class scriptwerbung : MonoBehaviour
     void Update()
     {
 		Zeit += Time.deltaTime;
-		if (Zeit >= mm.AdSpotLength)
+		if (Zeit >= waitTill)
 		{
-            sm.LoadGameEnd();
+            sm.LoadGame();
             Zeit = -1000;
 		}
 			
-    }
-
-    public void skip()
-    {
-        sm.LoadGameEnd();
-        Zeit = -1000;
     }
 }

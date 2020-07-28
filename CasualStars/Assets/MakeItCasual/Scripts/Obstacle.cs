@@ -7,7 +7,7 @@ public class Obstacle : MonoBehaviour
     public int splitCount;
     public int ScoreBonus;
     public NGameManager manager;
-    public MeshRenderer targetRender;
+    public MeshRenderer[] targetRender;
     public Material baseMaterial;
     public Material replaceMaterial;
 
@@ -31,13 +31,17 @@ public class Obstacle : MonoBehaviour
 
     public void showOutline()
     {
-        Debug.Log("Test1");
-        targetRender.material = replaceMaterial;
+        foreach (MeshRenderer renderer in targetRender)
+        {
+            renderer.material = replaceMaterial;
+        }
     }
     public void hideOutline()
     {
-        Debug.Log("Test2");
-        targetRender.material = baseMaterial;
+        foreach (MeshRenderer renderer in targetRender)
+        {
+            renderer.material = baseMaterial;
+        }
     }
 }
 

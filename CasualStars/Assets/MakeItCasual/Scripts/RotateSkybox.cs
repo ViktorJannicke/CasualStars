@@ -21,6 +21,9 @@ public class RotateSkybox : MonoBehaviour
         
         switch(Random.Range(0,4))
         {
+            case 0:
+                sb.material = skybox2;
+                break;
             case 1:
                 sb.material = skybox1;
                 break;

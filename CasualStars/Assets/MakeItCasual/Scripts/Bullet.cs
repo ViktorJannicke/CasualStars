@@ -25,7 +25,7 @@ public class Bullet : MonoBehaviour
                 var heading = targetPlayer.position - transform.position;
                 var distance = heading.magnitude;
                 Vector3 direction = heading / distance;
-                transform.Translate(direction * deltaT * speed, Space.World);
+                transform.Translate(direction * speed * deltaT, Space.World);
             }
         }
 

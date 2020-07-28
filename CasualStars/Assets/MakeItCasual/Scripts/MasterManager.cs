@@ -6,7 +6,6 @@ using UnityEngine.Audio;
 public class MasterManager : MonoBehaviour
 {
     public static MasterManager mm;
-    public string nextScene;
     public int AdSpotLength;
 
     public List<PlayerData> playerData;
@@ -14,6 +13,7 @@ public class MasterManager : MonoBehaviour
     public int lastScore;
 
     public int difficulty;
+    public int maxDifficulty;
 
     public AudioMixer mixer;
     public int version = 1;
@@ -53,11 +53,5 @@ public class MasterManager : MonoBehaviour
             audioData.version = version;
             SaveSystem.SaveAudio(audioData);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

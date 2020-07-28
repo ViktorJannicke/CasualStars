@@ -345,13 +345,13 @@ RectTransform:
   m_Children:
   - {fileID: 1716517599}
   - {fileID: 1757519046}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1361214684}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 621, y: 220.78125}
-  m_SizeDelta: {x: 1242, y: 441.55194}
+  m_AnchoredPosition: {x: 0, y: 220.78125}
+  m_SizeDelta: {x: 0, y: 441.55194}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &107771846
 GameObject:
@@ -825,7 +825,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1361214680}
-        m_MethodName: LoadGameStartFromScoreSubmition
+        m_MethodName: LoadNewTransition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1773,6 +1773,7 @@ RectTransform:
   - {fileID: 1112641257}
   - {fileID: 1316820893}
   - {fileID: 258168337}
+  - {fileID: 53983474}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2235,7 +2236,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757519045}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: a159252acc7e554f0b998d897b4fb9b0, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 6544f17b9b5eecf41b4efbe29affc056, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
