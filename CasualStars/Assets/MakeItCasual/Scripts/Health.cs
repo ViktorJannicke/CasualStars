@@ -13,6 +13,7 @@ public class Health : MonoBehaviour
 	public float TTED = 10f;
 	public Vector3 explosionOffset;
 	public float delay;
+	public GameObject Text;
 
 	// Start is called before the first frame update
 	private void OnCollisionEnter(Collision collision)
@@ -29,6 +30,9 @@ public class Health : MonoBehaviour
     {
 		yield return new WaitForSeconds(delay);
 
+		if (Text != null)
+		Text.SetActive(true);
+
 			if (health <= 0)
 			{
 				GameObject explosion = Instantiate(explosionBig, transform.position + explosionOffset, transform.rotation);
@@ -43,5 +47,11 @@ public class Health : MonoBehaviour
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 			}
+	}
+
+	public void Start()
+	{
+		if(Text != null)
+		Text.SetActive(false);
 	}
 }

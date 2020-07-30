@@ -176,3 +176,4 @@ MonoBehaviour:
   TTED: 10
   explosionOffset: {x: 0, y: 0, z: -5}
   delay: 0.15
+  Text: {fileID: 0}
