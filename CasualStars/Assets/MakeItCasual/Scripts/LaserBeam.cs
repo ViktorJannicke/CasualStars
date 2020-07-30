@@ -4,52 +4,35 @@ using UnityEngine;
 
 public class LaserBeam : MonoBehaviour
 {
-	public GameObject laserPrefab;
-	public GameObject firePoint;
+	public GameObject laser;
+	public LineRenderer laserRenderer;
+	public Transform targetPoint;
 
-	private GameObject spawnedLaser;
-
-	private void Start()
+	public void EnableLaser()
 	{
-		spawnedLaser = Instantiate(laserPrefab, firePoint.transform) as GameObject;
-
-		DisableLaser();
-	}
-
-	private void Update()
-	{
-		if (Input.GetMouseButtonDown(0))
+		if (!laser.activeSelf)
 		{
-			EnableLaser();
-		}
-
-		if (Input.GetMouseButton(0))
-		{
-			UpdateLaser();
-		}
-
-		if (Input.GetMouseButtonUp(0))
-		{
-			DisableLaser();
+			laser.SetActive(true);
 		}
 	}
 
-	void EnableLaser()
+	void Update()
 	{
-		spawnedLaser.SetActive(true);
+		if (targetPoint != null)
+		{
+			Vector3 heading = targetPoint.position - transform.position;
+			//var distance = heading.magnitude;
+			//Vector3 direction = heading / distance;
+			laserRenderer.SetPositions(new Vector3[] { Vector3.zero, heading });
+		}
 	}
 
-	void UpdateLaser()
+	public void DisableLaser()
 	{
-		if(firePoint != null)
+		if (laser.activeSelf)
 		{
-			spawnedLaser.transform.position = firePoint.transform.position;
+			laser.SetActive(false);
 		}
-	}	
-
-	void DisableLaser()
-	{
-		spawnedLaser.SetActive(false);
 	}
 
 

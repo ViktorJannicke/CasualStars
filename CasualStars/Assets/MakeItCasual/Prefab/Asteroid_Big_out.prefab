@@ -127,13 +127,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behavior: 1
-  val: 0.1
-  maxLeft: 10
-  maxRight: -10
+  val: 0.25
+  maxLeft: 25
+  maxRight: -25
   turnLeft: 0
   activated: 1
   player: {fileID: 0}
-  visual: {fileID: 0}
+  visual: {fileID: 8247107274390390050}
 --- !u!114 &-569781414376669804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,3 +175,4 @@ MonoBehaviour:
     type: 3}
   TTED: 10
   explosionOffset: {x: 0, y: 0, z: -5}
+  delay: 0.15

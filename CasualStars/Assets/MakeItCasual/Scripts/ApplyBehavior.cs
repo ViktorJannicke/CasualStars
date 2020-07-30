@@ -15,6 +15,30 @@ public class ApplyBehavior : MonoBehaviour
     public Transform player;
     public GameObject visual;
 
+    bool applyOnX;
+    bool applyOnY;
+    bool applyOnZ;
+
+    GameObject lastHit;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("AsteroidOut") && collision.gameObject.CompareTag("AsteroidIn") && lastHit != collision.gameObject)
+        {
+            lastHit = collision.gameObject;
+            ApplyBehavior bh = collision.gameObject.GetComponent<ApplyBehavior>();
+            bh.turnLeft = !bh.turnLeft;
+        }
+    }
+
+    private void Start()
+    {
+        visual.transform.rotation = Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
+        applyOnX = (Random.Range(0, 2) == 0 ? true : false);
+        applyOnY = (Random.Range(0, 2) == 0 ? true : false);
+        applyOnZ = (Random.Range(0, 2) == 0 ? true : false);
+    }
+
+    float count = 0;
     // Update is called once per frame
     void Update()
     {
@@ -24,7 +48,7 @@ public class ApplyBehavior : MonoBehaviour
             {
                 if (turnLeft)
                 {
-                    Vector3 rot = transform.rotation.eulerAngles;
+                    Vector3 rot = visual.transform.rotation.eulerAngles;
                     float angle = rot.z;
                     angle = (angle > 180) ? angle - 360 : angle;
                     if (angle > maxLeft)
@@ -33,18 +57,20 @@ public class ApplyBehavior : MonoBehaviour
                     }
                     else
                     {
-                        rot.z += val;
-                        transform.rotation = Quaternion.Euler(rot);
+                        rot.x += applyOnX ? val : 0;
+                        rot.y += applyOnY ? val : 0;
+                        rot.z += applyOnZ ? val : 0;
+                        visual.transform.rotation = Quaternion.Euler(rot);
                         Vector3 pos = transform.position;
-                        pos.x +=  val;
-                        pos.y +=  val;
-                        pos.z += val;
+                        pos.x += applyOnX ? val : 0;
+                        pos.y += applyOnY ? val : 0;
+                        pos.z += applyOnZ ? val : 0;
                         transform.position = pos;
                     }
                 }
                 else
                 {
-                    Vector3 rot = transform.rotation.eulerAngles;
+                    Vector3 rot = visual.transform.rotation.eulerAngles;
                     float angle = rot.z;
                     angle = (angle > 180) ? angle - 360 : angle;
                     if (angle < maxRight)
@@ -53,12 +79,14 @@ public class ApplyBehavior : MonoBehaviour
                     }
                     else
                     {
-                        rot.z -= val;
-                        transform.rotation = Quaternion.Euler(rot);
+                        rot.x -= applyOnX ? val : 0;
+                        rot.y -= applyOnY ? val : 0;
+                        rot.z -= applyOnZ ? val : 0;
+                        visual.transform.rotation = Quaternion.Euler(rot);
                         Vector3 pos = transform.position;
-                        pos.x -= val;
-                        pos.y -= val;
-                        pos.z -= val;
+                        pos.x -= applyOnX ? val : 0;
+                        pos.y -= applyOnY ? val : 0;
+                        pos.z -= applyOnZ ? val : 0;
                         transform.position = pos;
                     }
                 }
@@ -66,11 +94,9 @@ public class ApplyBehavior : MonoBehaviour
             else if(behavior == Behavior.floating_look_at_Player)
             {
                 if (turnLeft)
-                {
-                    Vector3 rot = transform.rotation.eulerAngles;
-                    float angle = rot.z;
-                    angle = (angle > 180) ? angle - 360 : angle;
-                    if (angle > maxLeft)
+                {;
+                    count += val;
+                    if (count > maxLeft)
                     {
                         turnLeft = false;
                     }
@@ -78,18 +104,16 @@ public class ApplyBehavior : MonoBehaviour
                     {
                         visual.transform.LookAt(player);
                         Vector3 pos = transform.position;
-                        pos.x += val;
-                        pos.y += val;
-                        pos.z += val;
+                        pos.x += applyOnX ? val : 0;
+                        pos.y += applyOnY ? val : 0;
+                        pos.z += applyOnZ ? val : 0;
                         transform.position = pos;
                     }
                 }
                 else
                 {
-                    Vector3 rot = transform.rotation.eulerAngles;
-                    float angle = rot.z;
-                    angle = (angle > 180) ? angle - 360 : angle;
-                    if (angle < maxRight)
+                    count -= val;
+                    if (count < maxRight)
                     {
                         turnLeft = true;
                     }
@@ -97,9 +121,9 @@ public class ApplyBehavior : MonoBehaviour
                     {
                         visual.transform.LookAt(player);
                         Vector3 pos = transform.position;
-                        pos.x -= val;
-                        pos.y -= val;
-                        pos.z -= val;
+                        pos.x -= applyOnX ? val : 0;
+                        pos.y -= applyOnY ? val : 0;
+                        pos.z -= applyOnZ ? val : 0;
                         transform.position = pos;
                     }
                 }

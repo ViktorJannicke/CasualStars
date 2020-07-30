@@ -7,29 +7,10 @@ public class Bullet : MonoBehaviour
     public float maxTime;
 
     public Transform targetPlayer;
-    public Obstacle o;
-    public bool move;
-    public float speed = 10;
 
     private void Update()
     {
-        float deltaT = Time.deltaTime;
-        if (move)
-        {
-            if (targetPlayer == null)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                var heading = targetPlayer.position - transform.position;
-                var distance = heading.magnitude;
-                Vector3 direction = heading / distance;
-                transform.Translate(direction * speed * deltaT, Space.World);
-            }
-        }
-
-        timer += deltaT;
+        timer += Time.deltaTime;
 
         if (timer >= maxTime)
             Destroy(gameObject);

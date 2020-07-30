@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
 
     public bool destoryOnTargetReached;
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (move)
         {
@@ -24,8 +24,6 @@ public class Movement : MonoBehaviour
             Vector3 direction = heading / distance;
             transform.Translate(direction * speed * Time.deltaTime, Space.World);
 
-            heading = targetPos - transform.position;
-            distance = heading.magnitude;
             if (distance < 1)
             {
                 move = false;

@@ -51,14 +51,14 @@ public class SceneManagement : MonoBehaviour
         SceneManager.UnloadSceneAsync("ScoreSubmition");
         SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
     }
-    public void LoadMainMenuFromCredits()
+    public void LoadSettingsFromCredits()
     {
         SceneManager.UnloadSceneAsync("Credits");
-        SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
     }
-    public void LoadCreditsFromMainMenu()
+    public void LoadCreditsFromSettings()
     {
-        SceneManager.UnloadSceneAsync("MainMenu");
+        SceneManager.UnloadSceneAsync("Settings");
         SceneManager.LoadSceneAsync("Credits", LoadSceneMode.Additive);
     } 
 

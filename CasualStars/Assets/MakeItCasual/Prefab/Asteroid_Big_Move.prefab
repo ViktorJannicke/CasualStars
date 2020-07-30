@@ -9,13 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8247107274390390052}
-  - component: {fileID: 8247107274390390049}
-  - component: {fileID: 8247107274390390048}
   - component: {fileID: 8247107274390390051}
   - component: {fileID: -3439700746272052135}
   - component: {fileID: -420009428126476224}
-  - component: {fileID: 6889305829495084414}
   - component: {fileID: 4306284659642388129}
+  - component: {fileID: 8782811542781484916}
   m_Layer: 10
   m_Name: Asteroid_Big_Move
   m_TagString: AsteroidIn
@@ -38,53 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!23 &8247107274390390049
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8247107274390390050}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 6ff5b26819ae9af47842327ce66e4377, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &8247107274390390048
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8247107274390390050}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &8247107274390390051
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,20 +93,7 @@ MonoBehaviour:
     type: 3}
   TTED: 10
   explosionOffset: {x: 0, y: 0, z: -5}
---- !u!64 &6889305829495084414
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8247107274390390050}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  delay: 0.15
 --- !u!114 &4306284659642388129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,13 +107,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behavior: 2
-  val: 0.5
-  maxLeft: 200
-  maxRight: -200
+  val: 0.25
+  maxLeft: 25
+  maxRight: -25
   turnLeft: 0
   activated: 1
   player: {fileID: 0}
   visual: {fileID: 1371427699098270147}
+--- !u!135 &8782811542781484916
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247107274390390050}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &9190227079474135408
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Health : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class Health : MonoBehaviour
 	public GameObject explosionBig;
 	public float TTED = 10f;
 	public Vector3 explosionOffset;
+	public float delay;
 
 	// Start is called before the first frame update
 	private void OnCollisionEnter(Collision collision)
@@ -19,7 +21,14 @@ public class Health : MonoBehaviour
 		{
 			lastHit = collision.gameObject;
 			health -= collision.gameObject.GetComponent<Bullet>().bulletDamage;
-			
+			StartCoroutine(destroyEffect(collision));
+		}
+    }
+
+	IEnumerator destroyEffect(Collision collision)
+    {
+		yield return new WaitForSeconds(delay);
+
 			if (health <= 0)
 			{
 				GameObject explosion = Instantiate(explosionBig, transform.position + explosionOffset, transform.rotation);
@@ -34,8 +43,5 @@ public class Health : MonoBehaviour
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 			}
-
-			Destroy(collision.gameObject);
-		}
-    }
+	}
 }

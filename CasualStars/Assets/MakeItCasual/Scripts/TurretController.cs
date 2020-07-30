@@ -3,24 +3,27 @@ using UnityEngine.UI;
 
 public class TurretController : MonoBehaviour
 {
+    public GameObject shootBullet;
     public GameObject bulletPrefab;
+    public LaserBeam laser;
 
     public Transform targetPlayer;
     public Transform fireTransform;
-    public Transform canonHandle;
 
-    public float bulletSpeed = 10f;
     public float fireDelay;
     public float time = 0;
     private int bulletRate = 1;
 
     public bool attack = false;
-    public bool debug;
-    public Text debugText;
 
     private void Update()
     {
-        if (attack)
+        if (shootBullet == null)
+        {
+            laser.DisableLaser();
+        }
+
+        if (attack && shootBullet == null)
         {
             if (targetPlayer != null && time == 0)
             {
@@ -62,12 +65,14 @@ public class TurretController : MonoBehaviour
 
     private void Fire()
     {
-        fireTransform.LookAt(targetPlayer);
-        GameObject shootBullet = Instantiate(bulletPrefab, fireTransform);
+        shootBullet = Instantiate(bulletPrefab, fireTransform);
         shootBullet.transform.parent = null;
         Bullet b = shootBullet.GetComponent<Bullet>();
         b.targetPlayer = targetPlayer;
-        b.move = true;
+        laser.EnableLaser();
+        laser.targetPoint = shootBullet.transform;
+        b.transform.position = targetPlayer.position;
+
         //shootBullet.transform.position = targetPlayer.position;
         //shootBullet.GetComponent<Rigidbody>().velocity = bulletSpeed * fireTransform.forward;// + (targetPlayer.position.y > fireTransform.position.y ? Vector3.up : Vector3.down);// + (targetPlayer.position.x > fireTransform.position.x ? Vector3.right : Vector3.left);
     }

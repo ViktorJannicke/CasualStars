@@ -13,6 +13,7 @@ public class NGameManager : MonoBehaviour
     public TextMeshProUGUI time;
 
     public float timer = 120;
+    public float[] timervals = {60,30};
 
     [Header("Asteroid Control Values")]
     public GameObject[] AsteroidprefabIn;
@@ -36,6 +37,7 @@ public class NGameManager : MonoBehaviour
     public bool drawOut;
 
     [Header("GameStart")]
+    public GameObject TopBar;
     public bool gameStarted;
     public float gameStartTime = 6;
     public TextMeshProUGUI gameStartText;
@@ -78,7 +80,7 @@ public class NGameManager : MonoBehaviour
             time.text = "Time: \n" + d.ToString("mm:ss");
 
             float t = Time.deltaTime;
-            if (timer - t <= 0)
+            if (timer - t <= 0.1f)
             {
                 if (once)
                 {
@@ -88,13 +90,18 @@ public class NGameManager : MonoBehaviour
                     Camera.main.gameObject.GetComponent<RotateSkybox>().activated = false;
                 }
             }
-            else if (timer - t <= 7 && timer - t >= 6)
+            else if (timer - t <= 7.01 && timer - t >= 6.01f)
             {
                 once = true;
                 timer -= t;
             }
             else
             {
+                if(timer == timervals[MasterManager.mm.difficulty])
+                {
+                    TopBar.SetActive(true);
+                }
+
                 timer -= t;
             }
         }
@@ -102,7 +109,7 @@ public class NGameManager : MonoBehaviour
         {
             float t = Time.deltaTime;
             gameStartTime -= t;
-            if (gameStartTime <= 0)
+            if (gameStartTime <= 0.01)
             {
                 if (once)
                 {
@@ -116,19 +123,19 @@ public class NGameManager : MonoBehaviour
             }
             else
             {
-                if (gameStartTime <= 1)
+                if (gameStartTime <= 1.01f)
                 {
                     gameStartText.text = "Los";
                 }
-                else if (gameStartTime <= 2)
+                else if (gameStartTime <= 2.01f)
                 {
                     gameStartText.text = "1";
                 }
-                else if (gameStartTime <= 3)
+                else if (gameStartTime <= 3.01f)
                 {
                     gameStartText.text = "2";
                 }
-                else if (gameStartTime <= 4)
+                else if (gameStartTime <= 4.01f)
                 {
                     gameStartText.text = "3";
                 }
@@ -136,8 +143,18 @@ public class NGameManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        timer = timervals[MasterManager.mm.difficulty];
+    }
+
     private void Start()
     {
+        int scoreValue = 0;
+        foreach (int val in spawnCountIn) { scoreValue += val; }
+        MasterManager.mm.maxScore = scoreValue; 
+
+        TopBar.SetActive(false);
         Vector3 pos = portal.position;
         pos.z = sizeOut.z - 725;
         portal.position = pos;
@@ -201,7 +218,7 @@ public class NGameManager : MonoBehaviour
             }
         }
         GameObject prefab = AsteroidprefabIn[selector];
-        GameObject asteroid = Instantiate(prefab, pos, Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360))));
+        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = InGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;
@@ -218,7 +235,7 @@ public class NGameManager : MonoBehaviour
         Vector3 pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeOut.x / 2, sizeOut.x / 2), UnityEngine.Random.Range(-sizeOut.y / 2, sizeOut.y / 2), UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 2));
         float avarageScale = (AsteroidprefabOut[selector].transform.localScale.z + AsteroidprefabOut[selector].transform.localScale.y + AsteroidprefabOut[selector].transform.localScale.z) / 4;
 
-        while (Physics.CheckSphere(pos, spawnRadius * 0.5f * avarageScale, mask))
+        while (Physics.CheckSphere(pos, spawnRadius * 0.75f * avarageScale, mask))
         {
             pos = transform.localPosition + center + new Vector3(UnityEngine.Random.Range(-sizeOut.x / 2, sizeOut.x / 2), UnityEngine.Random.Range(-sizeOut.y / 2, sizeOut.y / 2), UnityEngine.Random.Range(-sizeOut.z / 2, sizeOut.z / 2));
             count++;
@@ -228,12 +245,13 @@ public class NGameManager : MonoBehaviour
             }
         }
         GameObject prefab = AsteroidprefabOut[selector];
-        GameObject asteroid = Instantiate(prefab, pos, Quaternion.Euler(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360))));
+        GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = OutGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
         o.manager = this;
         ApplyBehavior bh = asteroid.GetComponent<ApplyBehavior>();
         bh.turnLeft = (UnityEngine.Random.Range(0, 2) == 1 ? true : false);
+        bh.player = player.transform;
 
         return 1;
     }

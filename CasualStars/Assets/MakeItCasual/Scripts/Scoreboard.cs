@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 
@@ -57,7 +58,7 @@ public class Scoreboard : MonoBehaviour
 
 	public void Submit()
 	{
-		MasterManager.mm.playerData.Add(new PlayerData(MasterManager.mm.playerData.Count, input.text, MasterManager.mm.lastScore));
+		MasterManager.mm.playerData.Add(new PlayerData(MasterManager.mm.playerData.Count, input.text, "" + MasterManager.mm.lastScore + " / " + MasterManager.mm.maxScore + " (" + (MasterManager.mm.lastScore / MasterManager.mm.maxScore * 100f)*1 + "% )"));
 		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
 		MasterManager.mm.playerData.Reverse();
 		SaveSystem.SavePlayer(MasterManager.mm.playerData);
@@ -68,8 +69,6 @@ public class Scoreboard : MonoBehaviour
 	{
 		DataSet.name = input.text;
 		MasterManager.mm.playerData[DataSet.id] = DataSet;
-		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
-		MasterManager.mm.playerData.Reverse();
 		SaveSystem.SavePlayer(MasterManager.mm.playerData);
 		scoreboardzeichnen();
 		HideEditPage();
@@ -86,7 +85,7 @@ public class Scoreboard : MonoBehaviour
 		if (!toggle)
 		{
 			toggle = true;
-			DataSet = MasterManager.mm.playerData[element.id];
+			DataSet = MasterManager.mm.playerData[getElement(MasterManager.mm.playerData, element.id)];
 		} else
 		{
 			toggle = false;
@@ -121,8 +120,20 @@ public class Scoreboard : MonoBehaviour
 	public void DeleteElement()
 	{
 		MasterManager.mm.playerData.Remove(DataSet);
-
-		scoreboardzeichnen();
 		ToggleToolTip(null);
+		scoreboardzeichnen();
+		
 	}
+
+	int getElement(List<PlayerData> datas, int id)
+    {
+		for (int i = 0; i < datas.Count; i++)
+		{
+			if (datas[i].id == id)
+            {
+				return i;
+            }
+        }
+		return 0;
+    }
 }

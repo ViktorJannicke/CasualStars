@@ -202,7 +202,7 @@ MonoBehaviour:
     version: 0
   lastScore: 0
   difficulty: 0
-  maxDifficulty: 1
+  maxDifficulty: 2
   mixer: {fileID: 24100000, guid: 2f56e2f55c7ed80458ae71a561807db0, type: 2}
   version: 1
   firstStart: 0

@@ -11,12 +11,13 @@ public class MasterManager : MonoBehaviour
     public List<PlayerData> playerData;
     public AudioData audioData;
     public int lastScore;
+    public int maxScore;
 
     public int difficulty;
     public int maxDifficulty;
 
     public AudioMixer mixer;
-    public int version = 1;
+    public int version = 2;
     public bool firstStart;
 
     // Start is called before the first frame update
