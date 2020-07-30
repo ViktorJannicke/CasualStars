@@ -42,6 +42,9 @@ public class Health : MonoBehaviour
 			mv.move = true;
 		}
 
+		if (Text != null)
+		Text.SetActive(true);
+
 			if (health <= 0)
 			{
 				GameObject explosion = Instantiate(explosionBig, transform.position + explosionOffset, transform.rotation);
@@ -56,5 +59,11 @@ public class Health : MonoBehaviour
 				explosion.transform.parent = null;
 				Destroy(explosion, TTED);
 			}
+	}
+
+	public void Start()
+	{
+		if(Text != null)
+		Text.SetActive(false);
 	}
 }
