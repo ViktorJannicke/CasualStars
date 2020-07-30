@@ -215,6 +215,7 @@ MonoBehaviour:
   Score: 0
   score: {fileID: 1065860114}
   time: {fileID: 528631012}
+  timer: 120
   timervals:
   - 40.5
   - 44
@@ -251,6 +252,8 @@ MonoBehaviour:
   targetPos: {fileID: 43472980}
   gameEnd: 0
   sm: {fileID: 513650985}
+  canvas: {fileID: 1728293310}
+  scoreText: {fileID: 1065860113}
 --- !u!4 &513650983
 Transform:
   m_ObjectHideFlags: 0
@@ -1541,7 +1544,7 @@ GameObject:
   - component: {fileID: 1728293311}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

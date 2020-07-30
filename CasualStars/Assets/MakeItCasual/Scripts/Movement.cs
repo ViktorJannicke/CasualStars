@@ -7,7 +7,9 @@ public class Movement : MonoBehaviour
     public bool isSatelite;
     public Transform target;
     public Vector3 targetPos;
-
+    public int requiredDistance = 1;
+    public bool changeScoreOnTargetReached = false;
+    public int ScoreBonus = 1;
     public bool destoryOnTargetReached;
 
     private void FixedUpdate()
@@ -24,11 +26,15 @@ public class Movement : MonoBehaviour
             Vector3 direction = heading / distance;
             transform.Translate(direction * speed * Time.deltaTime, Space.World);
 
-            if (distance < 1)
+            if (distance < requiredDistance)
             {
                 move = false;
 
-                if(destoryOnTargetReached)
+                if (changeScoreOnTargetReached)
+                {
+                    NGameManager.manager.Score += ScoreBonus;
+                }
+                if (destoryOnTargetReached)
                 {
                     Destroy(gameObject);
                 }

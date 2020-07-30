@@ -173,6 +173,7 @@ MonoBehaviour:
     type: 3}
   explosionBig: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
-  TTED: 10
+  TTED: 2
   explosionOffset: {x: 0, y: 0, z: -5}
   delay: 0.15
+  Text: {fileID: 0}

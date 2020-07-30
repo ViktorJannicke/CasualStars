@@ -518,6 +518,8 @@ MonoBehaviour:
   valmainMenu: 0
   activated: 0
   rtsb: {fileID: 7289019504094660792}
+  fokusCameraOnNearestObject: 1
+  speed2: 0.5
 --- !u!1 &4992367652552357786
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +650,9 @@ MonoBehaviour:
   isSatelite: 0
   target: {fileID: 0}
   targetPos: {x: 0, y: 0, z: 0}
+  requiredDistance: 1
+  changeScoreOnTargetReached: 0
+  ScoreBonus: 0
   destoryOnTargetReached: 0
 --- !u!1 &6308926886243056095
 GameObject:

@@ -50,6 +50,10 @@ public class NGameManager : MonoBehaviour
     public SceneManagement sm;
 
     bool once = true;
+
+    public static NGameManager manager;
+    public Transform canvas;
+    public Transform scoreText;
     private void Update()
     {
         if (gameEnd)
@@ -70,14 +74,14 @@ public class NGameManager : MonoBehaviour
         }
         else if (gameStarted)
         {
-            score.text = "Score: \n" + Score;
+            score.text = "Score: " + Score;
             int minutes = Mathf.FloorToInt(timer / 60);
             int seconds = Mathf.FloorToInt(timer) - (minutes * 60);
 
             DateTime d = new DateTime(2001, 01, 01, 01, minutes, seconds);
 
 
-            time.text = "Time: \n" + d.ToString("mm:ss");
+            time.text = "Time: " + d.ToString("mm:ss");
 
             float t = Time.deltaTime;
             if (timer - t <= 0.1f)
@@ -145,6 +149,7 @@ public class NGameManager : MonoBehaviour
 
     private void Awake()
     {
+        manager = this;
         timer = timervals[MasterManager.mm.difficulty];
     }
 
@@ -221,7 +226,6 @@ public class NGameManager : MonoBehaviour
         GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = InGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
-        o.manager = this;
         ApplyBehavior bh = asteroid.GetComponent<ApplyBehavior>();
         bh.turnLeft = (UnityEngine.Random.Range(0, 2) == 1 ? true : false);
         bh.player = player.transform;
@@ -248,7 +252,6 @@ public class NGameManager : MonoBehaviour
         GameObject asteroid = Instantiate(prefab, pos, prefab.transform.rotation);
         asteroid.transform.parent = OutGroup;
         Obstacle o = asteroid.GetComponent<Obstacle>();
-        o.manager = this;
         ApplyBehavior bh = asteroid.GetComponent<ApplyBehavior>();
         bh.turnLeft = (UnityEngine.Random.Range(0, 2) == 1 ? true : false);
         bh.player = player.transform;

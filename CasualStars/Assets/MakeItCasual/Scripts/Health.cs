@@ -13,6 +13,7 @@ public class Health : MonoBehaviour
 	public float TTED = 10f;
 	public Vector3 explosionOffset;
 	public float delay;
+	public GameObject Text;
 
 	// Start is called before the first frame update
 	private void OnCollisionEnter(Collision collision)
@@ -28,6 +29,18 @@ public class Health : MonoBehaviour
 	IEnumerator destroyEffect(Collision collision)
     {
 		yield return new WaitForSeconds(delay);
+		
+		if (Text != null)
+		{
+			GameObject newText = Instantiate(Text);
+			newText.transform.SetParent(NGameManager.manager.canvas);
+			Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+			pos.z = 25;
+			newText.transform.position = pos;
+			Movement mv = newText.GetComponent<Movement>();
+			mv.target = NGameManager.manager.scoreText;
+			mv.move = true;
+		}
 
 			if (health <= 0)
 			{

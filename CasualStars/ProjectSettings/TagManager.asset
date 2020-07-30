@@ -11,6 +11,7 @@ TagManager:
   - AsteroidIn
   - AsteroidOut
   - Asteroid
+  - Canvas
   layers:
   - Default
   - TransparentFX
