@@ -3,6 +3,7 @@ using TMPro;
 using System;
 using UnityEngine.Playables;
 using Boo.Lang;
+using UnityEngine.UI;
 
 public class NGameManager : MonoBehaviour
 {
@@ -43,7 +44,6 @@ public class NGameManager : MonoBehaviour
     public TextMeshProUGUI gameStartText;
     public float[] playerSpeed;
     public Transform portal;
-    public Transform targetPos;
 
     [Header("GameEnd")]
     public bool gameEnd = false;
@@ -54,6 +54,7 @@ public class NGameManager : MonoBehaviour
     public static NGameManager manager;
     public Transform canvas;
     public Transform scoreText;
+    public Slider progressBar;
     private void Update()
     {
         if (gameEnd)
@@ -105,6 +106,7 @@ public class NGameManager : MonoBehaviour
                 {
                     TopBar.SetActive(true);
                 }
+                progressBar.value = player.transform.position.z;
 
                 timer -= t;
             }
@@ -155,6 +157,9 @@ public class NGameManager : MonoBehaviour
 
     private void Start()
     {
+        progressBar.minValue = player.transform.position.z;
+        progressBar.maxValue = portal.transform.position.z;
+
         int scoreValue = 0;
         foreach (int val in spawnCountIn) { scoreValue += val; }
         MasterManager.mm.maxScore = scoreValue; 
@@ -163,7 +168,6 @@ public class NGameManager : MonoBehaviour
         Vector3 pos = portal.position;
         pos.z = sizeOut.z - 725;
         portal.position = pos;
-        targetPos.transform.position = pos;
 
         player.GetComponent<Movement>().speed = playerSpeed[MasterManager.mm.difficulty];
 
@@ -213,7 +217,7 @@ public class NGameManager : MonoBehaviour
 
         Vector3 pos = transform.localPosition + center + sizeInOffset + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
         float avarageScale = (AsteroidprefabIn[selector].transform.localScale.z + AsteroidprefabIn[selector].transform.localScale.y + AsteroidprefabIn[selector].transform.localScale.z) / 4;
-        while (Physics.CheckSphere(pos, spawnRadius * avarageScale, mask))
+        while (Physics.CheckSphere(pos, spawnRadius * 4f * avarageScale, mask))
         {
             pos = transform.localPosition + center + sizeInOffset + new Vector3(UnityEngine.Random.Range(-sizeIn.x / 2, sizeIn.x / 2), UnityEngine.Random.Range(-sizeIn.y / 2, sizeIn.y / 2), UnityEngine.Random.Range(-sizeIn.z / 2, sizeIn.z / 2));
             count++;

@@ -35,6 +35,7 @@ public class Health : MonoBehaviour
 			GameObject newText = Instantiate(Text);
 			newText.transform.SetParent(NGameManager.manager.canvas);
 			Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+			if (pos == null) pos = Camera.main.WorldToScreenPoint(NGameManager.manager.player.transform.position);
 			pos.z = 25;
 			newText.transform.position = pos;
 			Movement mv = newText.GetComponent<Movement>();

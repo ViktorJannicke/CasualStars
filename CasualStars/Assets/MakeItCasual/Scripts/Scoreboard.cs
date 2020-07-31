@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -40,7 +41,7 @@ public class Scoreboard : MonoBehaviour
 			GameObject objectS = Instantiate(scoreElement, transform);
 			ScoreElement se = objectS.GetComponent<ScoreElement>();
 			se.nameElement.text = data.name;
-			se.scoreElement.text = data.score.ToString();
+			se.scoreElement.text = data.score;
 			se.id = data.id;
 
 			obj.Add(objectS);
@@ -58,7 +59,11 @@ public class Scoreboard : MonoBehaviour
 
 	public void Submit()
 	{
-		MasterManager.mm.playerData.Add(new PlayerData(MasterManager.mm.playerData.Count, input.text, "" + MasterManager.mm.lastScore + " / " + MasterManager.mm.maxScore + " (" + (MasterManager.mm.lastScore / MasterManager.mm.maxScore * 100f)*1 + "% )"));
+		MasterManager.mm.playerData.Add(new PlayerData(MasterManager.mm.playerData.Count, input.text, new StringBuilder()
+			.Append(MasterManager.mm.lastScore)
+			.Append(" / ").Append(MasterManager.mm.maxScore)
+			.Append(" (").Append(((float)MasterManager.mm.lastScore / (float)MasterManager.mm.maxScore * 100f))
+			.Append("% )").ToString()));
 		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
 		MasterManager.mm.playerData.Reverse();
 		SaveSystem.SavePlayer(MasterManager.mm.playerData);

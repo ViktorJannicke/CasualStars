@@ -67,8 +67,6 @@ MonoBehaviour:
   splitObject: {fileID: 0}
   split: 0
   splitCount: 2
-  ScoreBonus: 1
-  manager: {fileID: 0}
   targetRender:
   - {fileID: 972793262031238914}
   - {fileID: 404534930756879721}
@@ -110,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   behavior: 1
-  val: 0.25
+  val: 0.5
   maxLeft: 25
   maxRight: -25
   turnLeft: 0

@@ -20,6 +20,8 @@ public class MasterManager : MonoBehaviour
     public int version = 2;
     public bool firstStart;
 
+    public string[] group;
+    public AudioData.AudioType[] audioTypes;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +55,11 @@ public class MasterManager : MonoBehaviour
             audioData = new AudioData(0.5f, 0.5f, 0.25f);
             audioData.version = version;
             SaveSystem.SaveAudio(audioData);
+        }
+
+        for (int i = 0; i < group.Length; i++) {
+            float val = audioData.sliderValues[(int)audioTypes[i]];
+            mixer.SetFloat(group[i], Mathf.Log10(val) * 20);
         }
     }
 }

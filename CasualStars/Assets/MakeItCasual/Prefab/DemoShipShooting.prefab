@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123625857188675193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.047, y: 0, z: -0.592}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4916104341025620494}
@@ -383,13 +383,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4623786011566026423}
-  m_LocalRotation: {x: -0.000002462417, y: -0.97629607, z: 0.21643966, w: -0.00000029802322}
-  m_LocalPosition: {x: -0.00000333786, y: 2.9999995, z: 6}
+  m_LocalRotation: {x: 0.004759391, y: 0.97606, z: -0.21638726, w: 0.021468228}
+  m_LocalPosition: {x: 0, y: 3, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6042588921202426487}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.000002, y: 177.48, z: 0}
 --- !u!20 &6237544661704252449
 Camera:
   m_ObjectHideFlags: 0
@@ -518,8 +518,6 @@ MonoBehaviour:
   valmainMenu: 0
   activated: 0
   rtsb: {fileID: 7289019504094660792}
-  fokusCameraOnNearestObject: 1
-  speed2: 0.5
 --- !u!1 &4992367652552357786
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,6 +607,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6042588921202426487}
   - component: {fileID: 2894835700092840985}
+  - component: {fileID: 2023873981640870217}
+  - component: {fileID: 3794517700317889678}
+  - component: {fileID: 1052923218736660932}
   m_Layer: 0
   m_Name: DemoShipShooting
   m_TagString: Player
@@ -654,6 +655,60 @@ MonoBehaviour:
   changeScoreOnTargetReached: 0
   ScoreBonus: 0
   destoryOnTargetReached: 0
+--- !u!114 &2023873981640870217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042588921202426494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0db0dffe17c7e743aca6783242ec06f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 1
+  speed: 0.5
+  startPos: {x: 0, y: 0, z: 0}
+  endPortal: {fileID: 0}
+--- !u!320 &3794517700317889678
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042588921202426494}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 0ccc1966a3cca2d49b48a50d27ffd738, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -3882400753782710202, guid: 0ccc1966a3cca2d49b48a50d27ffd738, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References: []
+--- !u!95 &1052923218736660932
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042588921202426494}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6308926886243056095
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,7 +942,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8741813751275204702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.75, z: 3}
+  m_LocalPosition: {x: 0, y: 0.75, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 463910191049341934}
