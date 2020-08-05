@@ -162,7 +162,7 @@ public class NGameManager : MonoBehaviour
 
         int scoreValue = 0;
         foreach (int val in spawnCountIn) { scoreValue += val; }
-        MasterManager.mm.maxScore = scoreValue; 
+        
 
         TopBar.SetActive(false);
         Vector3 pos = portal.position;
@@ -172,19 +172,22 @@ public class NGameManager : MonoBehaviour
         player.GetComponent<Movement>().speed = playerSpeed[MasterManager.mm.difficulty];
 
         int counter = 0;
-        for (int i = 0; i <= spawnCountIn[MasterManager.mm.difficulty]; i++)
+        int grandCounter = 0;
+        for (int i = 0; i < spawnCountIn[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnIn();
         }
         Debug.Log(counter);
+        grandCounter += counter*AsteroidprefabIn[0].GetComponent<Health>().ScoreBonus;
 
         counter = 0;
-        for (int i = 0; i <= spawnCountOut[MasterManager.mm.difficulty]; i++)
+        for (int i = 0; i < spawnCountOut[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnOut();
         }
         Debug.Log(counter);
-
+        grandCounter += counter * AsteroidprefabOut[0].GetComponent<Health>().ScoreBonus;
+        MasterManager.mm.maxScore += grandCounter;
         checkAlongPath();
     }
 

@@ -29,7 +29,7 @@ public class SceneManagement : MonoBehaviour
     }
     public void LoadSpaceship()
     {
-        //SceneManager.LoadSceneAsync("Spaceship", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Spaceship", LoadSceneMode.Additive);
     }
     public void LoadMainMenuFromIngame()
     {

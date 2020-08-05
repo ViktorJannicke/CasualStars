@@ -94,6 +94,7 @@ MonoBehaviour:
   explosionOffset: {x: 0, y: 0, z: -5}
   delay: 0.15
   Text: {fileID: 1779329414487397094, guid: 3b1ba18d7a5e2614c85958f66bc567a2, type: 3}
+  ScoreBonus: 5
 --- !u!114 &4306284659642388129
 MonoBehaviour:
   m_ObjectHideFlags: 0
