@@ -54,7 +54,11 @@ public class Scoreboard : MonoBehaviour
 		scoreboardzeichnen();
 
 		if (showScore)
-			text.text = "Your Score: " + MasterManager.mm.lastScore;
+			text.text = "Your Score: " + "\n" + new StringBuilder()
+			.Append(MasterManager.mm.lastScore)
+			.Append(" / ").Append(MasterManager.mm.maxScore)
+			.Append(" (").Append(Mathf.FloorToInt((float)MasterManager.mm.lastScore / (float)MasterManager.mm.maxScore * 100f))
+			.Append("%)").ToString();
 	}
 
 	public void Submit()
@@ -63,7 +67,7 @@ public class Scoreboard : MonoBehaviour
 			.Append(MasterManager.mm.lastScore)
 			.Append(" / ").Append(MasterManager.mm.maxScore)
 			.Append(" (").Append(Mathf.FloorToInt((float)MasterManager.mm.lastScore / (float)MasterManager.mm.maxScore * 100f))
-			.Append("% )").ToString()));
+			.Append("%)").ToString()));
 		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
 		MasterManager.mm.playerData.Reverse();
 		SaveSystem.SavePlayer(MasterManager.mm.playerData);

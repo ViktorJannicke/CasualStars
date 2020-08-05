@@ -530,8 +530,6 @@ MonoBehaviour:
   - 48
   AsteroidprefabIn:
   - {fileID: 6515083680831690827, guid: cf7633f8c15b9af459ed53501260f3e1, type: 3}
-  - {fileID: 6515083680831690827, guid: cf7633f8c15b9af459ed53501260f3e1, type: 3}
-  - {fileID: 8247107274390390050, guid: dd7719a1a74995c4abf4ffe3fb855a6c, type: 3}
   - {fileID: 8247107274390390050, guid: dd7719a1a74995c4abf4ffe3fb855a6c, type: 3}
   InGroup: {fileID: 1515004470}
   AsteroidprefabOut:
@@ -2085,8 +2083,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288347904
-  m_fontColor: {r: 0, g: 1, b: 0.603534, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2104,12 +2102,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 200
+  m_fontSize: 300
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 200
+  m_fontSizeMax: 300
   m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0

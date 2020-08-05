@@ -1308,25 +1308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b35a2dcf14f5948a97263624753750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetRenderers:
-  - {fileID: 1786771948}
-  - {fileID: 469324040}
-  - {fileID: 1463275372}
-  - {fileID: 1375208644}
-  - {fileID: 816921606}
-  - {fileID: 363331120}
-  - {fileID: 612598683}
-  - {fileID: 1279545711}
-  - {fileID: 456352511}
-  - {fileID: 1528893379}
-  - {fileID: 407223155}
-  - {fileID: 1375514252}
-  - {fileID: 1816819023}
-  - {fileID: 1689116120}
-  - {fileID: 889554647}
-  - {fileID: 1436085331}
-  emissiveIntensity: 1
-  baseEmissiveColor: {r: 1, g: 1, b: 1, a: 0}
+  light: {fileID: 1259319412}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  intensity: 0
+  load: 1
+  set: 0
 --- !u!95 &1259319410
 Animator:
   serializedVersion: 3

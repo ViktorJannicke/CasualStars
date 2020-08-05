@@ -26,6 +26,7 @@ public class SceneManagement : MonoBehaviour
     public void LoadLostGame()
     {
         SceneManager.LoadSceneAsync("LostGame");
+        LoadSpaceship();
     }
     public void LoadSpaceship()
     {

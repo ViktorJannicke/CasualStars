@@ -200,8 +200,8 @@ MonoBehaviour:
   audioData:
     sliderValues: []
     version: 0
-  lastScore: 0
-  maxScore: 0
+  lastScore: 250
+  maxScore: 250
   difficulty: 0
   maxDifficulty: 2
   mixer: {fileID: 24100000, guid: 2f56e2f55c7ed80458ae71a561807db0, type: 2}

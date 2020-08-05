@@ -451,6 +451,7 @@ GameObject:
   - component: {fileID: 216747507}
   - component: {fileID: 216747506}
   - component: {fileID: 216747510}
+  - component: {fileID: 216747505}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -458,6 +459,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &216747505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216747504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b35a2dcf14f5948a97263624753750, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 0}
+  color: {r: 1, g: 0.95686275, b: 0.8392157, a: 0}
+  intensity: 0.3
+  load: 0
+  set: 1
 --- !u!114 &216747506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,14 +727,15 @@ VideoPlayer:
   m_TargetMaterialProperty: _MainTex
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 0.5
-  m_Url: 
+  m_Url: file://D:/GitHub/CasualStars/CasualStars/Assets/External Sources/Ad/Games
+    Academy/GA_Trailer_Sommer_2019.mp4
   m_EnabledAudioTracks: 00
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1

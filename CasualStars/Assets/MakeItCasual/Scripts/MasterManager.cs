@@ -17,7 +17,7 @@ public class MasterManager : MonoBehaviour
     public int maxDifficulty;
 
     public AudioMixer mixer;
-    public int version = 2;
+    public int version = 5;
     public bool firstStart;
 
     public string[] group;
