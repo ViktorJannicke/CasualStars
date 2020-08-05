@@ -62,7 +62,7 @@ public class Scoreboard : MonoBehaviour
 		MasterManager.mm.playerData.Add(new PlayerData(MasterManager.mm.playerData.Count, input.text, new StringBuilder()
 			.Append(MasterManager.mm.lastScore)
 			.Append(" / ").Append(MasterManager.mm.maxScore)
-			.Append(" (").Append(((float)MasterManager.mm.lastScore / (float)MasterManager.mm.maxScore * 100f))
+			.Append(" (").Append(Mathf.FloorToInt((float)MasterManager.mm.lastScore / (float)MasterManager.mm.maxScore * 100f))
 			.Append("% )").ToString()));
 		MasterManager.mm.playerData.Sort((x, y) => x.score.CompareTo(y.score));
 		MasterManager.mm.playerData.Reverse();

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -6672448241112919555}
   - component: {fileID: -569781414376669804}
   - component: {fileID: 4944835937515704570}
+  - component: {fileID: 6016685966327958897}
   m_Layer: 10
   m_Name: Asteroid_Big_out
   m_TagString: AsteroidOut
@@ -130,7 +131,13 @@ MonoBehaviour:
   val: 0.25
   maxLeft: 25
   maxRight: -25
+  maxUp: 25
+  maxDown: -25
+  maxForward: 25
+  maxBackward: -25
   turnLeft: 0
+  turnUp: 0
+  turnForward: 0
   activated: 1
   player: {fileID: 0}
   visual: {fileID: 8247107274390390050}
@@ -149,8 +156,6 @@ MonoBehaviour:
   splitObject: {fileID: 0}
   split: 0
   splitCount: 2
-  ScoreBonus: 0
-  manager: {fileID: 0}
   targetRender:
   - {fileID: 8247107274390390049}
   baseMaterial: {fileID: 2100000, guid: c223bc27111a4cb4193e904b45dc1376, type: 2}
@@ -177,3 +182,18 @@ MonoBehaviour:
   explosionOffset: {x: 0, y: 0, z: -5}
   delay: 0.15
   Text: {fileID: 0}
+--- !u!114 &6016685966327958897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247107274390390050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPrototype: {fileID: 11400000, guid: de43381c21f43f544933a6c6cd468511, type: 2}
+  gpuInstancerID: 0
+  state: 0

@@ -166,20 +166,20 @@ public class NGameManager : MonoBehaviour
 
         TopBar.SetActive(false);
         Vector3 pos = portal.position;
-        pos.z = sizeOut.z - 725;
+        pos.z = sizeOut.z - 250;
         portal.position = pos;
 
         player.GetComponent<Movement>().speed = playerSpeed[MasterManager.mm.difficulty];
 
         int counter = 0;
-        for (int i = 0; i < spawnCountIn[MasterManager.mm.difficulty]; i++)
+        for (int i = 0; i <= spawnCountIn[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnIn();
         }
         Debug.Log(counter);
 
         counter = 0;
-        for (int i = 0; i < spawnCountOut[MasterManager.mm.difficulty]; i++)
+        for (int i = 0; i <= spawnCountOut[MasterManager.mm.difficulty]; i++)
         {
             counter += AsteroidsspawnOut();
         }

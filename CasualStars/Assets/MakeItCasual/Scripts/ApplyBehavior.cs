@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class ApplyBehavior : MonoBehaviour
 {
-    public enum Behavior {none, floating, floating_look_at_Player};
+    public enum Behavior { none, floating, floating_look_at_Player };
     public Behavior behavior;
 
     public float val = 0;
     public float maxLeft;
     public float maxRight;
+    public float maxUp;
+    public float maxDown;
+    public float maxForward;
+    public float maxBackward;
     public bool turnLeft;
+    public bool turnUp;
+    public bool turnForward;
     public bool activated = true;
     public Transform player;
     public GameObject visual;
@@ -46,87 +52,187 @@ public class ApplyBehavior : MonoBehaviour
         {
             if (behavior == Behavior.floating)
             {
-                if (turnLeft)
+                Vector3 rot = visual.transform.rotation.eulerAngles;
+                Vector3 pos = transform.position;
+                if (applyOnX && turnLeft)
                 {
-                    Vector3 rot = visual.transform.rotation.eulerAngles;
-                    float angle = rot.z;
-                    angle = (angle > 180) ? angle - 360 : angle;
+
+                    float angle = pos.x;
+
                     if (angle > maxLeft)
                     {
                         turnLeft = false;
                     }
                     else
                     {
-                        rot.x += applyOnX ? val : 0;
-                        rot.y += applyOnY ? val : 0;
-                        rot.z += applyOnZ ? val : 0;
-                        visual.transform.rotation = Quaternion.Euler(rot);
-                        Vector3 pos = transform.position;
-                        pos.x += applyOnX ? val : 0;
-                        pos.y += applyOnY ? val : 0;
-                        pos.z += applyOnZ ? val : 0;
-                        transform.position = pos;
+                        rot.x += val;
+                        pos.x += val;
                     }
                 }
-                else
+                else if (applyOnX && !turnLeft)
                 {
-                    Vector3 rot = visual.transform.rotation.eulerAngles;
-                    float angle = rot.z;
-                    angle = (angle > 180) ? angle - 360 : angle;
+                    float angle = pos.x;
+
                     if (angle < maxRight)
                     {
                         turnLeft = true;
                     }
                     else
                     {
-                        rot.x -= applyOnX ? val : 0;
-                        rot.y -= applyOnY ? val : 0;
-                        rot.z -= applyOnZ ? val : 0;
-                        visual.transform.rotation = Quaternion.Euler(rot);
-                        Vector3 pos = transform.position;
-                        pos.x -= applyOnX ? val : 0;
-                        pos.y -= applyOnY ? val : 0;
-                        pos.z -= applyOnZ ? val : 0;
-                        transform.position = pos;
+                        rot.x -= val;
+                        pos.x -= val;
                     }
                 }
+
+                if (applyOnY && turnUp)
+                {
+
+                    float angle = pos.y;
+
+                    if (angle > maxUp)
+                    {
+                        turnUp = false;
+                    }
+                    else
+                    {
+                        rot.y += val;
+                        pos.y += val;
+                    }
+                }
+                else if (applyOnY && !turnUp)
+                {
+                    float angle = pos.y;
+
+                    if (angle < maxDown)
+                    {
+                        turnUp = true;
+                    }
+                    else
+                    {
+                        rot.y -= val;
+                        pos.y -= val;
+                    }
+                }
+
+                if (applyOnZ && turnForward)
+                {
+
+                    float angle = pos.z;
+
+                    if (angle > maxForward)
+                    {
+                        turnForward = false;
+                    }
+                    else
+                    {
+                        rot.z += val;
+                        pos.z += val;
+                    }
+                }
+                else if (applyOnY && !turnUp)
+                {
+                    float angle = pos.z;
+
+                    if (angle < maxBackward)
+                    {
+                        turnForward = true;
+                    }
+                    else
+                    {
+                        rot.z -= val;
+                        pos.z -= val;
+                    }
+                }
+                visual.transform.rotation = Quaternion.Euler(rot);
+                transform.position = pos;
             }
-            else if(behavior == Behavior.floating_look_at_Player)
+            else if (behavior == Behavior.floating_look_at_Player)
             {
-                if (turnLeft)
-                {;
-                    count += val;
-                    if (count > maxLeft)
+                visual.transform.LookAt(player);
+
+                Vector3 pos = transform.position;
+                if (applyOnX && turnLeft)
+                {
+
+                    float angle = pos.x;
+                    if (angle > maxLeft)
                     {
                         turnLeft = false;
                     }
                     else
                     {
-                        visual.transform.LookAt(player);
-                        Vector3 pos = transform.position;
-                        pos.x += applyOnX ? val : 0;
-                        pos.y += applyOnY ? val : 0;
-                        pos.z += applyOnZ ? val : 0;
-                        transform.position = pos;
+                        pos.x += val;
                     }
                 }
-                else
+                else if (applyOnX && !turnLeft)
                 {
-                    count -= val;
-                    if (count < maxRight)
+                    float angle = pos.x;
+                    if (angle < maxRight)
                     {
                         turnLeft = true;
                     }
                     else
                     {
-                        visual.transform.LookAt(player);
-                        Vector3 pos = transform.position;
-                        pos.x -= applyOnX ? val : 0;
-                        pos.y -= applyOnY ? val : 0;
-                        pos.z -= applyOnZ ? val : 0;
-                        transform.position = pos;
+                        pos.x -= val;
                     }
                 }
+
+                if (applyOnY && turnUp)
+                {
+
+                    float angle = pos.y;
+
+                    if (angle > maxUp)
+                    {
+                        turnUp = false;
+                    }
+                    else
+                    {
+                        pos.y += val;
+                    }
+                }
+                else if (applyOnY && !turnUp)
+                {
+                    float angle = pos.y;
+
+                    if (angle < maxDown)
+                    {
+                        turnUp = true;
+                    }
+                    else
+                    {
+                        pos.y -= val;
+                    }
+                }
+
+                if (applyOnZ && turnForward)
+                {
+
+                    float angle = pos.z;
+
+                    if (angle > maxForward)
+                    {
+                        turnForward = false;
+                    }
+                    else
+                    {
+                        pos.z += val;
+                    }
+                }
+                else if (applyOnY && !turnUp)
+                {
+                    float angle = pos.z;
+
+                    if (angle < maxBackward)
+                    {
+                        turnForward = true;
+                    }
+                    else
+                    {
+                        pos.z -= val;
+                    }
+                }
+                transform.position = pos;
             }
         }
     }

@@ -66,11 +66,11 @@ public class FollowCamera : MonoBehaviour
                         position.x -= speed;
                     }
 
-                    if (fokusObject.transform.position.y > transform.position.y && fokusObject.transform.position.y - transform.position.y >= 2)
+                    if (fokusObject.transform.position.y + (fokusObject == endPortal ? 0 : 200 *(Screen.height/2688)) > transform.position.y && fokusObject.transform.position.y + (fokusObject == endPortal ? 0 : 200 * (Screen.height/2688)) - transform.position.y >= 2)
                     {
                         position.y += speed;
                     }
-                    else if (fokusObject.transform.position.y < transform.position.y && transform.position.y - fokusObject.transform.position.y >= 2)
+                    else if (fokusObject.transform.position.y + (fokusObject == endPortal ? 0 : 200 * (Screen.height/2688)) < transform.position.y && transform.position.y - fokusObject.transform.position.y + (fokusObject == endPortal ? 0 : 200 * (Screen.height/2688)) >= 2)
                     {
                         position.y -= speed;
                     }

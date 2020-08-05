@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -420009428126476224}
   - component: {fileID: 4306284659642388129}
   - component: {fileID: 8782811542781484916}
+  - component: {fileID: 606513203412453546}
   m_Layer: 10
   m_Name: Asteroid_Big_Move
   m_TagString: AsteroidIn
@@ -67,8 +68,6 @@ MonoBehaviour:
   splitObject: {fileID: 0}
   split: 0
   splitCount: 2
-  ScoreBonus: 1
-  manager: {fileID: 0}
   targetRender:
   - {fileID: 807441986036436255}
   baseMaterial: {fileID: 2100000, guid: 21dd84b0a067f414e8b7f6f1cf7da36c, type: 2}
@@ -111,7 +110,13 @@ MonoBehaviour:
   val: 0.25
   maxLeft: 25
   maxRight: -25
+  maxUp: 25
+  maxDown: -25
+  maxForward: 25
+  maxBackward: -25
   turnLeft: 0
+  turnUp: 0
+  turnForward: 0
   activated: 1
   player: {fileID: 0}
   visual: {fileID: 1371427699098270147}
@@ -128,6 +133,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &606513203412453546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8247107274390390050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13f42112a552354988a63573e49f5d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabPrototype: {fileID: 11400000, guid: c3fe4483930ff3b4598b682852bec1ed, type: 2}
+  gpuInstancerID: 0
+  state: 0
 --- !u!1001 &9190227079474135408
 PrefabInstance:
   m_ObjectHideFlags: 0
