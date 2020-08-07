@@ -90,6 +90,7 @@ public class SceneManagement : MonoBehaviour
     public void LoadNewTransition()
     {
         MasterManager.mm.lastScore = 0;
+        MasterManager.mm.maxScore = 0;
         MasterManager.mm.difficulty = 0;
         SceneManager.LoadSceneAsync("GameplayTransition");
     }

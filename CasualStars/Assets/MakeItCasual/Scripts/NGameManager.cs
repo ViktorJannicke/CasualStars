@@ -178,7 +178,7 @@ public class NGameManager : MonoBehaviour
             counter += AsteroidsspawnIn();
         }
         Debug.Log(counter);
-        grandCounter += (counter*5);
+        grandCounter += (counter*AsteroidprefabIn[0].GetComponent<Health>().ScoreBonus);
 
         counter = 0;
         for (int i = 0; i < spawnCountOut[MasterManager.mm.difficulty]; i++)
@@ -186,7 +186,7 @@ public class NGameManager : MonoBehaviour
             counter += AsteroidsspawnOut();
         }
         Debug.Log(counter);
-        grandCounter += (counter*1);
+        grandCounter += (counter * AsteroidprefabOut[0].GetComponent<Health>().ScoreBonus);
         MasterManager.mm.maxScore += grandCounter;
         checkAlongPath();
     }
